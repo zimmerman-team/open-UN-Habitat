@@ -1,0 +1,23 @@
+body ul.cm_blue, body ul.cm_blue ul
+{
+	/* Required settings */
+	top:-1000px; left:-1000px; position:absolute; z-index:999; 
+	/* Additional settings */
+	border-bottom:solid 1px #dcdcdc; text-align:left;
+}
+body ul.cm_blue li
+{
+	/* Required settings */
+	width:70px; list-style:none none outside;
+	/* Possibly inherited values overrides */
+	background-color:#fff; background-image:none; font-size:10px;
+	/* Additional settings */ 
+	color:#ccc; border:solid 1px #dcdcdc; border-bottom-width:0; padding:1px;
+}
+body ul.cm_blue li a{ padding:4px; display:block; color:#333;}
+body ul.cm_blue li span.submenu{display:block; width:4px; height:12px; float:right; background:url(images/submenu.gif) no-repeat 0 5px}
+body ul.cm_blue li a:hover{ text-decoration:underline;}
+body ul.cm_blue li.active a{background-color:#f1f1f1;}
+
+
+

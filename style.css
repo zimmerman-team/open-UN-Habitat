@@ -1,0 +1,55 @@
+/*   
+Theme Name: BLANK Theme
+Theme URI: http://digwp.com
+Description: This is just a BLANK starter WordPress Theme template -- WordPress v2.9.1
+Author: Chris Coyier
+Author URI: http://chriscoyier.net
+Version: 1
+*/
+
+@media screen {
+/************RESET ALL************/
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td {border:0; font-size:100%; margin:0; padding:0;}
+a {outline:none; text-decoration:none;}
+table {border-collapse:collapse; border-spacing:0;}
+fieldset,img {border:0;}
+img {vertical-align:bottom;}
+del,ins {text-decoration:none;}
+caption,th {text-align:left;}
+h1,h2,h3,h4,h5,h6 {font-size:100%; font-weight:normal;}
+q:before,q:after {content:'';}
+abbr,acronym {border:0; font-variant:normal;}
+sup,sub {vertical-align:baseline;}
+legend {color:#000;}
+ul,ul li{list-style:none;}
+input,button,textarea,select,optgroup,option {font-family:inherit; font-size:inherit; font-style:inherit; font-weight:inherit;}
+input,button,textarea,select {font-size:100%;}
+
+} /* END screen media */
+
+
+@media print {
+
+.do-not-print { display: none; }
+#comments { page-break-before: always; }
+
+body { width: 100% !important; margin: 0 !important; padding: 0 !important; line-height: 1.4; word-spacing: 1.1pt; letter-spacing: 0.2pt; font-family: Garamond,"Times New Roman", serif; color: #000; background: none; font-size: 12pt; }
+h1,h2,h3,h4,h5,h6 { font-family: Helvetica, Arial, sans-serif; }
+h1 { font-size: 19pt; }
+h2 { font-size:17pt; }
+h3 { font-size:15pt; }
+h4,h5,h6 { font-size:12pt; }
+code { font: 10pt Courier, monospace; } 
+blockquote { margin: 1.3em; padding: 1em; }
+img { display: block; margin: 1em 0; }
+a img { border: none; }
+table { margin: 1px; text-align:left; }
+th { border-bottom: 1px solid #333;  font-weight: bold; }
+td { border-bottom: 1px solid #333; }
+th, td { padding: 4px 10px 4px 0; }
+caption { background: #fff; margin-bottom: 2em; text-align: left; }
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; } 
+a { text-decoration: none; color: black; }
+	
+} /* END print media */
