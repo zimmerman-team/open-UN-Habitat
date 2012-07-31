@@ -41,17 +41,13 @@
 	<script src="<?php bloginfo('template_url'); ?>/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/jeegoocontext/jquery.jeegoocontext.min.js" type="text/javascript"></script>
-    <script src="<?php bloginfo('template_url'); ?>/js/script.js" type="text/javascript"></script>
+    <script src="<?php bloginfo('template_url'); ?>/js/script.js?theme_path=<?php bloginfo('template_url'); ?>" type="text/javascript"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/selector.js" type="text/javascript"></script>
 	<?php if(is_home()){?>
 	<script type="text/javascript" charset="utf-8">
 		function initialize() {
 			
-			
-			var baseUrl = top.location.pathname.toString(),
-				url = baseUrl + "wp-content/themes/openunh/map_search.php";
-		
-			
+			url = "<?php bloginfo('template_directory') ?>/map_search.php";
 			$.ajax({
 				url: url,
 				type: "GET",
@@ -97,6 +93,7 @@
 						fillColor: "#F96B15",
 						fillOpacity: 0.65,
 						country: data[idx]['name'],
+						total_cnt: data[idx]['total_cnt'],
 						total_activities_url: "?countries="+idx,
 						iso2 : idx
 					});
@@ -122,6 +119,10 @@
 						this.country + 
 					"</h2>" +
 					"<dl>" +
+					"<dt>Total Activities:</dt>" +
+					"<dd>" +
+						"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">"+this.total_cnt+" project(s)</a>" +
+					"</dd>" +
 						"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">show all activities for this country</a>" +
 					"</dl>";
 					

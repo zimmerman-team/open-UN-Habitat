@@ -1,5 +1,15 @@
+var sThemePath = '';
 // JavaScript Document
 $(document).ready(function() {
+	
+	
+	$('script').each(function() {
+	  if($(this).attr('src') !== undefined) {
+		if($(this).attr('src').indexOf('theme_path') > -1) {
+		  sThemePath = $(this).attr('src').split('theme_path=')[1].split('&')[0];
+		} // end if
+	  } // end if
+	});
 	
 	//Overlay
 	$(".overlay").fancybox({
@@ -107,7 +117,11 @@ $(document).ready(function() {
 				if($(this).val()==val) $(this).attr('checked', false);
 			});
 		}
-		processAjaxFilters(0);
+		if($('li.map a').attr('class')=='active') {
+			processAjaxMap();
+		} else {
+			processAjaxFilters(0);
+		}
 	});	
 	
 	$(".filterbox .filtercontent input[name=regions]").click(function(){
@@ -129,7 +143,11 @@ $(document).ready(function() {
 				if($(this).val()==val) $(this).attr('checked', false);
 			});
 		}
-		processAjaxFilters(0);
+		if($('li.map a').attr('class')=='active') {
+			processAjaxMap();
+		} else {
+			processAjaxFilters(0);
+		}
 	});	
 	
 	$(".filterbox .filtercontent input[name=sectors]").click(function(){
@@ -151,7 +169,11 @@ $(document).ready(function() {
 				if($(this).val()==val) $(this).attr('checked', false);
 			});
 		}
-		processAjaxFilters(0);
+		if($('li.map a').attr('class')=='active') {
+			processAjaxMap();
+		} else {
+			processAjaxFilters(0);
+		}
 	});	
 	
 	$(".filterbox .filtercontent input[name=budgets]").click(function(){
@@ -173,7 +195,11 @@ $(document).ready(function() {
 				if($(this).val()==val) $(this).attr('checked', false);
 			});
 		}
-		processAjaxFilters(0);
+		if($('li.map a').attr('class')=='active') {
+			processAjaxMap();
+		} else {
+			processAjaxFilters(0);
+		}
 	});	
 	
 	$('#popupsubmtBtn>a').click(function(){
@@ -262,7 +288,99 @@ $(document).ready(function() {
 		$(".filterbox .filtercontent input[name=budgets]").attr('checked', false);
 		$(".filterbox .filtercontent input[name=budgets]:first").attr('checked', true);
 		$(this).parent().parent().empty().hide();
-		processAjaxFilters(0);
+		if($('li.map a').attr('class')=='active') {
+			processAjaxMap();
+		} else {
+			processAjaxFilters(0);
+		}
+	});
+	
+	//Layout button click
+	$('div.layout>ul>li>a').click(function(){
+		
+		$('div.layout li a').removeClass('active');
+		$(this).addClass('active');
+		
+		var baseUrl = top.location.pathname.toString(),
+		url =  baseUrl,
+		urlSep = "?", country_fltr = '', region_fltr = '', sector_fltr = '', budget_fltr = '',
+		sep = "", selectedFltrs = [], isFilter = false;
+	
+		$('.filterbox input[type=checkbox]:checked').each(function(){
+			var control_name = $(this).attr('name');
+			var key = $(this).val();
+			switch(control_name) {
+				case 'countries':
+					if(!selectedFltrs['countries']) selectedFltrs['countries'] = [];
+					if(country_fltr.length==0) sep = '';
+					country_fltr += sep + key;
+					sep = "|";
+					var lbl = $(this).parent().text();
+					if(key!='All') selectedFltrs['countries'][key] = lbl;
+					break;
+				case 'regions':
+					if(!selectedFltrs['regions']) selectedFltrs['regions'] = [];
+					if(region_fltr.length==0) sep = '';
+					region_fltr += sep + key;
+					sep = "|";
+					var lbl = $(this).parent().text();
+					if(key!='All') selectedFltrs['regions'][key] = lbl;
+					break;
+				case 'sectors':
+					if(!selectedFltrs['sectors']) selectedFltrs['sectors'] = [];
+					if(sector_fltr.length==0) sep = '';
+					sector_fltr += sep + key;
+					sep = "|";
+					var lbl = $(this).parent().text();
+					if(key!='All') selectedFltrs['sectors'][key] = lbl;
+					break;
+				case 'budgets':
+					if(!selectedFltrs['budgets']) selectedFltrs['budgets'] = [];
+					if(budget_fltr.length==0) sep = '';
+					budget_fltr += sep + key;
+					sep = "|";
+					var lbl = $(this).parent().text();
+					if(key!='All') selectedFltrs['budgets'][key] = lbl;
+					break;
+			}
+		});
+		
+		country_fltr = country_fltr.replace(/(All\|)|(\|All)|(All)/g, '');
+		region_fltr = region_fltr.replace(/(All\|)|(\|All)|(All)/g, '');
+		sector_fltr = sector_fltr.replace(/(All\|)|(\|All)|(All)/g, '');
+		budget_fltr = budget_fltr.replace(/(All\|)|(\|All)|(All)/g, '');
+		
+		var keyword = jQuery('#s').val();
+		url +=  urlSep + "s=" + encodeURI(keyword);
+		urlSep = "&";
+		
+		if(country_fltr.length>0) {
+			url +=  urlSep + "countries=" + country_fltr;
+			urlSep = "&";
+			isFilter = true;
+		}
+		if(region_fltr.length>0) {
+			url +=  urlSep + "regions=" + region_fltr;
+			urlSep = "&";
+			isFilter = true;
+		}
+		if(sector_fltr.length>0) {
+			url +=  urlSep + "sectors=" + sector_fltr;
+			urlSep = "&";
+			isFilter = true;
+		}
+		if(budget_fltr.length>0) {
+			url +=  urlSep + "budgets=" + budget_fltr;
+			urlSep = "&";
+			isFilter = true;
+		}
+		
+		
+		if($(this).parent().attr('class')=='map') {
+			url += urlSep + "layout=m";
+		}
+		window.location = url;
+		return false;
 	});
 	
 	initPager();
@@ -297,19 +415,219 @@ function initPager() {
 	});
 }
 
+function processAjaxMap() {
+	var url =  sThemePath + "/map_search.php",
+	urlSep = "?", country_fltr = '', region_fltr = '', sector_fltr = '', budget_fltr = '',
+	sep = "", selectedFltrs = [], isFilter = false;
+
+	$('#map_canvas').empty();
+	
+	var html = "<center><p>" +
+			"<img src='"+sThemePath+"/images/ajax-loader.gif' alt='Loading results' />" +
+			"</p></center>";
+			
+	
+	$('#map_canvas').html(html);
+	
+	
+	$('.filterbox input[type=checkbox]:checked').each(function(){
+		var control_name = $(this).attr('name');
+		var key = $(this).val();
+		switch(control_name) {
+			case 'countries':
+				if(!selectedFltrs['countries']) selectedFltrs['countries'] = [];
+				if(country_fltr.length==0) sep = '';
+				country_fltr += sep + key;
+				sep = "|";
+				var lbl = $(this).parent().text();
+				if(key!='All') selectedFltrs['countries'][key] = lbl;
+				break;
+			case 'regions':
+				if(!selectedFltrs['regions']) selectedFltrs['regions'] = [];
+				if(region_fltr.length==0) sep = '';
+				region_fltr += sep + key;
+				sep = "|";
+				var lbl = $(this).parent().text();
+				if(key!='All') selectedFltrs['regions'][key] = lbl;
+				break;
+			case 'sectors':
+				if(!selectedFltrs['sectors']) selectedFltrs['sectors'] = [];
+				if(sector_fltr.length==0) sep = '';
+				sector_fltr += sep + key;
+				sep = "|";
+				var lbl = $(this).parent().text();
+				if(key!='All') selectedFltrs['sectors'][key] = lbl;
+				break;
+			case 'budgets':
+				if(!selectedFltrs['budgets']) selectedFltrs['budgets'] = [];
+				if(budget_fltr.length==0) sep = '';
+				budget_fltr += sep + key;
+				sep = "|";
+				var lbl = $(this).parent().text();
+				if(key!='All') selectedFltrs['budgets'][key] = lbl;
+				break;
+		}
+	});
+	
+	country_fltr = country_fltr.replace(/(All\|)|(\|All)|(All)/g, '');
+	region_fltr = region_fltr.replace(/(All\|)|(\|All)|(All)/g, '');
+	sector_fltr = sector_fltr.replace(/(All\|)|(\|All)|(All)/g, '');
+	budget_fltr = budget_fltr.replace(/(All\|)|(\|All)|(All)/g, '');
+
+	var keyword = jQuery('#s').val();
+	if(keyword) {
+		url +=  urlSep + "query=" + encodeURI(keyword);
+		urlSep = "&";
+	}
+	
+	
+	if(country_fltr.length>0) {
+		url +=  urlSep + "countries=" + country_fltr;
+		urlSep = "&";
+		isFilter = true;
+	}
+	if(region_fltr.length>0) {
+		url +=  urlSep + "regions=" + region_fltr;
+		urlSep = "&";
+		isFilter = true;
+	}
+	if(sector_fltr.length>0) {
+		url +=  urlSep + "sectors=" + sector_fltr;
+		urlSep = "&";
+		isFilter = true;
+	}
+	if(budget_fltr.length>0) {
+		url +=  urlSep + "budgets=" + budget_fltr;
+		urlSep = "&";
+		isFilter = true;
+	}
+	
+	$.ajax({
+		url: url,
+		type: "GET",
+		dataType: "json",
+		success: function(result){
+			
+			var resultsHTML = 'Results 1 - ' + result['meta']['total_count'];
+			resultsHTML += ' of ' + result['meta']['total_count'];
+			$('.searchresultstitle>h4').html(resultsHTML);
+			
+			$('#resultsContainer').empty();
+			$('#resultsContainer').html(html);
+			
+			var myLatLng = new google.maps.LatLng(-3.2013100765,-9.64460607187);
+			var myOptions = {
+				zoom : 2,
+				center : myLatLng,
+				mapTypeId : google.maps.MapTypeId.ROADMAP,
+				scrollwheel: false,
+				streetViewControl : false
+			};
+
+			var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+			if (!google.maps.Polygon.prototype.getBounds) {
+
+				google.maps.Polygon.prototype.getBounds = function(latLng) {
+
+						var bounds = new google.maps.LatLngBounds();
+						var paths = this.getPaths();
+						var path;
+						
+						for (var p = 0; p < paths.getLength(); p++) {
+								path = paths.getAt(p);
+								for (var i = 0; i < path.getLength(); i++) {
+										bounds.extend(path.getAt(i));
+								}
+						}
+
+						return bounds;
+				}
+
+			}
+			var data = result['objects'];
+			for(idx in data) {
+				var lats = [];
+				var lat_size =  data[idx]['path'].length;
+
+				for (var t=0; t <lat_size; t++) {
+					var inner = [];
+					for (var i=0; i <data[idx]['path'][t].length; i++) {
+						var lat = data[idx]['path'][t][i].split(',');
+						inner.push(new google.maps.LatLng(lat[0], lat[1]));
+					}
+					lats.push(inner);
+				}
+				var polygon = new google.maps.Polygon({
+					paths: lats,
+					strokeColor: "#FFFFFF",
+					strokeOpacity: 0.8,
+					strokeWeight: 2,
+					fillColor: "#F96B15",
+					fillOpacity: 0.65,
+					country: data[idx]['name'],
+					total_cnt: data[idx]['total_cnt'],
+					total_activities_url: "?countries="+idx,
+					iso2 : idx
+				});
+				if(data.length==1) map.setCenter(polygon.getBounds().getCenter());
+				polygon.setMap(map);
+				google.maps.event.addListener(polygon, 'click', function(event){
+					if (typeof currentPolygon != 'undefined') {
+						currentPolygon.setOptions({fillColor: "#F96B15"});
+					}
+					this.setOptions({fillColor: "#2D6A98"});
+					var keyword = $('#s').val();
+					
+					if(keyword) {
+						keyword = encodeURI(keyword);
+					}
+					
+					var contentString = "" + 
+					"<h2>" + 
+						"<img src=/media/images/flags/" + this.iso2.toLowerCase() + ".gif />" +
+						this.country + 
+					"</h2>" +
+					"<dl>" +
+					"<dt>Total Activities:</dt>" +
+					"<dd>" +
+						"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">"+this.total_cnt+" project(s)</a>" +
+					"</dd>" +
+						"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">show all activities for this country</a>" +
+					"</dl>";
+					
+					infowindow.setContent(contentString);
+					infowindow.setPosition(event.latLng);
+					infowindow.open(map);
+					currentPolygon = this;
+				});
+			}
+		},
+		error: function(msg){
+			alert('AJAX error!' + msg);
+			return false;
+		}
+	});
+	
+	if(isFilter) {
+		applyFilterHTML(selectedFltrs);
+	} else {
+		$('.searchcriteria').empty().hide();
+	}
+}
+
 function processAjaxFilters(offset, sort_by) {
 	
 	var baseUrl = top.location.pathname.toString();
 	$('#resultsContainer').empty();
 	
 	var html = "<center><p>" +
-			"<img src='"+baseUrl+"wp-content/themes/openunh/images/ajax-loader.gif' alt='Loading results' />" +
+			"<img src='"+sThemePath+"/images/ajax-loader.gif' alt='Loading results' />" +
 			"</p></center>";
 			
 	
 	$('#resultsContainer').html(html);
 	
-	var url =  baseUrl + "wp-content/themes/openunh/ajax_search.php",
+	var url =  sThemePath + "/ajax_search.php",
 		urlSep = "?", country_fltr = '', region_fltr = '', sector_fltr = '', budget_fltr = '',
 		sep = "", selectedFltrs = [], isFilter = false;
 	
@@ -485,7 +803,11 @@ function applyFilterHTML(selected) {
 		$(".filterbox .filtercontent input[name=budgets]").attr('checked', false);
 		$(".filterbox .filtercontent input[name=budgets]:first").attr('checked', true);
 		$(this).parent().parent().empty().hide();
-		processAjaxFilters(0);
+		if($('li.map a').attr('class')=='active') {
+			processAjaxMap();
+		} else {
+			processAjaxFilters(0);
+		}
 	});
 }
 
@@ -629,7 +951,7 @@ function applyResults(meta, objects) {
 		html += "<div class='searchresult row1'>" +
 				"No results" +
 				"</div>";
-		jQuery('#pagination').hide();
+		$('#pagination').hide();
 			
 	}
 	
@@ -642,8 +964,8 @@ function applyResults(meta, objects) {
 	resultsHTML += ' of ' + total_count;
 	$('.searchresultstitle>h4').html(resultsHTML);
 	
-	jQuery('#resultsContainer').empty();
-	jQuery('#resultsContainer').html(html);
+	$('#resultsContainer').empty();
+	$('#resultsContainer').html(html);
 }
 	
 /**

@@ -167,7 +167,7 @@ function wp_get_activity($identifier) {
 	
 	$content = file_get_contents($search_url);
 	$activity = json_decode($content);
-	if(empty($activity->title->default)) $activity->title->default = EMPTY_LABEL;
+	/*if(empty($activity->title->default)) $activity->title->default = EMPTY_LABEL;
 	if(empty($activity->recipient_country)) $activity->recipient_country[0]->name = EMPTY_LABEL;
 	if(empty($activity->activity_sectors)) $activity->activity_sectors[0]->name = EMPTY_LABEL;
 	if(empty($activity->iati_identifier)) $activity->iati_identifier = EMPTY_LABEL;
@@ -186,7 +186,7 @@ function wp_get_activity($identifier) {
 	if(empty($activity->activity_status->name)) $activity->activity_status->name = EMPTY_LABEL;
 	if(empty($activity->reporting_organisation->org_name)) $activity->reporting_organisation->org_name = EMPTY_LABEL;
 	if(empty($activity->reporting_organisation->ref)) $activity->reporting_organisation->ref = EMPTY_LABEL;
-	if(empty($activity->description->default)) $activity->description->default = EMPTY_LABEL;
+	if(empty($activity->description->default)) $activity->description->default = EMPTY_LABEL;*/
 	return $activity;
 
 }
@@ -203,6 +203,25 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 	switch($filter) {
 		case 'COUNTRY':
 			global $_COUNTRY_ISO_MAP;
+			if(empty($_COUNTRY_ISO_MAP)) {
+				$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit=0";
+				
+				$content = file_get_contents($search_url);
+				$result = json_decode($content);
+				$meta = $result->meta;
+				$total_count = $meta->total_count;
+				$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit={$total_count}";
+				$content = file_get_contents($search_url);
+				$result = json_decode($content);
+				$meta = $result->meta;
+				$objects = $result->objects;
+				$countries = objectToArray($objects);
+				foreach($countries AS $s) {
+					if(empty($s['name']) || $s['name']=='#N/A') continue;
+					$_COUNTRY_ISO_MAP[$s['iso']] = $s['name'];
+				}
+				asort($_COUNTRY_ISO_MAP);
+			}
 			$_data = $_COUNTRY_ISO_MAP;
 			$selected = array();
 			if(!empty($_REQUEST['countries'])) {
@@ -255,7 +274,27 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 			break;
 		case 'REGION':
 			global $_REGION_CHOICES;
+			if(empty($_REGION_CHOICES)) {
+				$search_url = SEARCH_URL . "regions/?format=json&organisations=41120&limit=0";
+				
+				$content = file_get_contents($search_url);
+				$result = json_decode($content);
+				$meta = $result->meta;
+				$total_count = $meta->total_count;
+				$search_url = SEARCH_URL . "regions/?format=json&organisations=41120&limit={$total_count}";
+				$content = file_get_contents($search_url);
+				$result = json_decode($content);
+				$meta = $result->meta;
+				$objects = $result->objects;
+				$regions = objectToArray($objects);
+				foreach($regions AS $s) {
+					if(empty($s['name']) || $s['name']=='#N/A') continue;
+					$_REGION_CHOICES[$s['code']] = $s['name'];
+				}
+				asort($_REGION_CHOICES);
+			}
 			$_data = $_REGION_CHOICES;
+
 			$selected = array();
 			if(!empty($_REQUEST['regions'])) {
 				$tmp = explode('|', $_REQUEST['regions']);
@@ -448,6 +487,26 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 	switch($filter) {
 		case 'COUNTRY':
 			global $_COUNTRY_ISO_MAP;
+			if(empty($_COUNTRY_ISO_MAP)) {
+				$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit=0";
+				
+				$content = file_get_contents($search_url);
+				$result = json_decode($content);
+				$meta = $result->meta;
+				$total_count = $meta->total_count;
+				$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit={$total_count}";
+				$content = file_get_contents($search_url);
+				$result = json_decode($content);
+				$meta = $result->meta;
+				$objects = $result->objects;
+				
+				$countries = objectToArray($objects);
+				foreach($countries AS $s) {
+					if(empty($s['name']) || $s['name']=='#N/A') continue;
+					$_COUNTRY_ISO_MAP[$s['iso']] = $s['name'];
+				}
+				asort($_COUNTRY_ISO_MAP);
+			}
 			
 			if($limit>=count($_COUNTRY_ISO_MAP)) {
 				return "";
@@ -500,6 +559,26 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			break;
 		case 'REGION':
 			global $_REGION_CHOICES;
+			if(empty($_REGION_CHOICES)) {
+				$search_url = SEARCH_URL . "regions/?format=json&organisations=41120&limit=0";
+				
+				$content = file_get_contents($search_url);
+				$result = json_decode($content);
+				$meta = $result->meta;
+				$total_count = $meta->total_count;
+				$search_url = SEARCH_URL . "regions/?format=json&organisations=41120&limit={$total_count}";
+				$content = file_get_contents($search_url);
+				$result = json_decode($content);
+				$meta = $result->meta;
+				$objects = $result->objects;
+				
+				$regions = objectToArray($objects);
+				foreach($regions AS $s) {
+					if(empty($s['name']) || $s['name']=='#N/A') continue;
+					$_REGION_CHOICES[$s['code']] = $s['name'];
+				}
+				asort($_REGION_CHOICES);
+			}
 			
 			if($limit>=count($_REGION_CHOICES)) {
 				return "";

@@ -75,9 +75,13 @@ else
 										echo "<li><span>Countries:</span>";
 										$sep = '';
 										$tmp = explode('|', $_REQUEST['countries']);
+										$countries = "";
+										$cSep = "";
 										foreach($tmp AS &$s) {
 											echo $sep .'<a href="#">'.$_COUNTRY_ISO_MAP[$s].'</a>';
 											$sep = ', ';
+											$countries .= $cSep . $s;
+											$cSep = '|';
 										}
 										echo "</li>";
 									}
@@ -122,7 +126,8 @@ else
                     <!--SEARCH RESULTS-->
                         <div class="searchresultsmap">
                         <div id="map">
-                            <iframe width="720" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/?ie=UTF8&amp;ll=26.431228,-71.015625&amp;spn=126.703667,346.289063&amp;t=m&amp;z=2&amp;output=embed"></iframe>
+							<div id="map_canvas" style="width: 720px; height: 500px;"></div>
+                            <!--<iframe width="720" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/?ie=UTF8&amp;ll=26.431228,-71.015625&amp;spn=126.703667,346.289063&amp;t=m&amp;z=2&amp;output=embed"></iframe>-->
                         </div>
                         </div>
                     <!--END SEARCH RESULTS-->
@@ -239,14 +244,171 @@ else
 	<div class="clr"></div>
   </div>
     <!--END MAINBODY-->
-    	<!--  Budget Context menu -->
-        <ul id="contxmenu_b" class="jeegoocontext cm_blue">
-            <li class="active"><a id='asc' href="#">Ascending</a></li>
-            <li><a id='desc' href="#">Descending</a></li>
-        </ul>
-        <!--  Date Context menu -->
-        <ul id="contxmenu_d" class="jeegoocontext cm_blue">
-            <li><a id='asc' href="#">Ascending</a></li>
-            <li class="active"><a id='desc' href="#">Descending</a></li>
-        </ul>
+	<!--  Budget Context menu -->
+	<ul id="contxmenu_b" class="jeegoocontext cm_blue">
+		<li class="active"><a id='asc' href="#">Ascending</a></li>
+		<li><a id='desc' href="#">Descending</a></li>
+	</ul>
+	<!--  Date Context menu -->
+	<ul id="contxmenu_d" class="jeegoocontext cm_blue">
+		<li><a id='asc' href="#">Ascending</a></li>
+		<li class="active"><a id='desc' href="#">Descending</a></li>
+	</ul>
+	<?php 
+		$layout=$_REQUEST['layout'];
+		if(!empty($_REQUEST['countries'])) {
+			$countries = trim($_REQUEST['countries']);
+		}
+		$search_url = "";
+		if(isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
+			$query = rawurlencode($_REQUEST['s']);
+			$search_url .= "&query={$query}";
+		}
+		if(!empty($_REQUEST['regions'])) {
+			$regions = explode('|', trim($_REQUEST['regions']));
+			foreach($regions AS &$c) $c = trim($c);
+			$regions = implode('|', $regions);
+			$search_url .= "&regions={$regions}";
+		}
+		
+		if(!empty($_REQUEST['sectors'])) {
+			$sectors = explode('|', trim($_REQUEST['sectors']));
+			foreach($sectors AS &$c) $c = trim($c);
+			$sectors = implode('|', $sectors);
+			$search_url .= "&sectors={$sectors}";
+		}
+		
+		if(!empty($_REQUEST['budgets'])) {
+			$budgets = explode('|', trim($_REQUEST['budgets']));
+			//Get the lowest budget from filter and use this one, all the other are included in the range
+			ksort($budgets);
+			$search_url .= "&budgets={$budgets[0]}";
+		}
+		if($layout=='m') { 
+	?>
+	<script type="text/javascript" charset="utf-8">
+		function initPageMap(country) {
+			var baseUrl = top.location.pathname.toString(),
+			url = baseUrl + "wp-content/themes/openunh/map_search.php?countries=<?php echo $countries ?><?php echo $search_url; ?>";
+
+
+			$.ajax({
+				url: url,
+				type: "GET",
+				dataType: "json",
+				success: function(data){
+					initMap(data);
+				},
+				error: function(msg){
+					alert('AJAX error!' + msg);
+					return false;
+				}
+			});
+
+
+			function initMap(result) {
+				var myLatLng = new google.maps.LatLng(-3.2013100765,-9.64460607187);
+				var myOptions = {
+					zoom : 2,
+					center : myLatLng,
+					mapTypeId : google.maps.MapTypeId.ROADMAP,
+					scrollwheel: false,
+					streetViewControl : false
+				};
+
+				var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+				if (!google.maps.Polygon.prototype.getBounds) {
+
+					google.maps.Polygon.prototype.getBounds = function(latLng) {
+
+							var bounds = new google.maps.LatLngBounds();
+							var paths = this.getPaths();
+							var path;
+							
+							for (var p = 0; p < paths.getLength(); p++) {
+									path = paths.getAt(p);
+									for (var i = 0; i < path.getLength(); i++) {
+											bounds.extend(path.getAt(i));
+									}
+							}
+
+							return bounds;
+					}
+
+				}
+				var data = result['objects'];
+				for(idx in data) {
+					var lats = [];
+					var lat_size =  data[idx]['path'].length;
+
+					for (var t=0; t <lat_size; t++) {
+						var inner = [];
+						for (var i=0; i <data[idx]['path'][t].length; i++) {
+							var lat = data[idx]['path'][t][i].split(',');
+							inner.push(new google.maps.LatLng(lat[0], lat[1]));
+						}
+						lats.push(inner);
+					}
+					var polygon = new google.maps.Polygon({
+						paths: lats,
+						strokeColor: "#FFFFFF",
+						strokeOpacity: 0.8,
+						strokeWeight: 2,
+						fillColor: "#F96B15",
+						fillOpacity: 0.65,
+						country: data[idx]['name'],
+						total_cnt: data[idx]['total_cnt'],
+						total_activities_url: "?countries="+idx,
+						iso2 : idx
+					});
+					map.setCenter(polygon.getBounds().getCenter());
+					polygon.setMap(map);
+					google.maps.event.addListener(polygon, 'click', showInfo);
+					infowindow = new google.maps.InfoWindow();
+					google.maps.event.addListener(infowindow, 'closeclick', resetColor);
+				}
+				
+				function showInfo(event){
+					if (typeof currentPolygon != 'undefined') {
+						currentPolygon.setOptions({fillColor: "#F96B15"});
+					}
+					this.setOptions({fillColor: "#2D6A98"});
+					var keyword = $('#s').val();
+					
+					if(keyword) {
+						keyword = encodeURI(keyword);
+					}
+					var contentString = "" + 
+					"<h2>" + 
+						"<img src=/media/images/flags/" + this.iso2.toLowerCase() + ".gif />" +
+						this.country + 
+					"</h2>" +
+					"<dl>" +
+					"<dt>Total Activities:</dt>" +
+					"<dd>" +
+						"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">"+this.total_cnt+" project(s)</a>" +
+					"</dd>" +
+						"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">show all activities for this country</a>" +
+					"</dl>";
+					
+					infowindow.setContent(contentString);
+					infowindow.setPosition(event.latLng);
+					infowindow.open(map);
+					currentPolygon = this;
+				}
+				
+				function resetColor(){
+					currentPolygon.setOptions({fillColor: "#F96B15"});
+				}
+			}
+		}
+		$(document).ready(function() {
+			var script = document.createElement("script");
+			script.type = "text/javascript";
+			script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initPageMap";
+			document.body.appendChild(script);
+		});
+	</script>
+		
+	<?php } ?>
 <?php get_footer(); ?>

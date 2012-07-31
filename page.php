@@ -40,28 +40,32 @@ $activity = wp_get_activity($project_id);
             	<div class="projecttitle">
                  	<h2><span><?php echo $activity->title->default; ?></span></h2>
                     	<ul class="shrtdetail">
-                            <li><span>Countries:</span><?php
-								$sep = '';
-								$countries = "";
-								$cSep = "";
-								foreach($activity->recipient_country AS $country) {
-									echo  $sep . "<a href='?s=&countries={$country->iso}'>" . $country->name . "</a>";
-									$countries .= $cSep . $country->iso;
-									$sep = ', ';
-									$cSep = '|';
-								}
-							?></li>
-                            <li><span>Principal Sector:</span><?php
-								$sep = '';
-								foreach($activity->activity_sectors AS $sector) {
-									if($sector->name=='No information available') {
-										echo $sector->name;
-									} else {
-										echo  $sep . "<a href='?s=&sectors={$sector->code}'>" . $sector->name . "</a>";
+							<?php if(!empty($activity->recipient_country)) {?>
+								<li><span>Countries:</span><?php
+									$sep = '';
+									$countries = "";
+									$cSep = "";
+									foreach($activity->recipient_country AS $country) {
+										echo  $sep . "<a href='?s=&countries={$country->iso}'>" . $country->name . "</a>";
+										$countries .= $cSep . $country->iso;
+										$sep = ', ';
+										$cSep = '|';
 									}
-									$sep = ', ';
-								}
-							?></li>
+								?></li>
+							<?php } ?>
+							<?php if(!empty($activity->activity_sectors)) {?>
+								<li><span>Principal Sector:</span><?php
+									$sep = '';
+									foreach($activity->activity_sectors AS $sector) {
+										if($sector->name=='No information available') {
+											echo $sector->name;
+										} else {
+											echo  $sep . "<a href='?s=&sectors={$sector->code}'>" . $sector->name . "</a>";
+										}
+										$sep = ', ';
+									}
+								?></li>
+							<?php } ?>
                         </ul>
                         <ul class="menu actions">
                            <li><a href="#" class="export"><span>Export</span></a></li>
@@ -75,22 +79,22 @@ $activity = wp_get_activity($project_id);
               <div class="colLeftlg">
                 <div class="projectsum">
                   <ul>
-                    <li><span>IATI identifier : </span><?php echo $activity->iati_identifier; ?></li>
-                    <li class="row1"><span>Reporting organisation :</span> <?php echo $activity->reporting_organisation->org_name; ?></li>
-                    <li><span>Start-date :</span> <?php echo $activity->start_actual; ?></li>
-                    <li class="row1"><span>Sector code :</span> <?php echo $activity->activity_sectors[0]->code; ?></li>
-                    <li><span>Last updated :</span> <?php echo $activity->date_updated; ?></li>
-                    <li class="row1"><span>Start date planned :</span> <?php echo $activity->start_planned; ?></li>
-                    <li><span>End date planned: </span> <?php echo $activity->end_planned; ?></li>
-                    <li class="row1"><span>End dat actual :</span> <?php echo $activity->end_actual; ?></li>
-                    <li><span>Collaboration type :</span> <?php echo $activity->collaboration_type->code; ?>. <?php echo $activity->collaboration_type->name; ?></li>
-                    <li class="row1"><span>Flow type :</span> <?php echo $activity->default_flow_type->name; ?></li>
-                    <li><span>Aid type :</span> <?php echo (empty($activity->default_aid_type->code)?'':$activity->default_aid_type->code .'.'); ?> <?php echo $activity->default_aid_type->name; ?></li>
-                    <li class="row1"><span>Finance Type :</span> <?php echo $activity->default_finance_type->name; ?></li>
-                    <li><span>Tying status :</span> <?php echo $activity->default_tied_status_type->name?></li>
-                    <li class="row1"><span>Activity status :</span> <?php echo $activity->activity_status->name?></li>
-                    <li><span>Name participating organisation :</span> <?php echo $activity->reporting_organisation->org_name; ?></li>
-                    <li class="row1"><span>Organisation reference code :</span> <?php echo $activity->reporting_organisation->ref; ?></li>
+					<?php if(!empty($activity->iati_identifier)) {?><li><span>IATI identifier : </span><?php echo $activity->iati_identifier; ?></li><?php } ?>
+                    <?php if(!empty($activity->reporting_organisation->org_name)) {?><li class="row1"><span>Reporting organisation :</span> <?php echo $activity->reporting_organisation->org_name; ?></li><?php } ?>
+                    <?php if(!empty($activity->start_actual)) {?><li><span>Start-date :</span> <?php echo $activity->start_actual; ?></li><?php } ?>
+                    <?php if(!empty($activity->activity_sectors[0]->code)) {?><li class="row1"><span>Sector code :</span> <?php echo $activity->activity_sectors[0]->code; ?></li><?php } ?>
+                    <?php if(!empty($activity->date_updated)) {?><li><span>Last updated :</span> <?php echo $activity->date_updated; ?></li><?php } ?>
+                    <?php if(!empty($activity->start_planned)) {?><li class="row1"><span>Start date planned :</span> <?php echo $activity->start_planned; ?></li><?php } ?>
+                    <?php if(!empty($activity->end_planned)) {?><li><span>End date planned: </span> <?php echo $activity->end_planned; ?></li><?php } ?>
+                    <?php if(!empty($activity->end_actual)) {?><li class="row1"><span>End dat actual :</span> <?php echo $activity->end_actual; ?></li><?php } ?>
+                    <?php if(!empty($activity->collaboration_type->name)) {?><li><span>Collaboration type :</span> <?php echo $activity->collaboration_type->code; ?>. <?php echo $activity->collaboration_type->name; ?></li><?php } ?>
+                    <?php if(!empty($activity->default_flow_type->name)) {?><li class="row1"><span>Flow type :</span> <?php echo $activity->default_flow_type->name; ?></li><?php } ?>
+                    <?php if(!empty($activity->default_aid_type->name)) {?><li><span>Aid type :</span> <?php echo (empty($activity->default_aid_type->code)?'':$activity->default_aid_type->code .'.'); ?> <?php echo $activity->default_aid_type->name; ?></li><?php } ?>
+                    <?php if(!empty($activity->default_finance_type->name)) {?><li class="row1"><span>Finance Type :</span> <?php echo $activity->default_finance_type->name; ?></li><?php } ?>
+                    <?php if(!empty($activity->default_tied_status_type->name)) {?><li><span>Tying status :</span> <?php echo $activity->default_tied_status_type->name?></li><?php } ?>
+                    <?php if(!empty($activity->activity_status->name)) {?><li class="row1"><span>Activity status :</span> <?php echo $activity->activity_status->name?></li><?php } ?>
+                    <?php if(!empty($activity->reporting_organisation->org_name)) {?><li><span>Name participating organisation :</span> <?php echo $activity->reporting_organisation->org_name; ?></li><?php } ?>
+                    <?php if(!empty($activity->reporting_organisation->ref)) {?><li class="row1"><span>Organisation reference code :</span> <?php echo $activity->reporting_organisation->ref; ?></li><?php } ?>
                   </ul>
                 </div>
               </div>
@@ -128,9 +132,7 @@ $activity = wp_get_activity($project_id);
               </div>
 		<script type="text/javascript" charset="utf-8">
 			function initPageMap(country) {
-				var baseUrl = top.location.pathname.toString(),
-				url = baseUrl + "wp-content/themes/openunh/map_search.php?countries=<?php echo $countries ?>";
-
+				var url = "<?php bloginfo('template_directory') ?>/map_search.php?countries=<?php echo $countries ?>";
 
 				$.ajax({
 					url: url,
@@ -146,7 +148,7 @@ $activity = wp_get_activity($project_id);
 				});
 
 
-				function initMap(data) {
+				function initMap(result) {
 					var myLatLng = new google.maps.LatLng(-3.2013100765,-9.64460607187);
 					var myOptions = {
 						zoom : 2,
@@ -176,6 +178,7 @@ $activity = wp_get_activity($project_id);
 						}
 
 					}
+					var data = result['objects'];
 					for(idx in data) {
 						var lats = [];
 						var lat_size =  data[idx]['path'].length;
