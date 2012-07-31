@@ -5,8 +5,9 @@
 	
 	if(!empty($FILTER['countries'])) {
 		$countries = explode('|', $FILTER['countries']);
+		$array['objects'] = array();
 		foreach($countries AS $c) {
-			$array[$c] = array('path' => $_GM_POLYGONS[$c], 'name' => $_COUNTRY_ISO_MAP[$c], 'total_cnt' => 0);
+			$array['objects'][$c] = array('path' => $_GM_POLYGONS[$c], 'name' => $_COUNTRY_ISO_MAP[$c], 'total_cnt' => 0);
 		}
 		
 		$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit=0&countries={$FILTER['countries']}";
@@ -61,7 +62,6 @@
 		$result = json_decode($content);
 		$objects = $result->objects;
 		$activities = objectToArray($objects);
-		$array['objects'] = array();
 		$array['meta']['total_count'] = $result->meta->total_count;
 		foreach($activities AS $a) {
 			foreach($a['recipient_country'] AS $c) {
