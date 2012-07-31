@@ -62,7 +62,7 @@
 			});
 			
 			
-			function initMap(data) {
+			function initMap(result) {
 				var myLatLng = new google.maps.LatLng(-3.2013100765,-9.64460607187);
 				var myOptions = {
 					zoom : 2,
@@ -72,7 +72,8 @@
 					streetViewControl : false
 				};
 
-				var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);	
+				var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+				var data = result['objects'];
 				for(idx in data) {
 					var lats = [];
 					var lat_size =  data[idx]['path'].length;
