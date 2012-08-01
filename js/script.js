@@ -1,12 +1,16 @@
-var sThemePath = '';
+var sThemePath = '', sBlogName = '';
 // JavaScript Document
 $(document).ready(function() {
+	
 	
 	
 	$('script').each(function() {
 	  if($(this).attr('src') !== undefined) {
 		if($(this).attr('src').indexOf('theme_path') > -1) {
 		  sThemePath = $(this).attr('src').split('theme_path=')[1].split('&')[0];
+		} // end if
+		if($(this).attr('src').indexOf('blog_name') > -1) {
+		  sBlogName = $(this).attr('src').split('blog_name=')[1].split('&')[0];
 		} // end if
 	  } // end if
 	});
@@ -384,6 +388,74 @@ $(document).ready(function() {
 	});
 	
 	initPager();
+	$('.saveresults').click(function(){
+		
+		var url = sThemePath + "/export.php?author=" + sBlogName,
+			urlSep = "&", country_fltr = '', region_fltr = '', sector_fltr = '', budget_fltr = '', sep = '';
+		
+		$('.filterbox input[type=checkbox]:checked').each(function(){
+			var control_name = $(this).attr('name');
+			var key = $(this).val();
+			switch(control_name) {
+				case 'countries':
+					if(country_fltr.length==0) sep = '';
+					country_fltr += sep + key;
+					sep = "|";
+					break;
+				case 'regions':
+					if(region_fltr.length==0) sep = '';
+					region_fltr += sep + key;
+					sep = "|";
+					break;
+				case 'sectors':
+					if(sector_fltr.length==0) sep = '';
+					sector_fltr += sep + key;
+					sep = "|";
+					break;
+				case 'budgets':
+					if(budget_fltr.length==0) sep = '';
+					budget_fltr += sep + key;
+					sep = "|";
+					break;
+			}
+		});
+		
+		country_fltr = country_fltr.replace(/(All\|)|(\|All)|(All)/g, '');
+		region_fltr = region_fltr.replace(/(All\|)|(\|All)|(All)/g, '');
+		sector_fltr = sector_fltr.replace(/(All\|)|(\|All)|(All)/g, '');
+		budget_fltr = budget_fltr.replace(/(All\|)|(\|All)|(All)/g, '');
+
+		var keyword = jQuery('#s').val();
+		if(keyword) {
+			url +=  urlSep + "query=" + encodeURI(keyword);
+			urlSep = "&";
+		}
+		
+		
+		if(country_fltr.length>0) {
+			url +=  urlSep + "countries=" + country_fltr;
+			urlSep = "&";
+			isFilter = true;
+		}
+		if(region_fltr.length>0) {
+			url +=  urlSep + "regions=" + region_fltr;
+			urlSep = "&";
+			isFilter = true;
+		}
+		if(sector_fltr.length>0) {
+			url +=  urlSep + "sectors=" + sector_fltr;
+			urlSep = "&";
+			isFilter = true;
+		}
+		if(budget_fltr.length>0) {
+			url +=  urlSep + "budgets=" + budget_fltr;
+			urlSep = "&";
+			isFilter = true;
+		}
+		
+		
+		$("#secretIFrame").attr("src",url);
+	});	
 	
 });
 

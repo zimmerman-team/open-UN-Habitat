@@ -1,6 +1,30 @@
 <?php
-	include( 'constants.php' );
+
+	include_once( 'constants.php' );
 	
+if(!function_exists(objectToArray)) {
+	function objectToArray($d) {
+		if (is_object($d)) {
+			// Gets the properties of the given object
+			// with get_object_vars function
+			$d = get_object_vars($d);
+		}
+
+		if (is_array($d)) {
+			/*
+			* Return array converted to object
+			* Using __FUNCTION__ (Magic constant)
+			* for recursive call
+			*/
+			return array_map(__FUNCTION__, $d);
+		}
+		else {
+			// Return array
+			return $d;
+		}
+	}	
+}
+
 	$FILTER = getFilter($_GET);
 	
 	if(!empty($FILTER['countries'])) {
@@ -157,9 +181,12 @@
 		}
 	}
 	
-	echo json_encode($array);
+	if(!isset($FILTER['inline'])) {
+		echo json_encode($array);
+	}
 
-	
+
+
 
 function getFilter(&$DATA, $format=1) {
 	if (empty($DATA)) return false;
@@ -174,26 +201,5 @@ function getFilter(&$DATA, $format=1) {
 	}
 	
 	return $tmp;
-}
-
-function objectToArray($d) {
-	if (is_object($d)) {
-		// Gets the properties of the given object
-		// with get_object_vars function
-		$d = get_object_vars($d);
-	}
-
-	if (is_array($d)) {
-		/*
-		* Return array converted to object
-		* Using __FUNCTION__ (Magic constant)
-		* for recursive call
-		*/
-		return array_map(__FUNCTION__, $d);
-	}
-	else {
-		// Return array
-		return $d;
-	}
 }
 ?>

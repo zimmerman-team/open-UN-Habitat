@@ -824,6 +824,37 @@ function wp_generate_paging($meta) {
 	echo $paging_block;
 }
 
+function wp_generate_home_map_data() {
+		global $_GM_POLYGONS;
+		$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit=0";
+	
+		$content = file_get_contents($activities_url);
+		$result = json_decode($content);
+		$meta = $result->meta;
+		$limit = $meta->total_count;
+		$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit={$limit}";
+		
+		$content = file_get_contents($activities_url);
+		$result = json_decode($content);
+		$objects = $result->objects;
+		$activities = objectToArray($objects);
+		$array['objects'] = array();
+		$array['meta']['total_count'] = $result->meta->total_count;
+		foreach($activities AS $a) {
+			foreach($a['recipient_country'] AS $c) {
+				if(isset($array['objects'][$c['iso']])) {
+					$array['objects'][$c['iso']]['total_cnt']++;
+				} else {
+					if(isset($_GM_POLYGONS[$c['iso']])) {
+						$array['objects'][$c['iso']] = array('path' => $_GM_POLYGONS[$c['iso']], 'name' => $c['name'], 'total_cnt' => 1);
+					}
+				}
+			}
+		}
+		
+		return $array;
+}
+
 function format_custom_number($num) {
 	
 	$s = explode('.', $num);

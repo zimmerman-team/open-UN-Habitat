@@ -1,5 +1,4 @@
 <?php get_header(); ?>
-
 <?php
 $details=$_REQUEST['details'];
 if(isset($details))
@@ -51,6 +50,7 @@ else
           <!--COL-RIGHT-->
           <div class="colRight">
           	<div class="searchresultslist">
+			<iframe id="secretIFrame" src="" style="display:none; visibility:hidden;"></iframe>
             <?php 
 			$layout=$_REQUEST['layout'];
 			wp_generate_results($details, $meta, $projects_html, $has_filter);
@@ -127,7 +127,6 @@ else
                         <div class="searchresultsmap">
                         <div id="map">
 							<div id="map_canvas" style="width: 720px; height: 500px;"></div>
-                            <!--<iframe width="720" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/?ie=UTF8&amp;ll=26.431228,-71.015625&amp;spn=126.703667,346.289063&amp;t=m&amp;z=2&amp;output=embed"></iframe>-->
                         </div>
                         </div>
                     <!--END SEARCH RESULTS-->

@@ -41,102 +41,87 @@
 	<script src="<?php bloginfo('template_url'); ?>/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/jeegoocontext/jquery.jeegoocontext.min.js" type="text/javascript"></script>
-    <script src="<?php bloginfo('template_url'); ?>/js/script.js?theme_path=<?php bloginfo('template_url'); ?>" type="text/javascript"></script>
+    <script src="<?php bloginfo('template_url'); ?>/js/script.js?theme_path=<?php bloginfo('template_url'); ?>&blog_name=<?php bloginfo('name'); ?>" type="text/javascript"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/selector.js" type="text/javascript"></script>
 	<?php if(is_home()){?>
 	<script type="text/javascript" charset="utf-8">
 		function initialize() {
-			
-			url = "<?php bloginfo('template_directory') ?>/map_search.php";
-			$.ajax({
-				url: url,
-				type: "GET",
-				dataType: "json",
-				success: function(data){
-					initMap(data);
-				},
-				error: function(msg){
-					alert('AJAX error!' + msg);
-					return false;
-				}
-			});
-			
-			
-			function initMap(result) {
-				var myLatLng = new google.maps.LatLng(-3.2013100765,-9.64460607187);
-				var myOptions = {
-					zoom : 2,
-					center : myLatLng,
-					mapTypeId : google.maps.MapTypeId.ROADMAP,
-					scrollwheel: false,
-					streetViewControl : false
-				};
 
-				var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-				var data = result['objects'];
-				for(idx in data) {
-					var lats = [];
-					var lat_size =  data[idx]['path'].length;
+			var result = <?php echo json_encode(wp_generate_home_map_data());?>;
+			var myLatLng = new google.maps.LatLng(-3.2013100765,-9.64460607187);
+			var myOptions = {
+				zoom : 2,
+				center : myLatLng,
+				mapTypeId : google.maps.MapTypeId.ROADMAP,
+				scrollwheel: false,
+				streetViewControl : false
+			};
 
-					for (var t=0; t <lat_size; t++) {
-						var inner = [];
-						for (var i=0; i <data[idx]['path'][t].length; i++) {
-							var lat = data[idx]['path'][t][i].split(',');
-							inner.push(new google.maps.LatLng(lat[0], lat[1]));
-						}
-						lats.push(inner);
+			var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+			var data = result['objects'];
+			for(idx in data) {
+				var lats = [];
+				var lat_size =  data[idx]['path'].length;
+
+				for (var t=0; t <lat_size; t++) {
+					var inner = [];
+					for (var i=0; i <data[idx]['path'][t].length; i++) {
+						var lat = data[idx]['path'][t][i].split(',');
+						inner.push(new google.maps.LatLng(lat[0], lat[1]));
 					}
-					var polygon = new google.maps.Polygon({
-						paths: lats,
-						strokeColor: "#FFFFFF",
-						strokeOpacity: 0.8,
-						strokeWeight: 2,
-						fillColor: "#F96B15",
-						fillOpacity: 0.65,
-						country: data[idx]['name'],
-						total_cnt: data[idx]['total_cnt'],
-						total_activities_url: "?countries="+idx,
-						iso2 : idx
-					});
-					polygon.setMap(map);
-					google.maps.event.addListener(polygon, 'click', showInfo);
-					infowindow = new google.maps.InfoWindow();
-					google.maps.event.addListener(infowindow, 'closeclick', resetColor);
+					lats.push(inner);
 				}
-				
-				function showInfo(event){
-					if (typeof currentPolygon != 'undefined') {
-						currentPolygon.setOptions({fillColor: "#F96B15"});
-					}
-					this.setOptions({fillColor: "#2D6A98"});
-					var keyword = $('#s').val();
-					
-					if(keyword) {
-						keyword = encodeURI(keyword);
-					}
-					var contentString = "" + 
-					"<h2>" + 
-						"<img src=/media/images/flags/" + this.iso2.toLowerCase() + ".gif />" +
-						this.country + 
-					"</h2>" +
-					"<dl>" +
-					"<dt>Total Activities:</dt>" +
-					"<dd>" +
-						"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">"+this.total_cnt+" project(s)</a>" +
-					"</dd>" +
-						"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">show all activities for this country</a>" +
-					"</dl>";
-					
-					infowindow.setContent(contentString);
-					infowindow.setPosition(event.latLng);
-					infowindow.open(map);
-					currentPolygon = this;
-				}
-				
-				function resetColor(){
+				var polygon = new google.maps.Polygon({
+					paths: lats,
+					strokeColor: "#FFFFFF",
+					strokeOpacity: 0.8,
+					strokeWeight: 2,
+					fillColor: "#F96B15",
+					fillOpacity: 0.65,
+					country: data[idx]['name'],
+					total_cnt: data[idx]['total_cnt'],
+					total_activities_url: "?countries="+idx,
+					iso2 : idx
+				});
+				polygon.setMap(map);
+				google.maps.event.addListener(polygon, 'click', showInfo);
+				infowindow = new google.maps.InfoWindow();
+				google.maps.event.addListener(infowindow, 'closeclick', resetColor);
+			}
+			
+			function showInfo(event){
+				if (typeof currentPolygon != 'undefined') {
 					currentPolygon.setOptions({fillColor: "#F96B15"});
 				}
+				this.setOptions({fillColor: "#2D6A98"});
+				var keyword = $('#s').val();
+				
+				if(keyword) {
+					keyword = encodeURI(keyword);
+				}
+				var contentString = "" + 
+				"<h2>" + 
+					"<img src=/media/images/flags/" + this.iso2.toLowerCase() + ".gif />" +
+					this.country + 
+				"</h2>" +
+				"<dl>" +
+				"<dt>Total Activities:</dt>" +
+				"<dd>" +
+					"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">"+this.total_cnt+" project(s)</a>" +
+				"</dd>" +
+					"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">show all activities for this country</a>" +
+				"</dl>";
+				
+				infowindow.setContent(contentString);
+				infowindow.setPosition(event.latLng);
+				infowindow.open(map);
+				currentPolygon = this;
 			}
+			
+			function resetColor(){
+				currentPolygon.setOptions({fillColor: "#F96B15"});
+			}
+			
 		}
 		
 		
@@ -158,7 +143,6 @@
 </head>
 
 <body id="bd" class="ff3">
-	
 	<div id="opunh-wrapper">
 
 		<!--START HEADER-->
