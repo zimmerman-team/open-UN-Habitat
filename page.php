@@ -67,6 +67,9 @@ $activity = wp_get_activity($project_id);
 									}
 								?></li>
 							<?php } ?>
+							<?php if(!empty($activity->statistics->total_budget)) {?>
+								<li><span>Budget:</span> US$ <?php echo format_custom_number($activity->statistics->total_budget)  ?></li>
+							<?php } ?>
                         </ul>
                         <ul class="menu actions">
                            <li><a href="#" id="<?php echo $activity->iati_identifier; ?>" class="export"><span>Export</span></a></li>
