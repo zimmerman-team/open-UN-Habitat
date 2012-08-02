@@ -68,6 +68,7 @@ dt { float:left; }
 .mainsearch p{ padding:5px 5px 0 5px;}
 
 /*Map*/
+#map_canvas h2 img {margin-right: 5px;margin-top: 4px; vertical-align:top;}
 .searchmapwrap{ position:relative;background:url(../images/mapbg.png) center bottom no-repeat; padding-bottom:30px; margin:0 0 10px 0; width:960px; height:340px;}
 .searchmap{ border:1px solid #809cbc; height:340px; overflow:hidden;}
 .textblurb{	position:absolute;top:80px;right:20px;width:255px;background:url(../images/trans.png);padding:10px 10px 5px 10px;color:#fff;}

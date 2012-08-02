@@ -672,7 +672,7 @@ function processAjaxMap() {
 					
 					var contentString = "" + 
 					"<h2>" + 
-						"<img src=/media/images/flags/" + this.iso2.toLowerCase() + ".gif />" +
+						"<img src='"+sThemePath+"/images/flags/" + this.iso2.toLowerCase() + ".gif' />" +
 						this.country + 
 					"</h2>" +
 					"<dl>" +
@@ -915,7 +915,7 @@ function applyResults(meta, objects) {
 			
 			html += "<div class='searchresult row"+(idx+1)+"'>" +
 					"<a id='detail_1' href='javascript:void(0);' class='moredetail'></a>" +
-					"<h3><a href='" + baseUrl + "?page_id=2&id="+project.iati_identifier+"&back_url="+encodeURI(back_url)+"'>"+project.title.default+"</a></h3>" +
+					"<h3><a href='" + baseUrl + "?page_id=2&id="+project.iati_identifier+"&back_url="+encodeURI(back_url)+"'>"+project.titles[0].title+"</a></h3>" +
 					"<span class='detail'><span>Countries</span>: "; 
 			var sep = '';
 			for(i in project.recipient_country) {
@@ -924,7 +924,7 @@ function applyResults(meta, objects) {
 			}
 		
 			html += "</span>" +
-					"<span class='detail'><span>Subject</span>: " +project.title.default+ "</span>" +
+					"<span class='detail'><span>Subject</span>: " +project.titles[0].title+ "</span>" +
 					"<span class='detail'><span>Budget</span>: US$ " + format_number(project.statistics.total_budget) + "</span>" +
 					"<span class='detail'><span>Sector</span>: ";
 				
@@ -934,7 +934,7 @@ function applyResults(meta, objects) {
 				sep = ', ';
 			}	
 			html += "</span>" +
-					"<p class='shortdescription'>"+project.description.default+"</p>" +
+					"<p class='shortdescription'>"+project.descriptions[0].description+"</p>" +
 					"<div class='resultdetail detail_"+(idx+1)+"'>" +
 					"<div class='rcol rcol1'>" +
 					"<ul>" +

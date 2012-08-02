@@ -379,7 +379,7 @@ else
 					}
 					var contentString = "" + 
 					"<h2>" + 
-						"<img src=/media/images/flags/" + this.iso2.toLowerCase() + ".gif />" +
+						"<img src='<?php echo bloginfo('template_url'); ?>/images/flags/" + this.iso2.toLowerCase() + ".gif' />" +
 						this.country + 
 					"</h2>" +
 					"<dl>" +

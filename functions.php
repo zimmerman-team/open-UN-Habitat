@@ -1,5 +1,9 @@
 <?php
-	include( TEMPLATEPATH.'/constants.php' );
+	include( TEMPLATEPATH .'/constants.php' );
+	if(file_exists(TEMPLATEPATH . '/countries.php')) {
+		include_once( TEMPLATEPATH . '/countries.php' );
+		asort($_COUNTRY_ISO_MAP);
+	}
 	// Add RSS links to <head> section
 	automatic_feed_links();
 	
@@ -36,6 +40,38 @@
 			$query_vars['s'] = " ";
 		}
 		return $query_vars;
+	}
+	
+	if(!empty($_COUNTRY_ISO_MAP)) {
+		$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit=0";
+		
+		$content = file_get_contents($search_url);
+		$result = json_decode($content);
+		$meta = $result->meta;
+		$total_count = $meta->total_count;
+		if($total_count!=count($_COUNTRY_ISO_MAP)) {
+			$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit={$total_count}";
+			$content = file_get_contents($search_url);
+			$result = json_decode($content);
+			$meta = $result->meta;
+			$objects = $result->objects;
+			$countries = objectToArray($objects);
+			$to_write = '<?php
+						$_COUNTRY_ISO_MAP = array(
+						';
+			foreach($countries AS $s) {
+				if(empty($s['name']) || $s['name']=='#N/A') continue;
+				$_COUNTRY_ISO_MAP[$s['iso']] = $s['name'];
+				$name = addslashes($s['name']);
+				$to_write .= "'{$s['iso']}' => '{$name}',\n";
+			}
+			$to_write .= ');
+			?>';
+			$fp = fopen(TEMPLATEPATH . '/countries.php', 'w+');
+			fwrite($fp, $to_write);
+			fclose($fp);
+			asort($_COUNTRY_ISO_MAP);
+		}
 	}
 
 function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
@@ -93,7 +129,7 @@ function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
 			
 			$return .= '<div class="searchresult row'.$idx.'">
                         	<a id="detail_'.$idx.'" href="javascript:void(0);" class="moredetail"></a>';
-			$return .= '<h3><a href="'.$base_url.'/?page_id=2&id='.$project->iati_identifier.'&back_url='.rawurlencode($back_url).'">'.$project->title->default.'</a></h3>';			
+			$return .= '<h3><a href="'.$base_url.'/?page_id=2&id='.$project->iati_identifier.'&back_url='.rawurlencode($back_url).'">'.$project->titles[0]->title.'</a></h3>';			
 			
 			if(in_array("all",$details) || in_array("country",$details) ){
 				$return .= '<span class="detail"><span>Countries</span>:';
@@ -105,7 +141,7 @@ function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
 				$return .= '</span>';
 			}
 			if(in_array("all",$details) || in_array("subject",$details) ){
-				$return .= '<span class="detail"><span>Subject</span>: '.$project->title->default.'</span>';
+				$return .= '<span class="detail"><span>Subject</span>: '.$project->titles[0]->title.'</span>';
 			}
 			if(in_array("all",$details) || in_array("budget",$details) ){
 				$return .= '<span class="detail"><span>Budget</span>: US$ '.format_custom_number($project->statistics->total_budget).'</span>';
@@ -124,7 +160,7 @@ function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
 				$return .= '</span>';
 			}
 			
-			$return .= '<p class="shortdescription">'.$project->description->default.'</p>';
+			$return .= '<p class="shortdescription">'.$project->descriptions[0]->description.'</p>';
 			$return .= '<div class="resultdetail detail_'.$idx.'">';
 			$return .= '<div class="rcol rcol1">
 							<ul>
@@ -216,10 +252,20 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 				$meta = $result->meta;
 				$objects = $result->objects;
 				$countries = objectToArray($objects);
+				$to_write = '<?php
+							$_COUNTRY_ISO_MAP = array(
+							';
 				foreach($countries AS $s) {
 					if(empty($s['name']) || $s['name']=='#N/A') continue;
 					$_COUNTRY_ISO_MAP[$s['iso']] = $s['name'];
+					$name = addslashes($s['name']);
+					$to_write .= "'{$s['iso']}' => '{$name}',\n";
 				}
+				$to_write .= ');
+				?>';
+				$fp = fopen(TEMPLATEPATH . '/countries.php', 'w+');
+				fwrite($fp, $to_write);
+				fclose($fp);
 				asort($_COUNTRY_ISO_MAP);
 			}
 			$_data = $_COUNTRY_ISO_MAP;
@@ -500,11 +546,20 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 				$meta = $result->meta;
 				$objects = $result->objects;
 				
-				$countries = objectToArray($objects);
+				$to_write = '<?php
+							$_COUNTRY_ISO_MAP = array(
+							';
 				foreach($countries AS $s) {
 					if(empty($s['name']) || $s['name']=='#N/A') continue;
 					$_COUNTRY_ISO_MAP[$s['iso']] = $s['name'];
+					$name = addslashes($s['name']);
+					$to_write .= "'{$s['iso']}' => '{$name}',\n";
 				}
+				$to_write .= ');
+				?>';
+				$fp = fopen(TEMPLATEPATH . '/countries.php', 'w+');
+				fwrite($fp, $to_write);
+				fclose($fp);
 				asort($_COUNTRY_ISO_MAP);
 			}
 			

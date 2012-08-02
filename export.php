@@ -70,12 +70,12 @@ function generate_activity_export($activity) {
 
 	$objPHPExcel->getProperties()->setCreator( $author );
 	$objPHPExcel->getProperties()->setLastModifiedBy( $author );
-	$objPHPExcel->getProperties()->setTitle($activity['title']['default']);
+	$objPHPExcel->getProperties()->setTitle($activity['titles'][0]['title']);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(30);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(35);
 	$row=1;
 	$objPHPExcel->getActiveSheet()->mergeCells("A{$row}:D{$row}");
-	$objPHPExcel->getActiveSheet()->setCellValue("A{$row}", $activity['title']['default']);
+	$objPHPExcel->getActiveSheet()->setCellValue("A{$row}", $activity['titles'][0]['title']);
 	
 	$fill = array('type' => PHPExcel_Style_Fill::FILL_SOLID, 'startcolor' => array('rgb' => 'DADADA') );
 	$objPHPExcel->getActiveSheet()->getStyle("A{$row}")->getFill()->applyFromArray($fill);
@@ -88,7 +88,7 @@ function generate_activity_export($activity) {
 	$sep = '';
 	$countries = '';
 	if(empty($activity['recipient_country'])) {
-		$countries = "No information avaialable";
+		$countries = EMPTY_LABEL;
 	} else {
 		foreach($activity['recipient_country'] AS $country) {
 			$countries .= $sep . $country['name'];
@@ -102,7 +102,7 @@ function generate_activity_export($activity) {
 	$sep = '';
 	$sectors = '';
 	if(empty($activity['activity_sectors'])) {
-		$sectors = "No information avaialable";
+		$sectors = EMPTY_LABEL;
 	} else {
 		foreach($activity['activity_sectors'] AS $sector) {
 			$sectors .= $sep . $sector['name'];
@@ -214,8 +214,8 @@ function generate_activity_export($activity) {
 	$objPHPExcel->getActiveSheet()->getStyle("B{$row}")->getAlignment()->setWrapText(true);
 	$objPHPExcel->getActiveSheet()->getStyle('B'.$row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
 	$objPHPExcel->getActiveSheet()->getRowDimension($row)->setRowHeight(100);
-	if(empty($activity['description']['default'])) $activity['description']['default'] = EMPTY_LABEL;
-	$objPHPExcel->getActiveSheet()->setCellValue("B{$row}", $activity['description']['default']);
+	if(empty($activity['descriptions'][0]['description'])) $activity['descriptions'][0]['description'] = EMPTY_LABEL;
+	$objPHPExcel->getActiveSheet()->setCellValue("B{$row}", $activity['descriptions'][0]['description']);
 	$row++;
 	$objPHPExcel->getActiveSheet()->setCellValue("A{$row}", 'Documents:');
 	$objPHPExcel->getActiveSheet()->getStyle('A'.$row)->getFont()->setBold(true);
@@ -248,11 +248,15 @@ function generate_search_export($activities) {
 	$objPHPExcel->getProperties()->setLastModifiedBy( $author );
 	$objPHPExcel->getProperties()->setTitle("Search results");
 	$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(35);
+	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(12);
 	$row=1;
 
 	foreach($activities AS $a) {
 		$objPHPExcel->getActiveSheet()->mergeCells("A{$row}:D{$row}");
-		$objPHPExcel->getActiveSheet()->setCellValue("A{$row}", $a['title']['default']);
+		$objPHPExcel->getActiveSheet()->setCellValue("A{$row}", $a['titles'][0]['title']);
+		$fill = array('type' => PHPExcel_Style_Fill::FILL_SOLID, 'startcolor' => array('rgb' => 'DADADA') );
+		$objPHPExcel->getActiveSheet()->getStyle("A{$row}")->getFill()->applyFromArray($fill);
+		$objPHPExcel->getActiveSheet()->getStyle('A'.$row)->getFont()->setSize(14);
 		$objPHPExcel->getActiveSheet()->getStyle("A{$row}:D{$row}")->getAlignment()->setWrapText(true);
 		$objPHPExcel->getActiveSheet()->getStyle("A{$row}:D{$row}")->getFont()->setBold(true);
 		$row++;
@@ -260,26 +264,37 @@ function generate_search_export($activities) {
 		$objPHPExcel->getActiveSheet()->getStyle('A'.$row)->getFont()->setBold(true);
 		$sep = '';
 		$countries = '';
-		foreach($a['recipient_country'] AS $country) {
-			$countries .= $sep . $country['name'];
-			$sep = ', ';
+		if(empty($a['recipient_country'])) {
+			$countries = EMPTY_LABEL;
+		} else {
+			foreach($a['recipient_country'] AS $country) {
+				$countries .= $sep . $country['name'];
+				$sep = ', ';
+			}
 		}
 		$objPHPExcel->getActiveSheet()->setCellValue("B{$row}", $countries);
 		$row++;
 		$objPHPExcel->getActiveSheet()->setCellValue("A{$row}", 'Subject:');
 		$objPHPExcel->getActiveSheet()->getStyle('A'.$row)->getFont()->setBold(true);
-		$objPHPExcel->getActiveSheet()->setCellValue("B{$row}", $a['title']['default']);
+		if(empty($a['titles'][0]['title'])) $a['titles'][0]['title'] = EMPTY_LABEL;
+		$objPHPExcel->getActiveSheet()->setCellValue("B{$row}", $a['titles'][0]['title']);
 		$row++;
 		$objPHPExcel->getActiveSheet()->setCellValue("A{$row}", 'Budget:');
 		$objPHPExcel->getActiveSheet()->getStyle('A'.$row)->getFont()->setBold(true);
-		$objPHPExcel->getActiveSheet()->setCellValue("B{$row}", "US$ " . format_custom_number($a['statistics']['total_budget']));
+		$budget = '';
+		if(empty($a['statistics']['total_budget'])) {
+			$budget = EMPTY_LABEL;
+		} else {
+			$budget = "US$ " . format_custom_number($a['statistics']['total_budget']);
+		}
+		$objPHPExcel->getActiveSheet()->setCellValue("B{$row}", $budget);
 		$row++;
 		$objPHPExcel->getActiveSheet()->setCellValue("A{$row}", 'Sector:');
 		$objPHPExcel->getActiveSheet()->getStyle('A'.$row)->getFont()->setBold(true);
 		$sep = '';
 		$sectors = '';
 		if(empty($a['activity_sectors'])) {
-			$sectors = "No information avaialable";
+			$sectors = EMPTY_LABEL;
 		} else {
 			foreach($a['activity_sectors'] AS $sector) {
 				$sectors .= $sep . $sector['name'];
@@ -287,6 +302,16 @@ function generate_search_export($activities) {
 			}
 		}
 		$objPHPExcel->getActiveSheet()->setCellValue("B{$row}", $sectors);
+		$row++;
+		
+		$objPHPExcel->getActiveSheet()->setCellValue("A{$row}", 'Description:');
+		$objPHPExcel->getActiveSheet()->getStyle('A'.$row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+		$objPHPExcel->getActiveSheet()->getStyle('A'.$row)->getFont()->setBold(true);
+		$objPHPExcel->getActiveSheet()->getStyle("B{$row}")->getAlignment()->setWrapText(true);
+		$objPHPExcel->getActiveSheet()->getStyle('B'.$row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+		$objPHPExcel->getActiveSheet()->getRowDimension($row)->setRowHeight(100);
+		if(empty($a['descriptions'][0]['description'])) $a['descriptions'][0]['description'] = EMPTY_LABEL;
+		$objPHPExcel->getActiveSheet()->setCellValue("B{$row}", $a['descriptions'][0]['description']);
 		
 		$row+=2;
 	}

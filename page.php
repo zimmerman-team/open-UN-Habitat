@@ -39,7 +39,7 @@ $activity = wp_get_activity($project_id);
             <div class="clr"></div>
         	<!--SEARCH TITLE BAR-->
             	<div class="projecttitle">
-                 	<h2><span><?php echo $activity->title->default; ?></span></h2>
+                 	<h2><span><?php echo $activity->titles[0]->title; ?></span></h2>
                     	<ul class="shrtdetail">
 							<?php if(!empty($activity->recipient_country)) {?>
 								<li><span>Countries:</span><?php
@@ -109,7 +109,7 @@ $activity = wp_get_activity($project_id);
                             	<div id="prjctMap" class="map">
 									<div id="map_canvas" style="width: 230px; height: 140px;"></div>
                                 </div>
-                              <p><?php echo $activity->description->default; ?></p>
+                              <p><?php echo $activity->descriptions[0]->description; ?></p>
 							  <p>&nbsp;</p>
                          
                           </div>
@@ -200,6 +200,7 @@ $activity = wp_get_activity($project_id);
 							fillColor: "#F96B15",
 							fillOpacity: 0.65,
 							country: data[idx]['name'],
+							total_cnt: data[idx]['total_cnt'],
 							total_activities_url: "?countries="+idx,
 							iso2 : idx
 						});
@@ -222,10 +223,14 @@ $activity = wp_get_activity($project_id);
 						}
 						var contentString = "" + 
 						"<h2>" + 
-							"<img src=/media/images/flags/" + this.iso2.toLowerCase() + ".gif />" +
+							"<img src='<?php echo bloginfo('template_url'); ?>/images/flags/" + this.iso2.toLowerCase() + ".gif' />" +
 							this.country + 
 						"</h2>" +
 						"<dl>" +
+							"<dt>Total Activities:</dt>" +
+							"<dd>" +
+								"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">"+this.total_cnt+" project(s)</a>" +
+							"</dd>" +
 							"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">show all activities for this country</a>" +
 						"</dl>";
 						

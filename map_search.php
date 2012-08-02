@@ -1,6 +1,7 @@
 <?php
 
 	include_once( 'constants.php' );
+	if(file_exists('countries.php') && empty($_COUNTRY_ISO_MAP)) include_once( 'countries.php' );
 	
 if(!function_exists(objectToArray)) {
 	function objectToArray($d) {
@@ -24,7 +25,7 @@ if(!function_exists(objectToArray)) {
 		}
 	}	
 }
-
+	
 	$FILTER = getFilter($_GET);
 	
 	if(!empty($FILTER['countries'])) {

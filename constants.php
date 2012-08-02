@@ -471,6 +471,8 @@ $_BUDGET_CHOICES = array(
 '1000000' => '> US$ 1.000.000',
 );
 
+if(file_exists('countries.php')) include( 'countries.php' );
+
 asort($_COUNTRY_ISO_MAP);
 asort($_GM_POLYGONS);
 
