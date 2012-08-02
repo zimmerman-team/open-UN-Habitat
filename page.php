@@ -34,6 +34,7 @@ $activity = wp_get_activity($project_id);
       </div>
     <?php }
 	else{?>
+	<iframe id="secretIFrame" src="" style="display:none; visibility:hidden;"></iframe>
     <a href="<?php echo $back_url; ?>" class="backbutton">Back to Search Results</a>
             <div class="clr"></div>
         	<!--SEARCH TITLE BAR-->
@@ -68,7 +69,7 @@ $activity = wp_get_activity($project_id);
 							<?php } ?>
                         </ul>
                         <ul class="menu actions">
-                           <li><a href="#" class="export"><span>Export</span></a></li>
+                           <li><a href="#" id="<?php echo $activity->iati_identifier; ?>" class="export"><span>Export</span></a></li>
                            <li><a href="#" class="share"><span>SHARE</span></a></li>
                            <li><a href="javascript:bookmarksite('Promoting Sustainable Transport Solutions for East Africa', 'http://www.openunh-projectdetail.com')" class="bookmark"><span>BOOKMARK</span></a></li>
                            <li><a href="<?php echo get_option('home'); ?>/?page_id=42" class="whistleb"><span>WHISTLEBLOWER</span></a></li>
@@ -86,11 +87,11 @@ $activity = wp_get_activity($project_id);
                     <?php if(!empty($activity->date_updated)) {?><li><span>Last updated :</span> <?php echo $activity->date_updated; ?></li><?php } ?>
                     <?php if(!empty($activity->start_planned)) {?><li class="row1"><span>Start date planned :</span> <?php echo $activity->start_planned; ?></li><?php } ?>
                     <?php if(!empty($activity->end_planned)) {?><li><span>End date planned: </span> <?php echo $activity->end_planned; ?></li><?php } ?>
-                    <?php if(!empty($activity->end_actual)) {?><li class="row1"><span>End dat actual :</span> <?php echo $activity->end_actual; ?></li><?php } ?>
+                    <?php if(!empty($activity->end_actual)) {?><li class="row1"><span>End date actual :</span> <?php echo $activity->end_actual; ?></li><?php } ?>
                     <?php if(!empty($activity->collaboration_type->name)) {?><li><span>Collaboration type :</span> <?php echo $activity->collaboration_type->code; ?>. <?php echo $activity->collaboration_type->name; ?></li><?php } ?>
                     <?php if(!empty($activity->default_flow_type->name)) {?><li class="row1"><span>Flow type :</span> <?php echo $activity->default_flow_type->name; ?></li><?php } ?>
                     <?php if(!empty($activity->default_aid_type->name)) {?><li><span>Aid type :</span> <?php echo (empty($activity->default_aid_type->code)?'':$activity->default_aid_type->code .'.'); ?> <?php echo $activity->default_aid_type->name; ?></li><?php } ?>
-                    <?php if(!empty($activity->default_finance_type->name)) {?><li class="row1"><span>Finance Type :</span> <?php echo $activity->default_finance_type->name; ?></li><?php } ?>
+                    <?php if(!empty($activity->default_finance_type->name)) {?><li class="row1"><span>Finance type :</span> <?php echo $activity->default_finance_type->name; ?></li><?php } ?>
                     <?php if(!empty($activity->default_tied_status_type->name)) {?><li><span>Tying status :</span> <?php echo $activity->default_tied_status_type->name?></li><?php } ?>
                     <?php if(!empty($activity->activity_status->name)) {?><li class="row1"><span>Activity status :</span> <?php echo $activity->activity_status->name?></li><?php } ?>
                     <?php if(!empty($activity->reporting_organisation->org_name)) {?><li><span>Name participating organisation :</span> <?php echo $activity->reporting_organisation->org_name; ?></li><?php } ?>
