@@ -153,7 +153,7 @@ dt { float:left; }
 .searchtoolbar{ padding:10px 10px 10px 10px; font-size:11px; position:relative; height:20px;}
 .searchtoolbar a{ color:#333;}
 .saveresults{ padding:3px 0 3px 20px; background:url(../images/saveresult.png) left center no-repeat; float:left;} 
-.orderby{ float:right; width:275px; white-space:nowrap;}
+.orderby{ float:right; width:214px; white-space:nowrap;}
 .orderby li a{ padding:0 12px 0 5px; margin:0 0 0 5px; background:url(../images/sortby.png) right 8px no-repeat; text-decoration:underline; white-space:nowrap}
 .orderby li.desc a{ background-position: right -13px;}
 .sortbylabel{ font-weight:bold; padding:0px; margin-right:0px;}
