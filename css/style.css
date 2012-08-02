@@ -68,6 +68,7 @@ dt { float:left; }
 .mainsearch p{ padding:5px 5px 0 5px;}
 
 /*Map*/
+div.infowindow { max-height:250px; }
 #map_canvas h2 img {margin-right: 5px;margin-top: 4px; vertical-align:top;}
 .searchmapwrap{ position:relative;background:url(../images/mapbg.png) center bottom no-repeat; padding-bottom:30px; margin:0 0 10px 0; width:960px; height:340px;}
 .searchmap{ border:1px solid #809cbc; height:340px; overflow:hidden;}
@@ -179,7 +180,7 @@ dt { float:left; }
 .searchresult h3 a:hover{color:#008cc6;}
 .searchresult .detail{ font-weight:normal;font-size:11px; display:block; padding:0 10px; line-height:140%;}
 .searchresult .detail span{  font-weight:bold;}
-.searchresult .shortdescription{ padding:10px 10px 10px 10px; max-height: 100px; overflow: hidden;}
+.searchresult .shortdescription{ padding:10px 10px 10px 10px; max-height: 47px; overflow: hidden;}
 .searchresult .resultdetail,.searchresult .resultrow{ border-top:1px dotted #a2a1a1;}
 .resultdetail{ display:none; font-size:11px;}
 .rcol{ float:left; width:240px; overflow:hidden;}

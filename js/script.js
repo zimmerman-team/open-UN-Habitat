@@ -35,7 +35,7 @@ $(document).ready(function() {
 	$(".moredetail").click(function(){
 		if($(this).hasClass('active')){
 			$(this).parent().find('p.shortdescription').animate({ 
-				"max-height": "100px"
+				"max-height": "47px"
 			  }, 1500 );
 			$(".moredetail").removeClass('active');
 			var idnt = $(this).attr('id');
@@ -204,7 +204,35 @@ $(document).ready(function() {
 		} else {
 			processAjaxFilters(0);
 		}
-	});	
+	});
+	
+	$(".countrieslist input[name=countries]").click(function(){
+		var val = $(this).val();
+		if($(this).is(':checked') && val!='All') {
+			$(".countrieslist input[name=countries]:first").attr('checked', false);
+		}
+	});
+	
+	$(".regionslist input[name=regions]").click(function(){
+		var val = $(this).val();
+		if($(this).is(':checked') && val!='All') {
+			$(".regionslist input[name=regions]:first").attr('checked', false);
+		}
+	});
+	
+	$(".budgetlist input[name=budgets]").click(function(){
+		var val = $(this).val();
+		if($(this).is(':checked') && val!='All') {
+			$(".budgetlist input[name=budgets]:first").attr('checked', false);
+		}
+	});
+	
+	$(".sectorslist input[name=sectors]").click(function(){
+		var val = $(this).val();
+		if($(this).is(':checked') && val!='All') {
+			$(".budgetlist input[name=sectors]:first").attr('checked', false);
+		}
+	});
 	
 	$('#popupsubmtBtn>a').click(function(){
 		var baseUrl = top.location.pathname.toString();
