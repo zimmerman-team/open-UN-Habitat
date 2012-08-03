@@ -43,7 +43,7 @@
 					<li><a class="overlay" href="#region_popup"><span>By Region</span></a></li>
 					<li><a class="overlay" href="#budget_popup"><span>By Budget</span></a></li>
 					<li><a class="overlay" href="#sector_popup"><span>By Sector</span></a></li>
-					<li><a href="#"><span>By Tags</span></a></li>
+				 <!--	<li><a href="#"><span>By Tags</span></a></li>-->
 				</ul>
 				<ul class="menu global">
 					<li><a href="?s=" title="View all Global Projects">Global Projects</a></li>
