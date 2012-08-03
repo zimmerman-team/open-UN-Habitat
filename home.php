@@ -28,7 +28,7 @@
 				<ul>
 					<li class="country"><a href="#" class="active"><span>View by Country</span></a></li>
 					<li class="region"><a href="#" ><span>View by Regions</span></a></li>
-					<li class="global-pr"><a href="searchresults.html"><span>Global Projects</span></a></li>
+					<li class="global-pr"><a href="#"><span>Global Projects</span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -94,11 +94,11 @@
 			<div class="col col4">
 				<h4>Popular Searches</h4>
 				<ul class="popsearch">
-					<li><a href="searchresults.html">Kenya, Agriculture<span>Searched by 1,200 people</span></a></li>
-					<li><a href="searchresults-map.html">Atlantic, Kenya, Naimibia, Water<span>Searched by 1,200 people</span></a></li>
-					<li><a href="searchresults-map.html">Kenya, Uganda, Tanzania, Rwanda, Burundi, Sudan &lt;20,000, <span>Searched by 1,200 people</span></a></li>
-					<li><a href="searchresults.html">Uganda, Social Welfare<span>Searched by 1,200 people</span></a></li>
-					<li><a href="searchresults.html">Global Projects, &gt;20,000<span>Searched by 1,200 people</span></a></li>
+					<li><a href="?s=Kenya">Kenya</a></li>
+					<li><a href="?s=Afghanistan">Afghanistan</a></li>
+					<li><a href="?s=reintegration">Reintegration</a></li>
+					<li><a href="?s=refugees">Refugees</a></li>
+					<li><a href="?s=">Global Projects</a></li>
 				</ul>
 				</p>
 			</div>
