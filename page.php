@@ -47,7 +47,7 @@ $activity = wp_get_activity($project_id);
 									$countries = "";
 									$cSep = "";
 									foreach($activity->recipient_country AS $country) {
-										echo  $sep . "<a href='?s=&countries={$country->iso}'>" . $country->name . "</a>";
+										echo  $sep . "<a href='".get_bloginfo('url')."/?s=&countries={$country->iso}'>" . $country->name . "</a>";
 										$countries .= $cSep . $country->iso;
 										$sep = ', ';
 										$cSep = '|';
@@ -61,7 +61,7 @@ $activity = wp_get_activity($project_id);
 										if($sector->name=='No information available') {
 											echo $sector->name;
 										} else {
-											echo  $sep . "<a href='?s=&sectors={$sector->code}'>" . $sector->name . "</a>";
+											echo  $sep . "<a href='".get_bloginfo('url')."/?s=&sectors={$sector->code}'>" . $sector->name . "</a>";
 										}
 										$sep = ', ';
 									}
@@ -232,9 +232,9 @@ $activity = wp_get_activity($project_id);
 						"<dl>" +
 							"<dt>Total Activities:</dt>" +
 							"<dd>" +
-								"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">"+this.total_cnt+" project(s)</a>" +
+								"<a href='<?php echo get_bloginfo('url'); ?>/?s=" + keyword + "&countries=" + this.iso2 + "'>"+this.total_cnt+" project(s)</a>" +
 							"</dd>" +
-							"<a href=?s=" + keyword + "&countries=" + this.iso2 + ">show all activities for this country</a>" +
+							"<a href='<?php echo get_bloginfo('url'); ?>/?s=" + keyword + "&countries=" + this.iso2 + "'>show all activities for this country</a>" +
 						"</dl>";
 						
 						infowindow.setContent(contentString);

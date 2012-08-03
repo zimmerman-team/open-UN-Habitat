@@ -4,6 +4,14 @@
 		include_once( TEMPLATEPATH . '/countries.php' );
 		asort($_COUNTRY_ISO_MAP);
 	}
+	if(file_exists(TEMPLATEPATH . '/sectors.php')) {
+		include_once( TEMPLATEPATH . '/sectors.php' );
+		asort($_SECTOR_CHOICES);
+	}
+	if(file_exists(TEMPLATEPATH . '/regions.php')) {
+		include_once( TEMPLATEPATH . '/regions.php' );
+		asort($_REGION_CHOICES);
+	}
 	// Add RSS links to <head> section
 	automatic_feed_links();
 	
@@ -42,36 +50,8 @@
 		return $query_vars;
 	}
 	
-	if(!empty($_COUNTRY_ISO_MAP)) {
-		$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit=0";
-		
-		$content = file_get_contents($search_url);
-		$result = json_decode($content);
-		$meta = $result->meta;
-		$total_count = $meta->total_count;
-		if($total_count!=count($_COUNTRY_ISO_MAP)) {
-			$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit={$total_count}";
-			$content = file_get_contents($search_url);
-			$result = json_decode($content);
-			$meta = $result->meta;
-			$objects = $result->objects;
-			$countries = objectToArray($objects);
-			$to_write = '<?php
-						$_COUNTRY_ISO_MAP = array(
-						';
-			foreach($countries AS $s) {
-				if(empty($s['name']) || $s['name']=='#N/A') continue;
-				$_COUNTRY_ISO_MAP[$s['iso']] = $s['name'];
-				$name = addslashes($s['name']);
-				$to_write .= "'{$s['iso']}' => '{$name}',\n";
-			}
-			$to_write .= ');
-			?>';
-			$fp = fopen(TEMPLATEPATH . '/countries.php', 'w+');
-			fwrite($fp, $to_write);
-			fclose($fp);
-			asort($_COUNTRY_ISO_MAP);
-		}
+	if(empty($_COUNTRY_ISO_MAP)) {
+		wp_generate_constants();
 	}
 
 function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
@@ -239,33 +219,9 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 	switch($filter) {
 		case 'COUNTRY':
 			global $_COUNTRY_ISO_MAP;
-			if(empty($_COUNTRY_ISO_MAP)) {
-				$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit=0";
-				
-				$content = file_get_contents($search_url);
-				$result = json_decode($content);
-				$meta = $result->meta;
-				$total_count = $meta->total_count;
-				$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit={$total_count}";
-				$content = file_get_contents($search_url);
-				$result = json_decode($content);
-				$meta = $result->meta;
-				$objects = $result->objects;
-				$countries = objectToArray($objects);
-				$to_write = '<?php
-							$_COUNTRY_ISO_MAP = array(
-							';
-				foreach($countries AS $s) {
-					if(empty($s['name']) || $s['name']=='#N/A') continue;
-					$_COUNTRY_ISO_MAP[$s['iso']] = $s['name'];
-					$name = addslashes($s['name']);
-					$to_write .= "'{$s['iso']}' => '{$name}',\n";
-				}
-				$to_write .= ');
-				?>';
-				$fp = fopen(TEMPLATEPATH . '/countries.php', 'w+');
-				fwrite($fp, $to_write);
-				fclose($fp);
+			if(empty($_COUNTRY_ISO_MAP) && !file_exists(TEMPLATEPATH . '/countries.php')) {
+				wp_generate_constants();
+				include_once( TEMPLATEPATH . '/countries.php' );
 				asort($_COUNTRY_ISO_MAP);
 			}
 			$_data = $_COUNTRY_ISO_MAP;
@@ -320,23 +276,9 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 			break;
 		case 'REGION':
 			global $_REGION_CHOICES;
-			if(empty($_REGION_CHOICES)) {
-				$search_url = SEARCH_URL . "regions/?format=json&organisations=41120&limit=0";
-				
-				$content = file_get_contents($search_url);
-				$result = json_decode($content);
-				$meta = $result->meta;
-				$total_count = $meta->total_count;
-				$search_url = SEARCH_URL . "regions/?format=json&organisations=41120&limit={$total_count}";
-				$content = file_get_contents($search_url);
-				$result = json_decode($content);
-				$meta = $result->meta;
-				$objects = $result->objects;
-				$regions = objectToArray($objects);
-				foreach($regions AS $s) {
-					if(empty($s['name']) || $s['name']=='#N/A') continue;
-					$_REGION_CHOICES[$s['code']] = $s['name'];
-				}
+			if(empty($_REGION_CHOICES) && !file_exists(TEMPLATEPATH . '/regions.php')) {
+				wp_generate_constants();
+				include_once( TEMPLATEPATH . '/regions.php' );
 				asort($_REGION_CHOICES);
 			}
 			$_data = $_REGION_CHOICES;
@@ -392,23 +334,9 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 			break;
 		case 'SECTOR':
 			global $_SECTOR_CHOICES;
-			if(empty($_SECTOR_CHOICES)) {
-				$search_url = SEARCH_URL . "sectors/?format=json&organisations=41120&limit=0";
-				
-				$content = file_get_contents($search_url);
-				$result = json_decode($content);
-				$meta = $result->meta;
-				$total_count = $meta->total_count;
-				$search_url = SEARCH_URL . "sectors/?format=json&organisations=41120&limit={$total_count}";
-				$content = file_get_contents($search_url);
-				$result = json_decode($content);
-				$meta = $result->meta;
-				$objects = $result->objects;
-				$sectors = objectToArray($objects);
-				foreach($sectors AS $s) {
-					if(empty($s['name']) || $s['name']=='#N/A') continue;
-					$_SECTOR_CHOICES[$s['code']] = $s['name'];
-				}
+			if(empty($_SECTOR_CHOICES) && !file_exists(TEMPLATEPATH . '/sectors.php')) {
+				wp_generate_constants();
+				include_once( TEMPLATEPATH . '/sectors.php' );
 				asort($_SECTOR_CHOICES);
 			}
 			$_data = $_SECTOR_CHOICES;
@@ -533,38 +461,10 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 	switch($filter) {
 		case 'COUNTRY':
 			global $_COUNTRY_ISO_MAP;
-			if(empty($_COUNTRY_ISO_MAP)) {
-				$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit=0";
-				
-				$content = file_get_contents($search_url);
-				$result = json_decode($content);
-				$meta = $result->meta;
-				$total_count = $meta->total_count;
-				$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit={$total_count}";
-				$content = file_get_contents($search_url);
-				$result = json_decode($content);
-				$meta = $result->meta;
-				$objects = $result->objects;
-				
-				$to_write = '<?php
-							$_COUNTRY_ISO_MAP = array(
-							';
-				foreach($countries AS $s) {
-					if(empty($s['name']) || $s['name']=='#N/A') continue;
-					$_COUNTRY_ISO_MAP[$s['iso']] = $s['name'];
-					$name = addslashes($s['name']);
-					$to_write .= "'{$s['iso']}' => '{$name}',\n";
-				}
-				$to_write .= ');
-				?>';
-				$fp = fopen(TEMPLATEPATH . '/countries.php', 'w+');
-				fwrite($fp, $to_write);
-				fclose($fp);
+			if(empty($_COUNTRY_ISO_MAP) && !file_exists(TEMPLATEPATH . '/countries.php')) {
+				wp_generate_constants();
+				include_once( TEMPLATEPATH . '/countries.php' );
 				asort($_COUNTRY_ISO_MAP);
-			}
-			
-			if($limit>=count($_COUNTRY_ISO_MAP)) {
-				return "";
 			}
 			
 			$selected = array();
@@ -595,16 +495,18 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			$items_per_col = $fltr_cnt/4;
 			$cnt = 0;
 			$return .= "<div class=\"col\"><ul>";
-			foreach($_COUNTRY_ISO_MAP AS $iso=>$c) {
-				$checked = "";
-				if(isset($selected[$iso])) $checked = "checked";
-				$cnt++;
-				$return .= "<li>
-							<input name=\"countries\" id=\"check-country{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked}/>
-							<label for=\"check-country{$cnt}\">{$c}</label>
-						</li>";
-				if($cnt%$items_per_col==0) {
-					$return .= "</ul></div><div class=\"col\"><ul>";
+			if(!empty($_COUNTRY_ISO_MAP)) {
+				foreach($_COUNTRY_ISO_MAP AS $iso=>$c) {
+					$checked = "";
+					if(isset($selected[$iso])) $checked = "checked";
+					$cnt++;
+					$return .= "<li>
+								<input name=\"countries\" id=\"check-country{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked}/>
+								<label for=\"check-country{$cnt}\">{$c}</label>
+							</li>";
+					if($cnt%$items_per_col==0) {
+						$return .= "</ul></div><div class=\"col\"><ul>";
+					}
 				}
 			}
 			$return .= "</ul></div>";
@@ -614,29 +516,10 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			break;
 		case 'REGION':
 			global $_REGION_CHOICES;
-			if(empty($_REGION_CHOICES)) {
-				$search_url = SEARCH_URL . "regions/?format=json&organisations=41120&limit=0";
-				
-				$content = file_get_contents($search_url);
-				$result = json_decode($content);
-				$meta = $result->meta;
-				$total_count = $meta->total_count;
-				$search_url = SEARCH_URL . "regions/?format=json&organisations=41120&limit={$total_count}";
-				$content = file_get_contents($search_url);
-				$result = json_decode($content);
-				$meta = $result->meta;
-				$objects = $result->objects;
-				
-				$regions = objectToArray($objects);
-				foreach($regions AS $s) {
-					if(empty($s['name']) || $s['name']=='#N/A') continue;
-					$_REGION_CHOICES[$s['code']] = $s['name'];
-				}
+			if(empty($_REGION_CHOICES) && !file_exists(TEMPLATEPATH . '/regions.php')) {
+				wp_generate_constants();
+				include_once( TEMPLATEPATH . '/regions.php' );
 				asort($_REGION_CHOICES);
-			}
-			
-			if($limit>=count($_REGION_CHOICES)) {
-				return "";
 			}
 			
 			$selected = array();
@@ -667,16 +550,18 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			$items_per_col = $fltr_cnt/4;
 			$cnt = 0;
 			$return .= "<div class=\"col\"><ul>";
-			foreach($_REGION_CHOICES AS $iso=>$c) {
-				$checked = "";
-				if(isset($selected[$iso])) $checked = "checked";
-				$cnt++;
-				$return .= "<li>
-							<input name=\"regions\" id=\"check-region{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked}/>
-							<label for=\"check-region{$cnt}\">{$c}</label>
-						</li>";
-				if($cnt%$items_per_col==0) {
-					$return .= "</ul></div><div class=\"col\"><ul>";
+			if(!empty($_REGION_CHOICES)) {
+				foreach($_REGION_CHOICES AS $iso=>$c) {
+					$checked = "";
+					if(isset($selected[$iso])) $checked = "checked";
+					$cnt++;
+					$return .= "<li>
+								<input name=\"regions\" id=\"check-region{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked}/>
+								<label for=\"check-region{$cnt}\">{$c}</label>
+							</li>";
+					if($cnt%$items_per_col==0) {
+						$return .= "</ul></div><div class=\"col\"><ul>";
+					}
 				}
 			}
 			$return .= "</ul></div>";
@@ -687,28 +572,10 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			
 		case 'SECTOR':
 			global $_SECTOR_CHOICES;
-			if(empty($_SECTOR_CHOICES)) {
-				$search_url = SEARCH_URL . "sectors/?format=json&organisations=41120&limit=0";
-				
-				$content = file_get_contents($search_url);
-				$result = json_decode($content);
-				$meta = $result->meta;
-				$total_count = $meta->total_count;
-				$search_url = SEARCH_URL . "sectors/?format=json&organisations=41120&limit={$total_count}";
-				$content = file_get_contents($search_url);
-				$result = json_decode($content);
-				$meta = $result->meta;
-				$objects = $result->objects;
-				
-				$sectors = objectToArray($objects);
-				foreach($sectors AS $s) {
-					if(empty($s['name']) || $s['name']=='#N/A') continue;
-					$_SECTOR_CHOICES[$s['code']] = $s['name'];
-				}
+			if(empty($_SECTOR_CHOICES) && !file_exists(TEMPLATEPATH . '/sectors.php')) {
+				wp_generate_constants();
+				include_once( TEMPLATEPATH . '/sectors.php' );
 				asort($_SECTOR_CHOICES);
-			}
-			if($limit>=count($_SECTOR_CHOICES)) {
-				return "";
 			}
 			
 			$selected = array();
@@ -739,16 +606,18 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			$items_per_col = $fltr_cnt/4;
 			$cnt = 0;
 			$return .= "<div class=\"col\"><ul>";
-			foreach($_SECTOR_CHOICES AS $iso=>$c) {
-				$checked = "";
-				if(isset($selected[$iso])) $checked = "checked";
-				$cnt++;
-				$return .= "<li>
-							<input name=\"sectors\" id=\"check-sector{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked}/>
-							<label for=\"check-sector{$cnt}\">{$c}</label>
-						</li>";
-				if($cnt%$items_per_col==0) {
-					$return .= "</ul></div><div class=\"col\"><ul>";
+			if(!empty($_SECTOR_CHOICES)) {
+				foreach($_SECTOR_CHOICES AS $iso=>$c) {
+					$checked = "";
+					if(isset($selected[$iso])) $checked = "checked";
+					$cnt++;
+					$return .= "<li>
+								<input name=\"sectors\" id=\"check-sector{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked}/>
+								<label for=\"check-sector{$cnt}\">{$c}</label>
+							</li>";
+					if($cnt%$items_per_col==0) {
+						$return .= "</ul></div><div class=\"col\"><ul>";
+					}
 				}
 			}
 			$return .= "</ul></div>";
@@ -821,6 +690,101 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 				</div>';
 	
 	return $return;
+}
+
+function wp_generate_constants() {
+	$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit=0";
+	$content = file_get_contents($activities_url);
+	$result = json_decode($content);
+	$meta = $result->meta;
+	$count = $meta->total_count;
+	
+	$start=0;
+	$limit=50;
+	$countries = array();
+	$sectors = array();
+	$regions = array();
+	while($start<$count) {
+		$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&start={$start}&limit={$limit}";
+		$result = json_decode($content);
+		$objects = $result->objects;
+		$activities = objectToArray($objects);
+		
+		foreach($activities AS $a) {
+			if(!empty($a['recipient_country'])) {
+				foreach($a['recipient_country'] AS $c) {
+					if(isset($countries[$c['iso']])) continue;
+					$countries[$c['iso']] = $c['name'];
+				}
+			}
+			if(!empty($a['activity_sectors'])) {
+				foreach($a['activity_sectors'] AS $s) {
+					if(isset($sectors[$s['code']])) continue;
+					$sectors[$s['code']] = $s['name'];
+				}
+			}
+			if(!empty($a['recipient_region'])) {
+				foreach($a['recipient_region'] AS $r) {
+					if(isset($regions[$r['code']])) continue;
+					$regions[$r['code']] = $r['name'];
+				}
+			}
+		}
+		
+		$start+=$limit;
+	}
+	$to_write = '<?php
+$_COUNTRY_ISO_MAP = array(
+';
+	if(!empty($countries)) {
+		
+		foreach($countries AS $key=>$value) {
+			if(empty($value) || $value=='#N/A') continue;
+			$name = addslashes($value);
+			$to_write .= "'{$key}' => '{$name}',\n";
+		}
+		
+	}
+	$to_write .= ');
+?>';
+	$fp = fopen(TEMPLATEPATH . '/countries.php', 'w+');
+	fwrite($fp, $to_write);
+	fclose($fp);
+	$to_write = '<?php
+$_SECTOR_CHOICES = array(
+';
+	if(!empty($sectors)) {
+		
+		foreach($sectors AS $key=>$value) {
+			if(empty($value) || $value=='#N/A') continue;
+			$name = addslashes($value);
+			$to_write .= "'{$key}' => '{$name}',\n";
+		}
+		
+	}
+	$to_write .= ');
+?>';
+	$fp = fopen(TEMPLATEPATH . '/sectors.php', 'w+');
+	fwrite($fp, $to_write);
+	fclose($fp);
+	
+	$to_write = '<?php
+$_REGION_CHOICES = array(
+';
+	if(!empty($regions)) {
+		
+		foreach($regions AS $key=>$value) {
+			if(empty($value) || $value=='#N/A') continue;
+			$name = addslashes($value);
+			$to_write .= "'{$key}' => '{$name}',\n";
+		}
+	}
+	
+	$to_write .= ');
+?>';
+	$fp = fopen(TEMPLATEPATH . '/regions.php', 'w+');
+	fwrite($fp, $to_write);
+	fclose($fp);
 }
 
 function wp_generate_paging($meta) {
