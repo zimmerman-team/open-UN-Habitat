@@ -46,7 +46,7 @@
 				 <!--	<li><a href="#"><span>By Tags</span></a></li>-->
 				</ul>
 				<ul class="menu global">
-					<li><a href="?s=" title="View all Global Projects">Global Projects</a></li>
+					<li><a href="<?php echo get_option('home'); ?>/?s=" title="View all Global Projects">Global Projects</a></li>
 				</ul>
 			</div>
 		</div>

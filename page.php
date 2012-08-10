@@ -110,7 +110,7 @@ $activity = wp_get_activity($project_id);
                         	<h4>Description</h4>
                             <div class="wrap desc">
                             	<div id="prjctMap" class="map">
-									<div id="map_canvas" style="width: 230px; height: 140px;"></div>
+									<div id="map_canvas" style="width: 330px; height: 210px;"></div>
                                 </div>
                               <p><?php echo $activity->descriptions[0]->description; ?></p>
 							  <p>&nbsp;</p>
@@ -128,6 +128,14 @@ $activity = wp_get_activity($project_id);
                     <div class="longdetail">
                         <h4>Commitments</h4>
                          <div class="wrap comit">
+							<h2>No information available</h2>                             
+                         </div>
+                    </div>
+
+                   <!--RELATED PROJECTS-->
+                    <div class="longdetail">
+                        <h4>Related Projects</h4>
+                         <div class="wrap rel">
 							<h2>No information available</h2>                             
                          </div>
                     </div>
@@ -153,7 +161,7 @@ $activity = wp_get_activity($project_id);
 
 
 				function initMap(result) {
-					var myLatLng = new google.maps.LatLng(-3.2013100765,-9.64460607187);
+					var myLatLng = new google.maps.LatLng(9.795678,26.367188);
 					var myOptions = {
 						zoom : 2,
 						center : myLatLng,

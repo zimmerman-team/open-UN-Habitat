@@ -5,8 +5,6 @@ if(isset($details))
 	$details=$_REQUEST['details'];
 else
 	$details=array("all");
-
-
 ?>
 <!--START MAINBODY-->
     <div id="opunh-mainbody">
@@ -60,8 +58,8 @@ else
 								<div class="layout">
 									<span>view results as:</span>
 									<ul>
-										<li class="list"><a href="<?php echo get_option('home'); ?><?php echo str_replace(array(" ", "&layout=m"),array("+", ""),$_SERVER['REQUEST_URI']); ?>" title="View as List"><span>View as List</span></a></li>
-										<li class="map"><a href="<?php echo get_option('home'); ?><?php echo str_replace(" ","+",$_SERVER['REQUEST_URI']); ?>&layout=m" class="active" title="View as Map"><span>View as Map</span></a></li>
+										<li class="vlist"><a href="<?php echo get_option('home'); ?><?php echo str_replace(array(" ", "&layout=m"),array("+", ""),$_SERVER['REQUEST_URI']); ?>" title="View as List"><span>View as List</span></a></li>
+										<li class="vmap"><a href="<?php echo get_option('home'); ?><?php echo str_replace(" ","+",$_SERVER['REQUEST_URI']); ?>&layout=m" class="active" title="View as Map"><span>View as Map</span></a></li>
 									</ul>
 								</div>
 								<div class="searchcriteria" <?php echo ($has_filter?'':' style="display: none;"')?>>
@@ -137,8 +135,8 @@ else
 							<div class="layout">
 								<span>view results as:</span>
 								<ul>
-									<li class="list"><a href="<?php echo get_option('home'); ?><?php echo str_replace(array(" ", "&layout=m"),array("+", ""),$_SERVER['REQUEST_URI']); ?>" class="active" title="View as List"><span>View as List</span></a></li>
-									<li class="map"><a href="<?php echo get_option('home'); ?><?php echo str_replace(" ","+",$_SERVER['REQUEST_URI']); ?>&layout=m" title="View as Map"><span>View as Map</span></a></li>
+									<li class="vlist"><a href="<?php echo get_option('home'); ?><?php echo str_replace(array(" ", "&layout=m"),array("+", ""),$_SERVER['REQUEST_URI']); ?>" class="active" title="View as List"><span>View as List</span></a></li>
+									<li class="vmap"><a href="<?php echo get_option('home'); ?><?php echo str_replace(" ","+",$_SERVER['REQUEST_URI']); ?>&layout=m" title="View as Map"><span>View as Map</span></a></li>
 								</ul>
 							</div>
 							<div class="searchcriteria" <?php echo ($has_filter?'':' style="display: none;"')?>>
@@ -202,6 +200,7 @@ else
 								<li class="sortbylabel"><span>Sort by:</span></li>
 								<li class="sortby sortby_b"><a href="javascript:void(0);"><span>Budget</span></a></li>
 								<li class="sortby sortby_d desc"><a href="javascript:void(0);"><span>Start date</span></a></li>
+								<li class="sortby sortby_c"><a href="javascript:void(0);"><span>Country</span></a></li>
 								<li class="sortbydetails sortby_det"><a href="javascript:void(0);"><span>Details</span></a></li>
 							</ul> 
 							<div id="contxmenu_det2">
@@ -252,6 +251,11 @@ else
 		<li><a id='asc' href="#">Ascending</a></li>
 		<li class="active"><a id='desc' href="#">Descending</a></li>
 	</ul>
+        <!--  Country Context menu -->
+        <ul id="contxmenu_c" class="jeegoocontext cm_blue">
+            <li class="active"><a id='asc' href="#">Ascending</a></li>
+            <li><a id='desc' href="#">Descending</a></li>
+        </ul> 
 	<?php 
 		$layout=$_REQUEST['layout'];
 		if(!empty($_REQUEST['countries'])) {
@@ -288,7 +292,7 @@ else
 		function initPageMap(country) {
 			var baseUrl = top.location.pathname.toString(),
 			url = baseUrl + "wp-content/themes/openunh/map_search.php?countries=<?php echo $countries ?><?php echo $search_url; ?>";
-
+			var countries = '<?php echo $countries ?>';
 
 			$.ajax({
 				url: url,
@@ -305,7 +309,7 @@ else
 
 
 			function initMap(result) {
-				var myLatLng = new google.maps.LatLng(-3.2013100765,-9.64460607187);
+				var myLatLng = new google.maps.LatLng(9.795678,26.367188);
 				var myOptions = {
 					zoom : 2,
 					center : myLatLng,
@@ -359,7 +363,7 @@ else
 						total_activities_url: "?countries="+idx,
 						iso2 : idx
 					});
-					map.setCenter(polygon.getBounds().getCenter());
+					if (countries) map.setCenter(polygon.getBounds().getCenter());
 					polygon.setMap(map);
 					google.maps.event.addListener(polygon, 'click', showInfo);
 					infowindow = new google.maps.InfoWindow();

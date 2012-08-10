@@ -121,7 +121,7 @@ $(document).ready(function() {
 				if($(this).val()==val) $(this).attr('checked', false);
 			});
 		}
-		if($('li.map a').attr('class')=='active') {
+		if($('li.vmap a').attr('class')=='active') {
 			processAjaxMap();
 		} else {
 			processAjaxFilters(0);
@@ -147,7 +147,7 @@ $(document).ready(function() {
 				if($(this).val()==val) $(this).attr('checked', false);
 			});
 		}
-		if($('li.map a').attr('class')=='active') {
+		if($('li.vmap a').attr('class')=='active') {
 			processAjaxMap();
 		} else {
 			processAjaxFilters(0);
@@ -173,7 +173,7 @@ $(document).ready(function() {
 				if($(this).val()==val) $(this).attr('checked', false);
 			});
 		}
-		if($('li.map a').attr('class')=='active') {
+		if($('li.vmap a').attr('class')=='active') {
 			processAjaxMap();
 		} else {
 			processAjaxFilters(0);
@@ -199,7 +199,7 @@ $(document).ready(function() {
 				if($(this).val()==val) $(this).attr('checked', false);
 			});
 		}
-		if($('li.map a').attr('class')=='active') {
+		if($('li.vmap a').attr('class')=='active') {
 			processAjaxMap();
 		} else {
 			processAjaxFilters(0);
@@ -320,7 +320,7 @@ $(document).ready(function() {
 		$(".filterbox .filtercontent input[name=budgets]").attr('checked', false);
 		$(".filterbox .filtercontent input[name=budgets]:first").attr('checked', true);
 		$(this).parent().parent().empty().hide();
-		if($('li.map a').attr('class')=='active') {
+		if($('li.vmap a').attr('class')=='active') {
 			processAjaxMap();
 		} else {
 			processAjaxFilters(0);
@@ -408,7 +408,7 @@ $(document).ready(function() {
 		}
 		
 		
-		if($(this).parent().attr('class')=='map') {
+		if($(this).parent().attr('class')=='vmap') {
 			url += urlSep + "layout=m";
 		}
 		window.location = url;
@@ -919,7 +919,7 @@ function applyFilterHTML(selected) {
 		$(".filterbox .filtercontent input[name=budgets]").attr('checked', false);
 		$(".filterbox .filtercontent input[name=budgets]:first").attr('checked', true);
 		$(this).parent().parent().empty().hide();
-		if($('li.map a').attr('class')=='active') {
+		if($('li.vmap a').attr('class')=='active') {
 			processAjaxMap();
 		} else {
 			processAjaxFilters(0);
@@ -952,9 +952,11 @@ function applyResults(meta, objects) {
 			}
 		
 			html += "</span>" +
-					"<span class='detail'><span>Subject</span>: " +project.titles[0].title+ "</span>" +
-					"<span class='detail'><span>Budget</span>: US$ " + format_number(project.statistics.total_budget) + "</span>" +
-					"<span class='detail'><span>Sector</span>: ";
+					"<span class='detail'><span>Subject</span>: " +project.titles[0].title+ "</span>";
+			if(project.statistics) {
+				html += "<span class='detail'><span>Budget</span>: US$ " + format_number(project.statistics.total_budget) + "</span>";
+			}
+			html += "<span class='detail'><span>Sector</span>: ";
 				
 			var sep = '';
 			for(i in project.activity_sectors) {

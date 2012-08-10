@@ -29,7 +29,7 @@
 		   ?>
 	</title>
 	
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="<?php bloginfo('stylesheet_directory'); ?>/favicon.ico" type="image/x-icon" />
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
     <!--STYLE FILES-->
 	<link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" />
@@ -48,7 +48,7 @@
 		function initialize() {
 
 			var result = <?php echo json_encode(wp_generate_home_map_data());?>;
-			var myLatLng = new google.maps.LatLng(-3.2013100765,-9.64460607187);
+			var myLatLng = new google.maps.LatLng(9.795678,26.367188);
 			var myOptions = {
 				zoom : 2,
 				center : myLatLng,
@@ -147,7 +147,7 @@
 
 		<!--START HEADER-->
         <div id="opunh-header">
-        	<h1 id="logo"><a href="<?php echo get_option('home'); ?>/"><span><?php bloginfo('name'); ?></span></a></h1>
+        	<h1 id="logo"><a href="<?php echo get_option('home'); ?>/" title="Click here to go to the homepage"><span><?php bloginfo('name'); ?></span></a></h1>
 			<ul class="menu mainsite">
                 <li><a href="http://www.unhabitat.org/" target="_blank"><span>Go to UN-Habitat main website</span></a></li>
             </ul>
@@ -174,6 +174,9 @@
                     	</div>
                     <!--END SEARCH-->
              	<?php } ?>
+               <!--BETA-->
+            	<div class="beta beta-gr">BETA VERSION <a href="<?php echo get_option('home'); ?>/?page_id=89">Read More</a></div>
+            <!--END BETA-->
             <!--START MAIN MENU-->
                 <div class="mainmenu">
                 	<?php wp_nav_menu(array(

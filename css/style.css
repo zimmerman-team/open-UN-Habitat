@@ -33,12 +33,18 @@ dt { float:left; }
 .lang li.active a{ background:#b3d0dc; color:#006088;}
 .utilmenu a{ background:url(../images/sep.png) left center no-repeat; padding:0 8px 0 10px; font-size:11px; color:#b2e4f9}
 .utilmenu li:first-child a{background:none!important;}
+.beta{ width:160px; padding:3px 0 3px 0;color:#fff; text-transform:uppercase; font-size:9px; text-align:center; position:absolute; left:405px; top:15px;}
+.beta a{  text-transform:none; padding-left:8px; }
+.beta-bl{ background:#01618b url(../images/betabg-bl.png) left top repeat-x;}
+.beta-gr{ background:#445f50 url(../images/betabg-gr.png) left top repeat-x;}
+.beta-bl a{color:#b2e4f9;}
+.beta-gr a{color:#83deac;}
 .searchwrap{ width:315px; overflow:hidden;position:absolute; top:27px; right:0px;}
 .searchwrap label,.searchbox label{display:none;}
 .searchwrap .inputbox, .searchwrap .button, .button{ margin:0px; border:none;}
 .searchwrap .inputbox{ width:225px;  background:#fff; padding:5px; left:0px; height:18px; }
-.button{color:#fff; background:#42604f;text-shadow:0px 1px #000000; font-size:14px; text-transform:uppercase; padding:5px;}
-.searchwrap .button{ width:90px; height:28px; right:0px; position:absolute; padding:0px;}
+.button{color:#fff; background:#42604f;text-shadow:0px 1px #000000; font-size:14px; text-transform:uppercase; padding:5px; cursor:pointer;}
+.searchwrap .button{ width:90px; height:28px; right:0px; position:absolute; padding:0px; cursor:pointer;}
 .mainmenu{ position:absolute; top:63px; right:0px; text-transform:uppercase;}
 .mainmenu li a{padding-left:5px; color:#fff;  white-space:nowrap}
 .mainmenu li span{ padding:5px 15px 5px 10px;}
@@ -102,9 +108,9 @@ div.infowindow { max-height:250px; }
 .tabs{ padding:10px 0 0 8px}
 .tabs li{}
 .tabs li a{ color:#000; text-shadow:0px 1px #fff; font-weight:bold; padding:0 10px; margin:0 10px 0 0; white-space:nowrap}
-.nodisp{text-align:left; display:none;}
-.submtBtns{ position:fixed; top:0px; background:#009ada; color:#fff; }
-.submtBtns a{color:#fff; text-decoration:underline;padding:10px; display:block;}
+.submtBtns{ position:fixed; top:83%; background:#009ada; color:#fff; left:50%; margin:0 0 0 -250px; }
+.submtBtns a{color:#fff; font-weight:bold; text-decoration:underline;padding:10px; display:block;}
+#countries, .nodisp{ text-align:left; display:none;}
 .all{ font-weight:bold;}
 .countrieslist, .regionslist, .sectorslist { width:100%;}
 .countrieslist .col, .regionslist .col, .sectorslist .col{ float:left;width:25%; text-align:left;}
@@ -127,15 +133,15 @@ div.infowindow { max-height:250px; }
 /****Search Results***/
 .colLeft{ float:left; width:225px;}
 .colRight{ float:right; width:720px;}
-.filter,.searchresultstitle, .longdetail, .vstbox, .leftwrap{ border:1px solid #d5d5d5;position:relative;}
-.filterbox h4, .searchresultstitle h4, .longdetail h4, .leftmenu h4{ background:#dfdfdf url(../images/fl-title.png) left top repeat-x; padding:5px 8px; border:1px solid #f5f5f5; color:#000; font-weight:bold; text-shadow:0px 1px #fff;}
+.filter,.searchresultstitle,.summarytitle, .longdetail, .vstbox, .leftwrap,.summary{ border:1px solid #d5d5d5;position:relative;}
+.filterbox h4, .searchresultstitle h4,.summarytitle h4, .longdetail h4, .leftmenu h4,.summarytitle .summary h4{ background:#dfdfdf url(../images/fl-title.png) left top repeat-x; padding:5px 8px; border:1px solid #f5f5f5; color:#000; font-weight:bold; text-shadow:0px 1px #fff; font-size:12px;}
 .filtercontent{ padding:10px; border-top:1px solid #d5d5d5; border-bottom:1px solid #d5d5d5;}
 .filtercontent li,.countrieslist .col li{ clear:both; padding:3px 0;}
 .filtercontent li input, .countrieslist .col li input{ float:left; clear:left;}
 .filtercontent label, .countrieslist .col li label{ vertical-align:middle;}
 .filtercontent a{ font-weight:bold; font-size:11px;}
 
-.searchcriteria{border-top:1px solid #d5d5d5; padding:5px 5px 5px 10px; font-size:11px;}
+.searchcriteria,.summarydetails{border-top:1px solid #d5d5d5; padding:5px 5px 5px 10px; font-size:11px;}
 .clearresults{ float:right; text-transform:uppercase;}
 .clearresults span{ background:#000; color:#fff; padding:2px 5px;margin:0 0 0 3px;}
 .clearresults a{ color:#333; text-decoration:underline; }
@@ -147,14 +153,14 @@ div.infowindow { max-height:250px; }
 .layout ul li{ float:left; width:26px; height:25px;}
 .layout ul li a{ width:26px; height:25px; display:block; background:url(../images/layout.png) no-repeat; overflow:hidden;}
 .layout ul li span{ display:none;}
-.layout ul li.list a{ background-position:right bottom;}
-.layout ul li.list a.active{ background-position:right top;}
-.layout ul li.map a{ background-position:left bottom;}
-.layout ul li.map a.active{ background-position:left top;}
+.layout ul li.vlist a{ background-position:right bottom;}
+.layout ul li.vlist a.active{ background-position:right top;}
+.layout ul li.vmap a{ background-position:left bottom;}
+.layout ul li.vmap a.active{ background-position:left top;}
 .searchtoolbar{ padding:10px 10px 10px 10px; font-size:11px; position:relative; height:20px;}
 .searchtoolbar a{ color:#333;}
 .saveresults{ padding:3px 0 3px 20px; background:url(../images/saveresult.png) left center no-repeat; float:left;} 
-.orderby{ float:right; width:214px; white-space:nowrap;}
+.orderby{ float:right; width:275px; white-space:nowrap;}
 .orderby li a{ padding:0 12px 0 5px; margin:0 0 0 5px; background:url(../images/sortby.png) right 8px no-repeat; text-decoration:underline; white-space:nowrap}
 .orderby li.desc a{ background-position: right -13px;}
 .sortbylabel{ font-weight:bold; padding:0px; margin-right:0px;}
@@ -194,8 +200,23 @@ div.infowindow { max-height:250px; }
 .resultrow .bookmark{ background:url(../images/bookmark.png) left center no-repeat;}
 .resultrow .whistleb{ float:right;background:url(../images/whistle.png) left center no-repeat;} 
 
+/*Summary*/
+.summary p{ border-top:1px solid #dfdfdf; padding:10px; font-size:18px; font-weight:bold;}
+.summarytitle h4{ font-size:14px;}
+.summary{ width:205px; float:right; margin:5px}
+.summarychart{ float:left; width:350px; height:150px; overflow:hidden;}
+#visualization{ width:350px; height:170px;}
+.summarywrap{ clear:both; margin:0;}
+.summarywrap h2{ font-size:14px; font-weight:bold; color:#000; margin:10px 0 0 0; padding:10px 10px 0 10px; border-top:1px dotted #ddd;}
+.summarywrap h3{border:1px solid #d5d5d5;position:relative; clear:both; margin:10px 0}
+.summarywrap h3 span{ background:#dfdfdf url(../images/fl-title.png) left top repeat-x; padding:5px 8px; border:1px solid #f5f5f5; color:#000; font-weight:bold; text-shadow:0px 1px #fff; font-size:12px; display:block;}
+.summarywrap ul{ float:left; width:33%; overflow:hidden;}
+.summarywrap ul li { padding:0 10px 0 10px;}
+.summarywrap ul li a{ background:url(../images/bullet.png) 2px 7px no-repeat; display:block; padding:0 0 0 15px; color:#555; font-size:12px;}
+
+
 /*Project Detail*/
-.backbutton{ background:#008ac3 url(../images/backbtn.png) left top no-repeat; float:left; display:block; padding:8px; color:#fff; text-transform:uppercase; font-weight:normal; margin:-10px 0 8px 0; font-size:11px;}
+.backbutton{ background:#008ac3 url(../images/backbtn.png) left top repeat-x; float:left; display:block; padding:8px; color:#fff; text-transform:uppercase; font-weight:normal; margin:-10px 0 8px 0; font-size:11px;}
 .colLeftlg{ width:280px; float:left;}
 .colRightlg{ width:665px; float:right;}
 .projecttitle h2, .content h2, .fpgagetitle h2{ border:1px solid #d5d5d5;margin:0 0 5px 0}
@@ -218,7 +239,7 @@ div.infowindow { max-height:250px; }
 
 
 .wrap{ padding:10px; border-top:1px solid #d5d5d5;}
-.map{ float:right; width:230px; height:140px; overflow:hidden;}
+.map{ float:right; width:330px; height:210px; overflow:hidden; margin:0 0 0 10px;}
 .wrap p{ margin:0 0 10px 0;}
 .longdetail{ margin:0 0 10px 0;}
 
@@ -231,7 +252,7 @@ div.infowindow { max-height:250px; }
 .docs li.xls a{background:url(../images/doc-xls.png) left 3px no-repeat;}
 .docs li.doc a{background:url(../images/doc-word.png) left 3px no-repeat;}
 .docs li.pdf a{background:url(../images/doc-pdf.png) left 3px no-repeat;}
-.comit{ max-height:250px; overflow:auto;}
+.comit{ padding-bottom:0px; height:250px; overflow:auto;}
 .comitWrap{ width:100%; border:none!important;}
 .comtWrap td{ width:50%; text-align:center;}
 .comitTable{width:98%;text-align:left; margin:0 0 10px 0; border:1px solid #d5d5d5;}
@@ -258,8 +279,8 @@ div.infowindow { max-height:250px; }
 .contentext h3{ font-weight:bold; font-size:16px; margin:5px 0 10px 0;}
 .faqtitle{ font-weight:bold; text-transform:uppercase;}
 .sections, .contentext ul{ margin:10px 0 10px 10px;}
-.sections li, .contentext li{ padding:0 0 3px 0;}
-.sections li a{ background:url(../images/bullet.png) 2px 7px no-repeat; display:block; padding:0 0 0 15px; font-weight:bold;}
+.sections li, .contentext li, .rel li{ padding:0 0 3px 0;}
+.sections li a, .rel li a{ background:url(../images/bullet.png) 2px 7px no-repeat; display:block; padding:0 0 0 15px; font-weight:bold;}
 .contentext .notify li{background:url(../images/bullet.png) 2px 7px no-repeat; display:block; padding:0 0 3px 15px;}
 .sections li.sendquest a{ background:none!important; color:#333; text-decoration:underline;}
 .section{ border-bottom:1px dotted #b4b4b4; padding:10px;}
@@ -272,20 +293,33 @@ div.infowindow { max-height:250px; }
 .totop{ text-decoration:underline;text-transform:uppercase; float:right; font-size:11px;}
 
 /*Contacts*/
-.colLefteq{ width:470px; float:left;}
-.colRighteq{ width:470px; float:right;}
+.colLefteq{ width:290px; float:left; overflow:hidden}
+.colRighteq{ width:400px; float:right; overflow:hidden;}
 .contacts{ padding:10px;}
-.contacts h4{ font-weight:bold; margin:10px 0 0 0;}
-.contactform fieldset{ border:1px solid #d5d5d5; padding:10px; margin:0 10px 0 0;}
-.contactform legend{ margin:0 5px; padding:0 5px; font-weight:bold;}
+
+#qcf-style{float:left; margin:0 20px 0 0;}
+#qcf-style fieldset,.padd10bdr{border:1px solid #d5d5d5; padding:10px;}
+.colLefteq h4{ font-weight:bold; margin:10px 0 0 0;}
+.contactform{width:400px;}
+
+.contactform fieldset{ border:1px solid #d5d5d5; padding:10px; float:right;}
+.contactform legend, #qcf-style legend{ margin:0 5px; padding:0 5px; font-weight:bold;}
 .contactform .row{ height:30px; margin:3px 0px 0 10px;}
 .contactform sup{font-size:xx-small; vertical-align:top; color:#666666;}
+.contactform_respons,.contactform_error{ padding: 10px;}
+.contactform_respons h5,.contactform_error h5{font-weight:bold; margin:0px!important;}
+.contactform_error p{ color:#D31900; margin:0px!important;}
+.contactform_respons{border-top:3px solid #36a9d9;  border-bottom:3px solid #36a9d9; background-color: #b5d3e0;}
+.contactform_error{ border-top:3px solid #DE7A7B;  border-bottom:3px solid #DE7A7B; background-color: #E6C0C0;}
 .row label{ float:left; width:30%;}
-.row .inputbox{ width:280px; padding:5px; border:1px solid #d5d5d5;}
+.row .inputbox,.row .cuf_field{ width:210px; padding:5px; border:1px solid #d5d5d5;}
 .rowfull{ margin-left:10px;}
 .rowfull label{ float:none; display:block; width:100%;}
-.rowfull textarea{width:410px;padding:5px; border:1px solid #d5d5d5;}
-.contactform .button{ border:none; margin:5px 15px 0 0;width:90px;color:#fff; background:#42604f;text-shadow:0px 1px #000000; font-size:14px; text-transform:uppercase; height:28px; float:right;}
+.rowfull textarea{width:340px;padding:5px; border:1px solid #d5d5d5;}
+#cuf_captcha{padding:5px; border:1px solid #d5d5d5;}
+.paddl10{ padding:0 0 0 10px;}
+.contactform .button,#qcf-style #submit,.back-form{ border:none; margin:5px 15px 0 0;width:90px;color:#fff; background:#42604f;text-shadow:0px 1px #000000; font-size:14px; text-transform:uppercase; height:28px; float:right;}
+.back-form{ margin-right:0px;}
 .shrt{width:470px; overflow:hidden; float:left;}
 #pagination { margin:20px auto 10px auto; width:300px;}
 .pagination li{ float:left;}
@@ -298,3 +332,9 @@ div.infowindow { max-height:250px; }
 .ie7 body{ } 
 .ie7 #opunh-mainbody{ float:left;  }
 .ie7 .searchwrap .button, .ie7 .mainsearch .button{ top:1px!important;}
+#TheFeedbackButton { background:#42604f!important; color:#fff!important;}
+#TheFeedbackButton_page{}
+#TheFeedbackButton_page label{ display:block; padding:3px 3px 3px 25px; text-align:left;}
+#TheFeedbackButton_page input, #TheFeedbackButton_page textarea{ padding:3px; border:1px solid #b9c2ca;}
+#TFB_submit_button{ background:#42604f; color:#fff; background:#42604f;text-shadow:0px 1px #000000; font-size:14px; text-transform:uppercase; padding:5px; cursor:pointer; border:none!important; margin:10px 0 0 0;}
+#un-button{ text-transform:uppercase;letter-spacing:2px;}

@@ -12,16 +12,15 @@
 					); 
 			?>
             <div class="socialprofiles">
-                <a href="#"><img src="<?php bloginfo('template_url'); ?>/images/facebook.png" alt="Facebook" /></a>
-                <a href="#"><img src="<?php bloginfo('template_url'); ?>/images/flickr.png" alt="Flickr" /></a>
-                <a href="#"><img src="<?php bloginfo('template_url'); ?>/images/twitter.png" alt="Twitter" /></a>
-                <a href="#"><img src="<?php bloginfo('template_url'); ?>/images/youtube.png" alt="Youtube" /></a>
-                <a href="#"><img src="<?php bloginfo('template_url'); ?>/images/scribd.png" alt="Scribd" /></a>
+                <a target="_blank" href="https://www.facebook.com/pages/UN-HABITAT/127012777443"><img src="<?php bloginfo('template_url'); ?>/images/facebook.png" alt="Facebook" /></a>
+                <a target="_blank" href="http://www.flickr.com/photos/66729176@N02/"><img src="<?php bloginfo('template_url'); ?>/images/flickr.png" alt="Flickr" /></a>
+                <a target="_blank" href="https://twitter.com/#!/unhabitat"><img src="<?php bloginfo('template_url'); ?>/images/twitter.png" alt="Twitter" /></a>
+                <a target="_blank" href="http://www.youtube.com/user/epitunhabitat"><img src="<?php bloginfo('template_url'); ?>/images/youtube.png" alt="Youtube" /></a>
+                <a target="_blank" href="http://www.scribd.com/UN-HABITAT"><img src="<?php bloginfo('template_url'); ?>/images/scribd.png" alt="Scribd" /></a>
             </div>
             <p class="copyright ff4">&copy;<?php echo date("Y"); echo " "; bloginfo('name'); ?><br/>All rights reserved</p>
         </div>
 </div> 
-<a href="<?php echo get_option('home'); ?>/?forum=feedback" title="Give us your feedback"><img src="<?php bloginfo('template_url'); ?>/images/feedback.png" class="feedback"/></a>
 	<?php wp_footer(); ?>
 
 </body>

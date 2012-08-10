@@ -82,7 +82,6 @@
 }
 .sitemap a:link:before,
 .sitemap a:visited:before {
-	content: " "attr(href)" ";
 	display: block;
 	text-transform: uppercase;
 	font-size: 10px;
