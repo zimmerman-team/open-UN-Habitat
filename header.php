@@ -175,7 +175,7 @@
                     <!--END SEARCH-->
              	<?php } ?>
                <!--BETA-->
-            	<div class="beta beta-gr">BETA VERSION <a href="<?php echo get_option('home'); ?>/?page_id=89">Read More</a></div>
+            	<div class="beta beta-gr">BETA VERSION <a href="<?php echo get_option('home'); ?>/open-un-habitat-is-still-under-development">Read More</a></div>
             <!--END BETA-->
             <!--START MAIN MENU-->
                 <div class="mainmenu">
