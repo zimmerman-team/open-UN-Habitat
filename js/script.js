@@ -1,4 +1,4 @@
-var sThemePath = '', sBlogName = '';
+var sThemePath = '', sBlogName = '', _per_page = 5;
 // JavaScript Document
 $(document).ready(function() {
 	
@@ -57,7 +57,7 @@ $(document).ready(function() {
 	//Context Menu
 	$('.sortby_b').jeegoocontext('contxmenu_b',{event:'click'});
 	$('#contxmenu_b>li>a').click(function(){
-		$('#contxmenu_b li').removeClass('active');
+		$('.jeegoocontext li').removeClass('active');
 		$(this).parent().addClass('active');
 		var order = $(this).attr('id');
 		order = (order=='desc'?'-':'') + 'statistics__total_budget';
@@ -66,7 +66,7 @@ $(document).ready(function() {
 	$('.sortby_d').jeegoocontext('contxmenu_d',{event:'click'});
 	
 	$('#contxmenu_d>li>a').click(function(){
-		$('#contxmenu_d li').removeClass('active');
+		$('.jeegoocontext li').removeClass('active');
 		$(this).parent().addClass('active');
 		var order = $(this).attr('id');
 		order = (order=='desc'?'-':'') + 'start_actual';
@@ -117,9 +117,19 @@ $(document).ready(function() {
 				if($(this).val()==val) $(this).attr('checked', true);
 			});
 		} else {
+			var keyword = $('#s').val();
+			if(keyword) {
+				keyword = keyword.toLowerCase();
+				var lbl = $(this).parent().text();
+				if(lbl.toLowerCase()==keyword) {
+					$('#s').val('');
+				}
+			}
 			$('#country_popup input[type=checkbox]:checked').each(function(){
 				if($(this).val()==val) $(this).attr('checked', false);
 			});
+			
+			
 		}
 		if($('li.vmap a').attr('class')=='active') {
 			processAjaxMap();
@@ -319,6 +329,7 @@ $(document).ready(function() {
 		$(".filterbox .filtercontent input[name=sectors]:first").attr('checked', true);
 		$(".filterbox .filtercontent input[name=budgets]").attr('checked', false);
 		$(".filterbox .filtercontent input[name=budgets]:first").attr('checked', true);
+		$('#s').val('');
 		$(this).parent().parent().empty().hide();
 		if($('li.vmap a').attr('class')=='active') {
 			processAjaxMap();
@@ -511,7 +522,7 @@ function initPager() {
 	$('#pagination > ul > li > a').click(function(){
 		var className = $(this).attr('class');
 		var cur_page = parseInt($('#cur_page').html());
-		var per_page = 20;
+		var per_page = _per_page;
 		if(className=='limitstart') {
 			var offset = (cur_page-2)*per_page;
 			if(cur_page==1) return false;
@@ -794,8 +805,28 @@ function processAjaxFilters(offset, sort_by) {
 	
 	var keyword = jQuery('#s').val();
 	if(keyword) {
-		url +=  urlSep + "query=" + encodeURI(keyword);
-		urlSep = "&";
+		
+		var srch_country = "";
+		var new_country = "";
+		$('.countrieslist input[name=countries]').each(function(){
+			var control_name = $(this).attr('name');
+			var key = $(this).val();
+			var lbl = $(this).next().text();
+			lbl = lbl.toLowerCase();
+			keyword = keyword.toLowerCase();
+			if(lbl==keyword) {
+				srch_country = key;
+				
+			}
+		});
+		
+		if(srch_country.length>0) {
+			country_fltr += sep + srch_country;
+		} else {
+			url +=  urlSep + "query=" + encodeURI(keyword);
+			urlSep = "&";
+		}
+		
 	}
 	
 	
@@ -820,9 +851,7 @@ function processAjaxFilters(offset, sort_by) {
 		isFilter = true;
 	}
 	
-	var per_page = 20; //No per page selector
-	
-	url +=  urlSep + "limit=" + per_page;
+	url +=  urlSep + "limit=" + _per_page;
 	urlSep = "&";
 	
 	url +=  urlSep + "offset=" + offset;
@@ -830,6 +859,21 @@ function processAjaxFilters(offset, sort_by) {
 	
 	if(sort_by != null && sort_by.length>0) {
 		url += urlSep + "order_by=" + sort_by;
+	} else {
+		$('.jeegoocontext li.active a').each(function(){
+			var id = $(this).parent().parent().attr('id');
+			var ord =  $(this).attr('id');
+			switch(id) {
+				case 'contxmenu_b':
+					ord = (ord=='desc'?'-':'') + 'statistics__total_budget';
+					url += urlSep + "order_by=" + ord;
+					break;
+				case 'contxmenu_d':
+					ord = (ord=='desc'?'-':'') + 'start_actual';
+					url += urlSep + "order_by=" + ord;
+					break;	
+			}
+		});
 	}
 	
 	jQuery.ajax({
@@ -941,8 +985,8 @@ function applyResults(meta, objects) {
 		for(idx in objects) {
 			var project = objects[idx];
 			
-			html += "<div class='searchresult row"+(idx+1)+"'>" +
-					"<a id='detail_1' href='javascript:void(0);' class='moredetail'></a>" +
+			html += "<div class='searchresult row"+(idx%2)+"'>" +
+					"<a id='detail_"+(idx+1)+"' href='javascript:void(0);' class='moredetail'></a>" +
 					"<h3><a href='" + baseUrl + "?page_id=2&id="+project.iati_identifier+"&back_url="+encodeURI(back_url)+"'>"+project.titles[0].title+"</a></h3>" +
 					"<span class='detail'><span>Countries</span>: "; 
 			var sep = '';
@@ -995,49 +1039,31 @@ function applyResults(meta, objects) {
 		}
 		
 		//fix the paging 
-		var per_page = 20;
+		var per_page = _per_page;
 		var total_pages = Math.ceil(total_count/limit);
 		var cur_page = offset/limit + 1;
 		var paging_block = "<ul class='menu pagination'><li><a href='javascript:void(0);' class='start'><span>&laquo;</span></a></li><li><a href='javascript:void(0);' class='limitstart'><span>&larr; </span></a></li>";
-		var page_limit = 7;
-		var fromPage = cur_page - 3;
-		if(fromPage<=0) fromPage = 1;
-		var loop_limit = (total_pages>page_limit?(fromPage + page_limit - 1):total_pages);
-		
-
-		for(i=fromPage; i<=loop_limit; i++) {
+		var page_limit = 3;
+		var show_dots = true;
+		for(i=1; i<=total_pages; i++) {
 			paging_block += "<li>";
-			if(cur_page==i) {
-				paging_block += "<a href='javascript:void(0);' class='active'><span id='cur_page'>"+i+"</span></a>";
-			} else {
-				paging_block += "<a href='javascript:void(0);' class='page'><span>"+i+"</span></a>";
-			}
-			paging_block += "</li>";
-		}
-		if((fromPage+loop_limit)<(total_pages-3)) {
-			if(total_pages>page_limit) {
-				paging_block += "<li>...</li>";
-			}
 			
-			for(i=total_pages-2; i<=total_pages; i++) {
-				paging_block += "<li>";
-				
-				paging_block += "<a href='javascript:void(0);' class='page'><span>"+i+"</span></a>";
 			
-				paging_block += "</li>";
-			}
-		} else {
-
-			for(i=loop_limit+1; i<=total_pages; i++) {
-				paging_block += "<li>";
+			if (i == 1 || i == total_pages || (i >= cur_page - page_limit && i <= cur_page + page_limit) ) {
+				show_dots = true;
+				  // If it's the current page, leave out the link
+				  // otherwise set a URL field also
 				if(cur_page==i) {
 					paging_block += "<a href='javascript:void(0);' class='active'><span id='cur_page'>"+i+"</span></a>";
 				} else {
 					paging_block += "<a href='javascript:void(0);' class='page'><span>"+i+"</span></a>";
 				}
-				paging_block += "</li>";
-			}
+			} else if (show_dots == true) {
 			
+				show_dots = false;
+				paging_block += "...";
+			}
+			paging_block += "</li>";
 		}
 		
 		paging_block += "<li><a href='javascript:void(0);' class='endmilit'><span>&rarr; </span></a></li><li><a href='javascript:void(0)' class='end'><span>&raquo;</span></a></li></ul>";
@@ -1046,7 +1072,7 @@ function applyResults(meta, objects) {
 		$('#pagination > ul > li > a').click(function(){
 			var className = $(this).attr('class');
 			var cur_page = parseInt($('#cur_page').html());
-			var per_page = 20;
+			var per_page = _per_page;
 			if(className=='limitstart') {
 				var offset = (cur_page-2)*per_page;
 				if(cur_page==1) return false;
@@ -1084,6 +1110,29 @@ function applyResults(meta, objects) {
 	
 	$('#resultsContainer').empty();
 	$('#resultsContainer').html(html);
+	
+	$(".moredetail").click(function(){
+		if($(this).hasClass('active')){
+			$(this).parent().find('p.shortdescription').animate({ 
+				"max-height": "47px"
+			  }, 1500 );
+			$(".moredetail").removeClass('active');
+			var idnt = $(this).attr('id');
+			$('.'+idnt).slideUp();
+			
+		}
+		else{
+			$(this).parent().find('p.shortdescription').animate({ 
+				"max-height": "100%"
+			  }, 1500 );
+			$(".moredetail").removeClass('active');
+			$(this).addClass('active');
+			$(".resultdetail").slideUp();
+			var idnt = $(this).attr('id');
+			$('.'+idnt).slideDown();
+			
+		}
+	});
 }
 	
 /**

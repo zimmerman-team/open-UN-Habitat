@@ -55,11 +55,22 @@
 	}
 
 function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
-	$search_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit=20";
+	global $_PER_PAGE, $_COUNTRY_ISO_MAP;
+	$search_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit={$_PER_PAGE}";
 	
 	if(isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
 		$query = rawurlencode($_REQUEST['s']);
-		$search_url .= "&query={$query}";
+		
+		$srch_countries = array_map('strtolower', $_COUNTRY_ISO_MAP);
+		$srch_countries = array_flip($srch_countries);
+		$key = strtolower($query);
+		if(isset($srch_countries[$key])) {
+			$srch_countries = $srch_countries[$key];
+		} else {
+			$search_url .= "&query={$query}";
+			$srch_countries = null;
+		}
+		
 	}
 	
 	if(!empty($_REQUEST['countries'])) {
@@ -68,6 +79,14 @@ function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
 		$countries = implode('|', $countries);
 		$search_url .= "&countries={$countries}";
 		$has_filter = true;
+		if(!empty($srch_countries)) {
+			$search_url .= "|{$srch_countries}";
+		}
+	} else {
+		if(!empty($srch_countries)) {
+			$search_url .= "&countries={$srch_countries}";
+			$has_filter = true;
+		}
 	}
 	
 	if(!empty($_REQUEST['regions'])) {
@@ -107,7 +126,7 @@ function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
 		$base_url = get_option('home');
 		foreach($objects AS $idx=>$project) {
 			
-			$return .= '<div class="searchresult row'.$idx.'">
+			$return .= '<div class="searchresult row'.($idx%2).'">
                         	<a id="detail_'.$idx.'" href="javascript:void(0);" class="moredetail"></a>';
 			$return .= '<h3><a href="'.$base_url.'/?page_id=2&id='.$project->iati_identifier.'&back_url='.rawurlencode($back_url).'">'.$project->titles[0]->title.'</a></h3>';			
 			
@@ -226,10 +245,38 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 			}
 			$_data = $_COUNTRY_ISO_MAP;
 			$selected = array();
+			if(isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
+				$query = rawurlencode($_REQUEST['s']);
+				$srch_countries = array_map('strtolower', $_COUNTRY_ISO_MAP);
+				$srch_countries = array_flip($srch_countries);
+				$key = strtolower($query);
+				if(isset($srch_countries[$key])) {
+					$srch_countries = $srch_countries[$key];
+				} else {
+					$srch_countries = null;
+				}
+			}
+			
 			if(!empty($_REQUEST['countries'])) {
 				$tmp = explode('|', $_REQUEST['countries']);
 				foreach($tmp AS &$s) {
 					$selected[$s] = $_COUNTRY_ISO_MAP[$s];
+				}
+				
+				if(!empty($srch_countries) && !isset($selected[$srch_countries])) {
+					$selected[$srch_countries] = $_COUNTRY_ISO_MAP[$srch_countries];
+				}
+				
+				if(count($selected)>$limit) {
+					$limit=count($selected);
+					$_data = $selected;
+				} else {
+					$limit -= count($selected);
+					$_data = array_diff($_data, $selected);
+				}
+			} else {
+				if(!empty($srch_countries)) {
+					$selected[$srch_countries] = $_COUNTRY_ISO_MAP[$srch_countries];
 				}
 				
 				if(count($selected)>$limit) {
@@ -706,6 +753,7 @@ function wp_generate_constants() {
 	$regions = array();
 	while($start<$count) {
 		$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&start={$start}&limit={$limit}";
+		$content = file_get_contents($activities_url);
 		$result = json_decode($content);
 		$objects = $result->objects;
 		$activities = objectToArray($objects);
@@ -788,54 +836,35 @@ $_REGION_CHOICES = array(
 }
 
 function wp_generate_paging($meta) {
+	global $_PER_PAGE;
 	//fix the paging 
 	$total_count = $meta->total_count;
 	$offset = $meta->offset;
 	$limit = $meta->limit;
-	$per_page = 20;
+	$per_page = $_PER_PAGE;
 	$total_pages = ceil($total_count/$limit);
 	$cur_page = $offset/$limit + 1;
 	
 	$paging_block = "<ul class='menu pagination'><li><a href='javascript:void(0);' class='start'><span>&laquo;</span></a></li><li><a href='javascript:void(0);' class='limitstart'><span>&larr; </span></a></li>";
-	$page_limit = 7;
-	$fromPage = $cur_page - 3;
-	if($fromPage<=0) $fromPage = 1;
-	$loop_limit = ($total_pages>$page_limit?($fromPage + $page_limit - 1):$total_pages);
+	$page_limit = 3;
+	$show_dots = true;
 		
 
-	for($i=$fromPage; $i<=$loop_limit; $i++) {
+	for($i=1; $i<=$total_pages; $i++) {
 		$paging_block .= "<li>";
-		if($cur_page==i) {
-			$paging_block .= "<a href='javascript:void(0);' class='active'><span id='cur_page'>{$i}</span></a>";
-		} else {
-			$paging_block .= "<a href='javascript:void(0);' class='page'><span>{$i}</span></a>";
-		}
-		$paging_block .= "</li>";
-	}
-	if(($fromPage+$loop_limit)<($total_pages-3)) {
-		if($total_pages>$page_limit) {
-			$paging_block .= "<li>...</li>";
-		}
-		
-		for($i=$total_pages-2; $i<=$total_pages; $i++) {
-			$paging_block .= "<li>";
-			
-			$paging_block .= "<a href='javascript:void(0);' class='page'><span>{$i}</span></a>";
-		
-			$paging_block .= "</li>";
-		}
-	} else {
-
-		for($i=$loop_limit+1; $i<=$total_pages; $i++) {
-			$paging_block .= "<li>";
-			if($cur_page==i) {
+		if ($i == 1 || $i == $total_pages || ($i >= $cur_page - $page_limit && $i <= $cur_page + $page_limit) ) {
+			$show_dots = true;
+			if($cur_page==$i) {
 				$paging_block .= "<a href='javascript:void(0);' class='active'><span id='cur_page'>{$i}</span></a>";
 			} else {
 				$paging_block .= "<a href='javascript:void(0);' class='page'><span>{$i}</span></a>";
 			}
-			$paging_block .= "</li>";
-		}
 		
+		} else if ($show_dots == true) {
+			$show_dots = false;
+			$paging_block .= "...";
+		}
+		$paging_block .= "</li>";
 	}
 		
 	$paging_block .= "<li><a href='javascript:void(0);' class='endmilit'><span>&rarr; </span></a></li><li><a href='javascript:void(0)' class='end'><span>&raquo;</span></a></li></ul>";

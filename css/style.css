@@ -16,6 +16,7 @@ dt { float:left; }
 #opunh-footerwrap{ width:100%;background:url(../images/footerbg2.png) left top repeat-x; }
 #opunh-footer{height:85px;overflow:hidden;}
 .menu,.menu li{ float:left; list-style:none}
+ul.pagination {display:inline-block; float:none;}
 .menu li a,.menu li span{ display:block;}
 .clr{ clear:both; height:1px; overflow:hidden;}
 .button{ cursor:pointer;}
@@ -321,7 +322,7 @@ div.infowindow { max-height:250px; }
 .contactform .button,#qcf-style #submit,.back-form{ border:none; margin:5px 15px 0 0;width:90px;color:#fff; background:#42604f;text-shadow:0px 1px #000000; font-size:14px; text-transform:uppercase; height:28px; float:right;}
 .back-form{ margin-right:0px;}
 .shrt{width:470px; overflow:hidden; float:left;}
-#pagination { margin:20px auto 10px auto; width:300px;}
+#pagination { margin:20px auto 10px auto; text-align:center;}
 .pagination li{ float:left;}
 .pagination li a{ padding:2px 5px; margin:0 5px; display:block; color:#595959;}
 .pagination li span{display:block; padding:0px 3px;}

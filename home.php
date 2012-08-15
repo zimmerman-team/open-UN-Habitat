@@ -28,7 +28,7 @@
 				<ul>
 					<li class="country"><a href="#" class="active"><span>View by Country</span></a></li>
 					<li class="region"><a href="#" ><span>View by Regions</span></a></li>
-					<li class="global-pr"><a href="#"><span>Global Projects</span></a></li>
+					<li class="global-pr"><a href="<?php echo get_option('home'); ?>/?s=&countries=WW"><span>Global Projects</span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -46,7 +46,7 @@
 				 <!--	<li><a href="#"><span>By Tags</span></a></li>-->
 				</ul>
 				<ul class="menu global">
-					<li><a href="<?php echo get_option('home'); ?>/?s=" title="View all Global Projects">Global Projects</a></li>
+					<li><a href="<?php echo get_option('home'); ?>/?s=&countries=WW" title="View all Global Projects">Global Projects</a></li>
 				</ul>
 			</div>
 		</div>

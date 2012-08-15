@@ -67,7 +67,19 @@ else
 										<a href="javascript:void(0);" id="clearSearchBtn">Clear Search<span>X</span></a>
 									</div>
 									<ul>
-									   <?php 
+									   <?php
+										if(isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
+											$query = rawurlencode($_REQUEST['s']);
+											$srch_countries = array_map('strtolower', $_COUNTRY_ISO_MAP);
+											$srch_countries = array_flip($srch_countries);
+											$key = strtolower($query);
+											if(isset($srch_countries[$key])) {
+												$srch_countries = $srch_countries[$key];
+											} else {
+												$srch_countries = null;
+											}
+										}
+									   
 										if(!empty($_REQUEST['countries'])) {
 											echo "<li><span>Countries:</span>";
 											$sep = '';
@@ -80,7 +92,18 @@ else
 												$countries .= $cSep . $s;
 												$cSep = '|';
 											}
+											if(!empty($srch_countries) && !in_array($srch_countries, $tmp)) {
+												echo $sep .'<a href="#">'.$_COUNTRY_ISO_MAP[$srch_countries].'</a>';
+												$countries .= $cSep . $srch_countries;
+											}
 											echo "</li>";
+										} else {
+											if(!empty($srch_countries)) {
+												echo "<li><span>Countries:</span>";
+												echo '<a href="#">'.$_COUNTRY_ISO_MAP[$srch_countries].'</a>';
+												$countries = $srch_countries;
+												echo "</li>";
+											}
 										}
 										
 										if(!empty($_REQUEST['regions'])) {
@@ -145,6 +168,19 @@ else
 								</div>
 								<ul>
 									<?php 
+									
+										if(isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
+											$query = rawurlencode($_REQUEST['s']);
+											$srch_countries = array_map('strtolower', $_COUNTRY_ISO_MAP);
+											$srch_countries = array_flip($srch_countries);
+											$key = strtolower($query);
+											if(isset($srch_countries[$key])) {
+												$srch_countries = $srch_countries[$key];
+											} else {
+												$srch_countries = null;
+											}
+										}
+										
 										if(!empty($_REQUEST['countries'])) {
 											echo "<li><span>Countries:</span>";
 											$sep = '';
@@ -153,7 +189,18 @@ else
 												echo $sep .'<a href="#">'.$_COUNTRY_ISO_MAP[$s].'</a>';
 												$sep = ', ';
 											}
+											if(!empty($srch_countries) && !in_array($srch_countries, $tmp)) {
+												echo $sep .'<a href="#">'.$_COUNTRY_ISO_MAP[$srch_countries].'</a>';
+												$countries .= $cSep . $srch_countries;
+											}
 											echo "</li>";
+										} else {
+											if(!empty($srch_countries)) {
+												echo "<li><span>Countries:</span>";
+												echo '<a href="#">'.$_COUNTRY_ISO_MAP[$srch_countries].'</a>';
+												$countries = $srch_countries;
+												echo "</li>";
+											}
 										}
 										
 										if(!empty($_REQUEST['regions'])) {
