@@ -11,7 +11,7 @@
 		<div class="searchmapwrap">
 			<div class="searchmap">
 				<div id="map_canvas" style="width: 960px; height: 340px;"></div>
-				<!--<iframe width="960" height="340" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/?ie=UTF8&amp;ll=7.013668,87.1875&amp;spn=157.014702,358.242188&amp;t=m&amp;z=2&amp;output=embed"></iframe>-->
+
 				
 				
 			</div>
