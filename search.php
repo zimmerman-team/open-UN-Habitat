@@ -58,8 +58,8 @@ else
 								<div class="layout">
 									<span>view results as:</span>
 									<ul>
-										<li class="vlist"><a href="<?php echo get_option('home'); ?><?php echo str_replace(array(" ", "&layout=m"),array("+", ""),$_SERVER['REQUEST_URI']); ?>" title="View as List"><span>View as List</span></a></li>
-										<li class="vmap"><a href="<?php echo get_option('home'); ?><?php echo str_replace(" ","+",$_SERVER['REQUEST_URI']); ?>&layout=m" class="active" title="View as Map"><span>View as Map</span></a></li>
+										<li class="vlist"><a href="<?php echo get_option('home'); ?><?php echo str_replace(array(" ", "&amp;layout=m"),array("+", ""),$_SERVER['REQUEST_URI']); ?>" title="View as List"><span>View as List</span></a></li>
+										<li class="vmap"><a href="<?php echo get_option('home'); ?><?php echo str_replace(" ","+",$_SERVER['REQUEST_URI']); ?>&amp;layout=m" class="active" title="View as Map"><span>View as Map</span></a></li>
 									</ul>
 								</div>
 								<div class="searchcriteria" <?php echo ($has_filter?'':' style="display: none;"')?>>
@@ -158,8 +158,8 @@ else
 							<div class="layout">
 								<span>view results as:</span>
 								<ul>
-									<li class="vlist"><a href="<?php echo get_option('home'); ?><?php echo str_replace(array(" ", "&layout=m"),array("+", ""),$_SERVER['REQUEST_URI']); ?>" class="active" title="View as List"><span>View as List</span></a></li>
-									<li class="vmap"><a href="<?php echo get_option('home'); ?><?php echo str_replace(" ","+",$_SERVER['REQUEST_URI']); ?>&layout=m" title="View as Map"><span>View as Map</span></a></li>
+									<li class="vlist"><a href="<?php echo get_option('home'); ?><?php echo str_replace(array(" ", "&amp;layout=m"),array("+", ""),$_SERVER['REQUEST_URI']); ?>" class="active" title="View as List"><span>View as List</span></a></li>
+									<li class="vmap"><a href="<?php echo get_option('home'); ?><?php echo str_replace(" ","+",$_SERVER['REQUEST_URI']); ?>&amp;layout=m" title="View as Map"><span>View as Map</span></a></li>
 								</ul>
 							</div>
 							<div class="searchcriteria" <?php echo ($has_filter?'':' style="display: none;"')?>>
@@ -252,15 +252,15 @@ else
 							</ul> 
 							<div id="contxmenu_det2">
 								  <ul>
-									<li<?php if(in_array("all",$details)){?> class="active"<?php }?>><a href="<?php echo get_option('home'); ?>/?s=<?php echo str_replace(" ","+",$_REQUEST['s']); ?>&details[]=all">On</a></li>
-									<li<?php if(in_array("none",$details)){?> class="active"<?php }?>><a href="<?php echo get_option('home'); ?>/?s=<?php echo str_replace(" ","+",$_REQUEST['s']); ?>&details[]=none">Off</a></li>
+									<li<?php if(in_array("all",$details)){?> class="active"<?php }?>><a href="<?php echo get_option('home'); ?>/?s=<?php echo str_replace(" ","+",$_REQUEST['s']); ?>&amp;details[]=all">On</a></li>
+									<li<?php if(in_array("none",$details)){?> class="active"<?php }?>><a href="<?php echo get_option('home'); ?>/?s=<?php echo str_replace(" ","+",$_REQUEST['s']); ?>&amp;details[]=none">Off</a></li>
 									<li class="customlink<?php if(count($details)>0 && count($details)<4 && !in_array("all",$details) && !in_array("none",$details)){?> active<?php }?>" >
 										<a href="javascript:void(0);">Custom</a>
 										<form action="<?php echo get_option('home'); ?>/?s=<?php echo str_replace(" ","+",$_REQUEST['s']); ?>" method="post" name="detailForm" id="detailForm">
-											<label><input name="details[]" <?php if(in_array("all",$details) ||in_array("country",$details) ){?>checked="checked"<?php } ?>value="country" id="detail_1" type="checkbox">Country</label>
-											<label><input name="details[]" <?php if(in_array("all",$details) || in_array("subject",$details) ){?>checked="checked"<?php } ?>value="subject" id="detail_2" type="checkbox">Subject</label>
-											<label><input name="details[]" <?php if(in_array("all",$details) || in_array("budget",$details) ){?>checked="checked"<?php } ?>value="budget" id="detail_3" type="checkbox">Budget</label>
-											<label><input name="details[]" <?php if(in_array("all",$details) || in_array("sector",$details) ){?>checked="checked"<?php } ?>value="sector" id="detail_4" type="checkbox">Sector</label>
+											<label><input name="details[]" <?php if(in_array("all",$details) ||in_array("country",$details) ){?>checked="checked"<?php } ?>value="country" id="detail_1" type="checkbox" />Country</label>
+											<label><input name="details[]" <?php if(in_array("all",$details) || in_array("subject",$details) ){?>checked="checked"<?php } ?>value="subject" id="detail_2" type="checkbox" />Subject</label>
+											<label><input name="details[]" <?php if(in_array("all",$details) || in_array("budget",$details) ){?>checked="checked"<?php } ?>value="budget" id="detail_3" type="checkbox" />Budget</label>
+											<label><input name="details[]" <?php if(in_array("all",$details) || in_array("sector",$details) ){?>checked="checked"<?php } ?>value="sector" id="detail_4" type="checkbox" />Sector</label>
 										</form>
 										<a href="javascript:void(0);" id="submitButton" class="linkbtn"><strong>Apply</strong></a>|<a id="cancelButton" href="javascript:void(0);" class="linkbtn">Cancel</a>
 									</li>
@@ -276,7 +276,7 @@ else
 						</div>
 						
 						<!--Pagination-->
-						<input type="hidden" id="total_results" value="<?php echo $meta->total_count; ?>">
+						<input type="hidden" id="total_results" value="<?php echo $meta->total_count; ?>" />
 						<div id="pagination">
 							<?php echo wp_generate_paging($meta); ?>
 						<div class="clr"></div>
@@ -311,27 +311,27 @@ else
 		$search_url = "";
 		if(isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
 			$query = rawurlencode($_REQUEST['s']);
-			$search_url .= "&query={$query}";
+			$search_url .= "&amp;query={$query}";
 		}
 		if(!empty($_REQUEST['regions'])) {
 			$regions = explode('|', trim($_REQUEST['regions']));
 			foreach($regions AS &$c) $c = trim($c);
 			$regions = implode('|', $regions);
-			$search_url .= "&regions={$regions}";
+			$search_url .= "&amp;regions={$regions}";
 		}
 		
 		if(!empty($_REQUEST['sectors'])) {
 			$sectors = explode('|', trim($_REQUEST['sectors']));
 			foreach($sectors AS &$c) $c = trim($c);
 			$sectors = implode('|', $sectors);
-			$search_url .= "&sectors={$sectors}";
+			$search_url .= "&amp;sectors={$sectors}";
 		}
 		
 		if(!empty($_REQUEST['budgets'])) {
 			$budgets = explode('|', trim($_REQUEST['budgets']));
 			//Get the lowest budget from filter and use this one, all the other are included in the range
 			ksort($budgets);
-			$search_url .= "&budgets={$budgets[0]}";
+			$search_url .= "&amp;budgets={$budgets[0]}";
 		}
 		if($layout=='m') { 
 	?>

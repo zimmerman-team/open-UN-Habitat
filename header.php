@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
 <head profile="http://gmpg.org/xfn/11">
 
@@ -34,6 +34,7 @@
     <!--STYLE FILES-->
 	<link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" />
     <link href="<?php bloginfo('template_url'); ?>/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="<?php bloginfo('template_url'); ?>/css/slickmap.css" rel="stylesheet" type="text/css" />
 	<link href="<?php bloginfo('template_url'); ?>/assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" type="text/css" />
 	<link href="<?php bloginfo('template_url'); ?>/assets/jeegoocontext/skins/cm_blue/style.css" rel="stylesheet" type="text/css" />
 	
@@ -41,10 +42,11 @@
 	<script src="<?php bloginfo('template_url'); ?>/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/jeegoocontext/jquery.jeegoocontext.min.js" type="text/javascript"></script>
-    <script src="<?php bloginfo('template_url'); ?>/js/script.js?theme_path=<?php bloginfo('template_url'); ?>&blog_name=<?php bloginfo('name'); ?>" type="text/javascript"></script>
+    <script src="<?php bloginfo('template_url'); ?>/js/script.js?theme_path=<?php bloginfo('template_url'); ?>&amp;blog_name=<?php bloginfo('name'); ?>" type="text/javascript"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/selector.js" type="text/javascript"></script>
 	<?php if(is_home()){?>
 	<script type="text/javascript" charset="utf-8">
+	<!--
 		function initialize() {
 
 			var result = <?php echo json_encode(wp_generate_home_map_data());?>;
@@ -131,6 +133,7 @@
 			script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
 			document.body.appendChild(script);
 		});
+		// -->
 	</script>
 		
 	<?php } ?>	
@@ -151,11 +154,11 @@
 			<ul class="menu mainsite">
                 <li><a href="http://www.unhabitat.org/" target="_blank"><span>Go to UN-Habitat main website</span></a></li>
             </ul>
-            <ul class="menu lang">
+            <?php /*?><ul class="menu lang">
                 <li class="active"><a href="#"><span>EN</span></a></li>
                 <li><a href="#"><span>FR</span></a></li>
                 <li><a href="#"><span>ES</span></a></li>
-            </ul>
+            </ul><?php */?>
             <!--UTIL MENU-->
 	        <?php wp_nav_menu(array(
 					'menu'			  =>'top-menu',
@@ -175,7 +178,7 @@
                     <!--END SEARCH-->
              	<?php } ?>
                <!--BETA-->
-            	<div class="beta beta-gr">BETA VERSION <a href="<?php echo get_option('home'); ?>/open-un-habitat-is-still-under-development">Read More</a></div>
+            	<div class="beta beta-gr">OPEN BETA VERSION <a href="<?php echo get_option('home'); ?>/open-un-habitat-is-still-under-development">Read More</a></div>
             <!--END BETA-->
             <!--START MAIN MENU-->
                 <div class="mainmenu">

@@ -26,9 +26,9 @@
 			</div>
 			<div class="maptabs">
 				<ul>
-					<li class="country"><a href="<?php echo get_option('home'); ?>?s=&countries=AF|BE|JP|KE|KP|LA|LB|MZ|NP|SO|ES|CH|US" class="active"><span>View by Country</span></a></li>
+					<li class="country"><a href="<?php echo get_option('home'); ?>?s=&amp;countries=AF|BE|JP|KE|KP|LA|LB|MZ|NP|SO|ES|CH|US" class="active"><span>View by Country</span></a></li>
 				<!--	<li class="region"><a href="#" ><span>View by Regions</span></a></li>-->
-					<li class="global-pr"><a href="<?php echo get_option('home'); ?>/?s=&countries=WW"><span>Global</span></a></li>
+					<li class="global-pr"><a href="<?php echo get_option('home'); ?>/?s=&amp;countries=WW"><span>Worldwide Projects</span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -46,7 +46,7 @@
 				 <!--	<li><a href="#"><span>By Tags</span></a></li>-->
 				</ul>
 				<ul class="menu global">
-					<li><a href="<?php echo get_option('home'); ?>/?s=&countries=WW" title="View all Global">Global</a></li>
+					<li><a href="<?php echo get_option('home'); ?>/?s=" title="View all Projects">All Projects</a></li>
 				</ul>
 			</div>
 		</div>
@@ -100,7 +100,6 @@
 					<li><a href="?s=refugees">Refugees</a></li>
 					<li><a href="?s=">Global</a></li>
 				</ul>
-				</p>
 			</div>
         </div>
         <!--END SUMMARY-->

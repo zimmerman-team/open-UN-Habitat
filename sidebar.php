@@ -2,17 +2,20 @@
   	<div class="colLeft">
     	<div class="leftwrap">     		
         <div class="leftmenu">
-        	<h4>Pages</h4>
+        	 <h4>Quick Links</h4>  		
         	<!--UTIL MENU-->
-	        <?php wp_nav_menu(array(
-					'menu'			  =>'left-menu',
-				    'container'       => '',
-					'fallback_cb'	  =>  false,
-					'menu_class'      => 'submenu',
+            <?php
+				if(wp_nav_menu( array( 'theme_location' => 'left-menu', 'fallback_cb' => 'false') )) {
+					echo wp_nav_menu( array( 
+					'sort_column' => 'menu_order', 
+					'container_class' => 'menu-header', 
+					'theme_location' => 'left-menu' , 
+					'echo' => '0',
+					'menu_class'  => 'submenu',
 					'link_before'     => '<span>',
-					'link_after'     => '</span>',
-					'theme_location'  => 'left-menu')
-					); 
+					'link_after'     => '</span>' 
+					));
+				}
 				?>
     	</div>
         <?php 

@@ -4,10 +4,6 @@ Template Name: Sitemap
 */
 ?>
 <?php get_header(); ?>
-<?php
-//add CSS
-wp_enqueue_style('sitemap_css',get_bloginfo('template_url')."/css/slickmap.css");
-?>
 
 <!--START BODY-->
 <div id="opunh-mainbody">
@@ -30,8 +26,8 @@ wp_enqueue_style('sitemap_css',get_bloginfo('template_url')."/css/slickmap.css")
 			<li><a href="<?php echo get_option('home'); ?>/?s=">Projects</a>
 				<ul>
 					<li><a href="<?php echo get_option('home'); ?>/?s=" title="Search">Search</a></li>
-					<li><a href="<?php echo get_option('home'); ?>/?page_id=51&type=cn">Country Summary</a></li>
-					<li><a href="<?php echo get_option('home'); ?>/?page_id=54&type=sc">Section Summary</a></li>
+					<li><a href="<?php echo get_option('home'); ?>/?page_id=51&amp;type=cn">Country Summary</a></li>
+					<li><a href="<?php echo get_option('home'); ?>/?page_id=54&amp;type=sc">Section Summary</a></li>
 					<li><a href="#">Visualization</a></li>
 				</ul>
 			</li>
@@ -41,9 +37,7 @@ wp_enqueue_style('sitemap_css',get_bloginfo('template_url')."/css/slickmap.css")
 		</ul>
 
 	</div>
-            <!--END SITEMAP-->
-         
-		
+            <!--END SITEMAP-->		
         <div class="clr"></div>
   	</div>
 <!--END BODY-->

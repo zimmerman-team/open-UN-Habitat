@@ -127,8 +127,8 @@ function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
 		foreach($objects AS $idx=>$project) {
 			
 			$return .= '<div class="searchresult row'.($idx%2).'">
-                        	<a id="detail_'.$idx.'" href="javascript:void(0);" class="moredetail"></a>';
-			$return .= '<h3><a href="'.$base_url.'/?page_id=2&id='.$project->iati_identifier.'&back_url='.rawurlencode($back_url).'">'.$project->titles[0]->title.'</a></h3>';			
+                        	<a id="rdetail_'.$idx.'" href="javascript:void(0);" class="moredetail"></a>';
+			$return .= '<h3><a href="'.$base_url.'/?page_id=2&amp;id='.$project->iati_identifier.'&amp;back_url='.rawurlencode($back_url).'">'.$project->titles[0]->title.'</a></h3>';			
 			
 			if(in_array("all",$details) || in_array("country",$details) ){
 				$return .= '<span class="detail"><span>Countries</span>:';
@@ -160,7 +160,7 @@ function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
 			}
 			
 			$return .= '<p class="shortdescription">'.$project->descriptions[0]->description.'</p>';
-			$return .= '<div class="resultdetail detail_'.$idx.'">';
+			$return .= '<div class="resultdetail rdetail_'.$idx.'">';
 			$return .= '<div class="rcol rcol1">
 							<ul>
 							  <li><span>Last updated: </span>'.$project->date_updated.'</li>
@@ -290,16 +290,16 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 			
 			$cnt = 1;
 			$checked = "";
-			if(empty($selected)) $checked = "checked";
+			if(empty($selected)) $checked = "checked=\"checked\"";
 			$return .= "<li>
-							<label for=\"id_countries_{$cnt}\"><input name=\"countries\" value=\"All\" id=\"id_countries_{$cnt}\" type=\"checkbox\" {$checked}>All</label>
+							<label for=\"id_countries_{$cnt}\"><input name=\"countries\" value=\"All\" id=\"id_countries_{$cnt}\" type=\"checkbox\" {$checked} />All</label>
 						</li>";
 			if(!empty($selected)) {
 				foreach($selected AS $iso=>$c) {
-					$checked = "checked";
+					$checked = "checked=\"checked\"";
 					$cnt++;
 					$return .= "<li>
-									<label for=\"id_countries_{$cnt}\"><input name=\"countries\" value=\"{$iso}\" id=\"id_countries_{$cnt}\" type=\"checkbox\" {$checked}>{$c}</label>
+									<label for=\"id_countries_{$cnt}\"><input name=\"countries\" value=\"{$iso}\" id=\"id_countries_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
 								</li>";
 				}
 				
@@ -307,10 +307,10 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 			}
 			foreach($_data AS $iso=>$c) {
 				$checked = "";
-				if(isset($selected[$iso])) $checked = "checked";
+				if(isset($selected[$iso])) $checked = "checked=\"checked\"";
 				$cnt++;
 				$return .= "<li>
-							<label for=\"id_countries_{$cnt}\"><input name=\"countries\" value=\"{$iso}\" id=\"id_countries_{$cnt}\" type=\"checkbox\" {$checked}>{$c}</label>
+							<label for=\"id_countries_{$cnt}\"><input name=\"countries\" value=\"{$iso}\" id=\"id_countries_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
 						</li>";
 				if($cnt>$limit) break;
 			}
@@ -348,16 +348,16 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 			
 			$cnt = 1;
 			$checked = "";
-			if(empty($selected)) $checked = "checked";
+			if(empty($selected)) $checked = "checked=\"checked\"";
 			$return .= "<li>
-							<label for=\"id_regions_{$cnt}\"><input name=\"regions\" value=\"All\" id=\"id_regions_{$cnt}\" type=\"checkbox\" {$checked}>All</label>
+							<label for=\"id_regions_{$cnt}\"><input name=\"regions\" value=\"All\" id=\"id_regions_{$cnt}\" type=\"checkbox\" {$checked} />All</label>
 						</li>";
 			if(!empty($selected)) {
 				foreach($selected AS $iso=>$c) {
-					$checked = "checked";
+					$checked = "checked=\"checked\"";
 					$cnt++;
 					$return .= "<li>
-									<label for=\"id_regions_{$cnt}\"><input name=\"regions\" value=\"{$iso}\" id=\"id_regions_{$cnt}\" type=\"checkbox\" {$checked}>{$c}</label>
+									<label for=\"id_regions_{$cnt}\"><input name=\"regions\" value=\"{$iso}\" id=\"id_regions_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
 								</li>";
 				}
 				
@@ -365,10 +365,10 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 			}
 			foreach($_data AS $iso=>$c) {
 				$checked = "";
-				if(isset($selected[$iso])) $checked = "checked";
+				if(isset($selected[$iso])) $checked = "checked=\"checked\"";
 				$cnt++;
 				$return .= "<li>
-							<label for=\"id_regions_{$cnt}\"><input name=\"regions\" value=\"{$iso}\" id=\"id_regions_{$cnt}\" type=\"checkbox\" {$checked}>{$c}</label>
+							<label for=\"id_regions_{$cnt}\"><input name=\"regions\" value=\"{$iso}\" id=\"id_regions_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
 						</li>";
 				if($cnt>$limit) break;
 			}
@@ -405,16 +405,16 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 			
 			$cnt = 1;
 			$checked = "";
-			if(empty($selected)) $checked = "checked";
+			if(empty($selected)) $checked = "checked=\"checked\"";
 			$return .= "<li>
-							<label for=\"id_sectors_{$cnt}\"><input name=\"sectors\" value=\"All\" id=\"id_sectors_{$cnt}\" type=\"checkbox\" {$checked}>All</label>
+							<label for=\"id_sectors_{$cnt}\"><input name=\"sectors\" value=\"All\" id=\"id_sectors_{$cnt}\" type=\"checkbox\" {$checked} />All</label>
 						</li>";
 			if(!empty($selected)) {
 				foreach($selected AS $iso=>$c) {
-					$checked = "checked";
+					$checked = "checked=\"checked\"";
 					$cnt++;
 					$return .= "<li>
-									<label for=\"id_sectors_{$cnt}\"><input name=\"sectors\" value=\"{$iso}\" id=\"id_sectors_{$cnt}\" type=\"checkbox\" {$checked}>{$c}</label>
+									<label for=\"id_sectors_{$cnt}\"><input name=\"sectors\" value=\"{$iso}\" id=\"id_sectors_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
 								</li>";
 				}
 				
@@ -422,10 +422,10 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 			}
 			foreach($_data AS $iso=>$c) {
 				$checked = "";
-				if(isset($selected[$iso])) $checked = "checked";
+				if(isset($selected[$iso])) $checked = "checked=\"checked\"";
 				$cnt++;
 				$return .= "<li>
-							<label for=\"id_sectors_{$cnt}\"><input name=\"sectors\" value=\"{$iso}\" id=\"id_sectors_{$cnt}\" type=\"checkbox\" {$checked}>{$c}</label>
+							<label for=\"id_sectors_{$cnt}\"><input name=\"sectors\" value=\"{$iso}\" id=\"id_sectors_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
 						</li>";
 				if($cnt>$limit) break;
 			}
@@ -455,16 +455,16 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 			
 			$cnt = 1;
 			$checked = "";
-			if(empty($selected)) $checked = "checked";
+			if(empty($selected)) $checked = "checked=\"checked\"";
 			$return .= "<li>
-							<label for=\"id_budgets_{$cnt}\"><input name=\"budgets\" value=\"All\" id=\"id_budgets_{$cnt}\" type=\"checkbox\" {$checked}>All</label>
+							<label for=\"id_budgets_{$cnt}\"><input name=\"budgets\" value=\"All\" id=\"id_budgets_{$cnt}\" type=\"checkbox\" {$checked} />All</label>
 						</li>";
 			foreach($_data AS $iso=>$c) {
 				$checked = "";
-				if(isset($selected[$iso])) $checked = "checked";
+				if(isset($selected[$iso])) $checked = "checked=\"checked\"";
 				$cnt++;
 				$return .= "<li>
-							<label for=\"id_budgets_{$cnt}\"><input name=\"budgets\" value=\"{$iso}\" id=\"id_budgets_{$cnt}\" type=\"checkbox\" {$checked}>{$c}</label>
+							<label for=\"id_budgets_{$cnt}\"><input name=\"budgets\" value=\"{$iso}\" id=\"id_budgets_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
 						</li>";
 				if($cnt>$limit) break;
 			}
@@ -498,7 +498,7 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 	
 	$return = '	<div id="__FILTERID__" class="nodisp">
 						<div style="position:relative;">
-							<div class="submtBtns rounded-corners-bottom" id="popupsubmtBtn">
+							<div class="submtBtns rounded-corners" id="popupsubmtBtn">
 								<a href="'.$base_url.'/?s='.$query.'">__FILTERDESC__</a>
 							</div>
 						';
@@ -523,13 +523,13 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			}
 			
 			$return = preg_replace("/__FILTERID__/", strtolower($filter)."_popup", $return);
-			$return = preg_replace("/__FILTERDESC__/", "Select the countries you wish to see from below and click here to see Search Results", $return);
+			$return = preg_replace("/__FILTERDESC__/", "SEARCH", $return);
 			
 			$checked = "";
-			if(empty($selected)) $checked = "checked";
+			if(empty($selected)) $checked = "checked=\"checked\"";
 			$return .= '<div class="countrieslist">
 							<div class="all">
-								<label for="id_countries_1"><input name="countries" value="All" id="id_countries_1" type="checkbox" '.$checked.'/>All</label>
+								<label for="id_countries_0"><input name="countries" value="All" id="id_countries_0" type="checkbox" '.$checked.' />All</label>
 							</div>';
 			
 			$fltr_cnt = count($_COUNTRY_ISO_MAP);
@@ -545,10 +545,10 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			if(!empty($_COUNTRY_ISO_MAP)) {
 				foreach($_COUNTRY_ISO_MAP AS $iso=>$c) {
 					$checked = "";
-					if(isset($selected[$iso])) $checked = "checked";
+					if(isset($selected[$iso])) $checked = "checked=\"checked\"";
 					$cnt++;
 					$return .= "<li>
-								<input name=\"countries\" id=\"check-country{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked}/>
+								<input name=\"countries\" id=\"check-country{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked} />
 								<label for=\"check-country{$cnt}\">{$c}</label>
 							</li>";
 					if($cnt%$items_per_col==0) {
@@ -578,13 +578,13 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			}
 			
 			$return = preg_replace("/__FILTERID__/", strtolower($filter)."_popup", $return);
-			$return = preg_replace("/__FILTERDESC__/", "Select the regions you wish to see from below and click here to see Search Results", $return);
+			$return = preg_replace("/__FILTERDESC__/", "SEARCH", $return);
 			
 			$checked = "";
-			if(empty($selected)) $checked = "checked";
+			if(empty($selected)) $checked = "checked=\"checked\"";
 			$return .= '<div class="regionslist">
 							<div class="all">
-								<label for="id_regions_1"><input name="regions" value="All" id="id_regions_1" type="checkbox" '.$checked.'/>All</label>
+								<label for="id_regions_0"><input name="regions" value="All" id="id_regions_0" type="checkbox" '.$checked.' />All</label>
 							</div>';
 			
 			$fltr_cnt = count($_REGION_CHOICES);
@@ -600,10 +600,10 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			if(!empty($_REGION_CHOICES)) {
 				foreach($_REGION_CHOICES AS $iso=>$c) {
 					$checked = "";
-					if(isset($selected[$iso])) $checked = "checked";
+					if(isset($selected[$iso])) $checked = "checked=\"checked\"";
 					$cnt++;
 					$return .= "<li>
-								<input name=\"regions\" id=\"check-region{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked}/>
+								<input name=\"regions\" id=\"check-region{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked} />
 								<label for=\"check-region{$cnt}\">{$c}</label>
 							</li>";
 					if($cnt%$items_per_col==0) {
@@ -634,13 +634,13 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			}
 			
 			$return = preg_replace("/__FILTERID__/", strtolower($filter)."_popup", $return);
-			$return = preg_replace("/__FILTERDESC__/", "Select the sectors you wish to see from below and click here to see Search Results", $return);
+			$return = preg_replace("/__FILTERDESC__/", "SEARCH", $return);
 			
 			$checked = "";
-			if(empty($selected)) $checked = "checked";
+			if(empty($selected)) $checked = "checked=\"checked\"";
 			$return .= '<div class="sectorslist">
 							<div class="all">
-								<label for="id_sectors_1"><input name="sectors" value="All" id="id_sectors_1" type="checkbox" '.$checked.'/>All</label>
+								<label for="id_sectors_0"><input name="sectors" value="All" id="id_sectors_0" type="checkbox" '.$checked.' />All</label>
 							</div>';
 			
 			$fltr_cnt = count($_SECTOR_CHOICES);
@@ -656,10 +656,10 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			if(!empty($_SECTOR_CHOICES)) {
 				foreach($_SECTOR_CHOICES AS $iso=>$c) {
 					$checked = "";
-					if(isset($selected[$iso])) $checked = "checked";
+					if(isset($selected[$iso])) $checked = "checked=\"checked\"";
 					$cnt++;
 					$return .= "<li>
-								<input name=\"sectors\" id=\"check-sector{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked}/>
+								<input name=\"sectors\" id=\"check-sector{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked} />
 								<label for=\"check-sector{$cnt}\">{$c}</label>
 							</li>";
 					if($cnt%$items_per_col==0) {
@@ -688,13 +688,13 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			}
 			
 			$return = preg_replace("/__FILTERID__/", strtolower($filter)."_popup", $return);
-			$return = preg_replace("/__FILTERDESC__/", "Select the budget you wish to see from below and click here to see Search Results", $return);
+			$return = preg_replace("/__FILTERDESC__/", "SEARCH", $return);
 			
 			$checked = "";
-			if(empty($selected)) $checked = "checked";
+			if(empty($selected)) $checked = "checked=\"checked\"";
 			$return .= '<div class="budgetlist">
 							<div class="all">
-								<label for="id_budgets_1"><input name="budgets" value="All" id="id_budgets_1" type="checkbox" '.$checked.'/>All</label>
+								<label for="id_budgets_0"><input name="budgets" value="All" id="id_budgets_0" type="checkbox" '.$checked.' />All</label>
 							</div>';
 			
 			$fltr_cnt = count($_BUDGET_CHOICES);
@@ -709,10 +709,10 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 			$return .= "<div class=\"col\"><ul>";
 			foreach($_BUDGET_CHOICES AS $iso=>$c) {
 				$checked = "";
-				if(isset($selected[$iso])) $checked = "checked";
+				if(isset($selected[$iso])) $checked = "checked=\"checked\"";
 				$cnt++;
 				$return .= "<li>
-							<input name=\"budgets\" id=\"check-budget{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked}/>
+							<input name=\"budgets\" id=\"check-budget{$cnt}\" class=\"check\" type=\"checkbox\" value=\"{$iso}\" {$checked} />
 							<label for=\"check-budget{$cnt}\">{$c}</label>
 						</li>";
 				if($cnt%$items_per_col==0) {
