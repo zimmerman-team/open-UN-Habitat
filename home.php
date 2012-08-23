@@ -94,11 +94,11 @@
 			<div class="col col4">
 				<h4>Popular Searches</h4>
 				<ul class="popsearch">
-					<li><a href="?s=Kenya">Kenya</a></li>
-					<li><a href="?s=Afghanistan">Afghanistan</a></li>
-					<li><a href="?s=reintegration">Reintegration</a></li>
-					<li><a href="?s=refugees">Refugees</a></li>
-					<li><a href="?s=">Global</a></li>
+					<li><a href="?s=training">Training</a></li>
+					<li><a href="?s=climate">Climate</a></li>
+					<li><a href="?s=cities">Cities</a></li>
+					<li><a href="?s=water">Water</a></li>
+					<li><a href="?s=housing">Housing</a></li>
 				</ul>
 			</div>
         </div>
