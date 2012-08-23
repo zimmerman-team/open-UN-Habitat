@@ -64,7 +64,7 @@ else
 								</div>
 								<div class="searchcriteria" <?php echo ($has_filter?'':' style="display: none;"')?>>
 									<div class="clearresults">
-										<a href="javascript:void(0);" id="clearSearchBtn">Clear Search<span>X</span></a>
+										<a href="<?php echo get_option('home'); ?>?s=" id="clearSearchBtn">Clear Search<span>X</span></a>
 									</div>
 									<ul>
 									   <?php
@@ -164,7 +164,7 @@ else
 							</div>
 							<div class="searchcriteria" <?php echo ($has_filter?'':' style="display: none;"')?>>
 								<div class="clearresults">
-									<a href="javascript:void(0);" id="clearSearchBtn">Clear Search<span>X</span></a>
+									<a href="<?php echo get_option('home'); ?>?s=" id="clearSearchBtn">Clear Search<span>X</span></a>
 								</div>
 								<ul>
 									<?php 

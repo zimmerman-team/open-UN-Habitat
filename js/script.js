@@ -2,8 +2,6 @@ var sThemePath = '', sBlogName = '', _per_page = 5;
 // JavaScript Document
 $(document).ready(function() {
 	
-	
-	
 	$('script').each(function() {
 	  if($(this).attr('src') !== undefined) {
 		if($(this).attr('src').indexOf('theme_path') > -1) {
@@ -27,6 +25,7 @@ $(document).ready(function() {
 		openEffect	: 'none',
 		closeEffect	: 'none'
 	});
+	
 	//close
 	$('#close').click(function(){
 		$('.textblurb').fadeOut(400);
@@ -319,7 +318,7 @@ $(document).ready(function() {
 		window.location = baseUrl;
 		return false;
 	});
-	
+	/*
 	$('#clearSearchBtn').click(function(){
 		$(".filterbox .filtercontent input[name=countries]").attr('checked', false);
 		$(".filterbox .filtercontent input[name=countries]:first").attr('checked', true);
@@ -336,7 +335,7 @@ $(document).ready(function() {
 		} else {
 			processAjaxFilters(0);
 		}
-	});
+	});*/
 	
 	//Layout button click
 	$('div.layout>ul>li>a').click(function(){
@@ -903,8 +902,8 @@ function processAjaxFilters(offset, sort_by) {
 
 function applyFilterHTML(selected) {
 	$('.searchcriteria').empty();
-	
-	var html = '<div class="clearresults"><a href="javascript:void(0);" id="clearSearchBtn">Clear Search<span>X</span></a></div>';
+	var baseUrl = top.location.pathname.toString();
+	var html = '<div class="clearresults"><a href="'+baseUrl+'?s=" id="clearSearchBtn">Clear Search<span>X</span></a></div>';
 	html += '<ul>';
 	var sep = '';
 	if(!$.isEmptyObject(selected.countries)) {
@@ -953,7 +952,7 @@ function applyFilterHTML(selected) {
 	html += '</ul>';
 	$('.searchcriteria').html(html);
 	$('.searchcriteria').show();
-	$('#clearSearchBtn').click(function(){
+	/*$('#clearSearchBtn').click(function(){
 		$(".filterbox .filtercontent input[name=countries]").attr('checked', false);
 		$(".filterbox .filtercontent input[name=countries]:first").attr('checked', true);
 		$(".filterbox .filtercontent input[name=regions]").attr('checked', false);
@@ -968,7 +967,7 @@ function applyFilterHTML(selected) {
 		} else {
 			processAjaxFilters(0);
 		}
-	});
+	});*/
 }
 
 function applyResults(meta, objects) {

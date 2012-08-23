@@ -35,8 +35,10 @@ if(!function_exists(objectToArray)) {
 			$array['objects'][$c] = array('path' => $_GM_POLYGONS[$c], 'name' => $_COUNTRY_ISO_MAP[$c], 'total_cnt' => 0);
 		}
 		
-		$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit=0&countries={$FILTER['countries']}";
-		
+		$activities_url = SEARCH_URL . "activities/?format=json&limit=0&countries={$FILTER['countries']}";
+		if(!empty($_DEFAULT_ORGANISATION_ID)) {
+			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
+		}
 		if(!empty($FILTER['query'])) {
 			$activities_url .= "&query={$FILTER['query']}";
 		}
@@ -62,8 +64,10 @@ if(!function_exists(objectToArray)) {
 		$limit = $meta->total_count;
 		
 		
-		$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit={$limit}&countries={$FILTER['countries']}";
-		
+		$activities_url = SEARCH_URL . "activities/?format=json&limit={$limit}&countries={$FILTER['countries']}";
+		if(!empty($_DEFAULT_ORGANISATION_ID)) {
+			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
+		}
 		if(!empty($FILTER['query'])) {
 			$activities_url .= "&query={$FILTER['query']}";
 		}
@@ -117,8 +121,11 @@ if(!function_exists(objectToArray)) {
 			}
 		}
 		*/
-		$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit=0";
-	
+		$activities_url = SEARCH_URL . "activities/?format=json&limit=0";
+		if(!empty($_DEFAULT_ORGANISATION_ID)) {
+			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
+		}
+		
 		if(!empty($FILTER['query'])) {
 			$activities_url .= "&query={$FILTER['query']}";
 		}
@@ -142,7 +149,10 @@ if(!function_exists(objectToArray)) {
 		$result = json_decode($content);
 		$meta = $result->meta;
 		$limit = $meta->total_count;
-		$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit={$limit}";
+		$activities_url = SEARCH_URL . "activities/?format=json&limit={$limit}";
+		if(!empty($_DEFAULT_ORGANISATION_ID)) {
+			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
+		}
 		
 		if(!empty($FILTER['query'])) {
 			$activities_url .= "&query={$FILTER['query']}";

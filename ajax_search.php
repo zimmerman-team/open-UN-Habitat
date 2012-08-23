@@ -1,4 +1,5 @@
 <?php
+	include_once( 'constants.php' );
 	
 	$FILTER = getFilter($_GET);
 	
@@ -8,7 +9,10 @@
 	$FILTER['offset'] = intval($FILTER['offset']);
 	if($FILTER['offset']<0) $FILTER['offset'] = 0;
 	
-	$search_url = "http://oipa.openaidsearch.org/api/v2/activities/?format=json&organisations=41120&limit={$FILTER['limit']}&offset={$FILTER['offset']}";
+	$search_url = "http://oipa.openaidsearch.org/api/v2/activities/?format=json&limit={$FILTER['limit']}&offset={$FILTER['offset']}";
+	if(!empty($_DEFAULT_ORGANISATION_ID)) {
+		$search_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
+	}
 	
 	if(!empty($FILTER['query'])) {
 		$search_url .= "&query={$FILTER['query']}";

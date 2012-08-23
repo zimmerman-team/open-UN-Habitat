@@ -1,8 +1,17 @@
 <?php
 	include( TEMPLATEPATH .'/constants.php' );
 	if(file_exists(TEMPLATEPATH . '/countries.php')) {
+		$fmdate = filemtime(TEMPLATEPATH . '/countries.php');
+		if((time() - $fmdate)>$_RELAOD_FILTERS_TIMEOUT) {
+			wp_generate_constants();
+		}
 		include_once( TEMPLATEPATH . '/countries.php' );
 		asort($_COUNTRY_ISO_MAP);
+	} else {
+		wp_generate_constants();
+		include_once( TEMPLATEPATH . '/countries.php' );
+		asort($_COUNTRY_ISO_MAP);
+		
 	}
 	if(file_exists(TEMPLATEPATH . '/sectors.php')) {
 		include_once( TEMPLATEPATH . '/sectors.php' );
@@ -49,15 +58,13 @@
 		}
 		return $query_vars;
 	}
-	
-	if(empty($_COUNTRY_ISO_MAP)) {
-		wp_generate_constants();
-	}
 
 function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
-	global $_PER_PAGE, $_COUNTRY_ISO_MAP;
-	$search_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit={$_PER_PAGE}";
-	
+	global $_DEFAULT_ORGANISATION_ID, $_PER_PAGE, $_COUNTRY_ISO_MAP;
+	$search_url = SEARCH_URL . "activities/?format=json&limit={$_PER_PAGE}";
+	if(!empty($_DEFAULT_ORGANISATION_ID)) {
+		$search_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
+	}
 	if(isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
 		$query = rawurlencode($_REQUEST['s']);
 		
@@ -740,7 +747,11 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 }
 
 function wp_generate_constants() {
-	$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit=0";
+	global $_DEFAULT_ORGANISATION_ID;
+	$activities_url = SEARCH_URL . "activities/?format=json&limit=0";
+	if(!empty($_DEFAULT_ORGANISATION_ID)) {
+		$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
+	}
 	$content = file_get_contents($activities_url);
 	$result = json_decode($content);
 	$meta = $result->meta;
@@ -751,8 +762,13 @@ function wp_generate_constants() {
 	$countries = array();
 	$sectors = array();
 	$regions = array();
+	$budgets = array();
+	$total_budget = 0;
 	while($start<$count) {
-		$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&start={$start}&limit={$limit}";
+		$activities_url = SEARCH_URL . "activities/?format=json&start={$start}&limit={$limit}";
+		if(!empty($_DEFAULT_ORGANISATION_ID)) {
+			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
+		}
 		$content = file_get_contents($activities_url);
 		$result = json_decode($content);
 		$objects = $result->objects;
@@ -763,6 +779,12 @@ function wp_generate_constants() {
 				foreach($a['recipient_country'] AS $c) {
 					if(isset($countries[$c['iso']])) continue;
 					$countries[$c['iso']] = $c['name'];
+					if(!isset($budgets[$c['iso']])) {
+						$budgets[$c['iso']] = $a['statistics']['total_budget'];
+					} else {
+						$budgets[$c['iso']] += $a['statistics']['total_budget'];
+					}
+					$total_budget += $a['statistics']['total_budget'];
 				}
 			}
 			if(!empty($a['activity_sectors'])) {
@@ -794,10 +816,24 @@ $_COUNTRY_ISO_MAP = array(
 		
 	}
 	$to_write .= ');
+$_COUNTRY_BUDGETS = array(
+';
+$to_write .= "'all' => '{$total_budget}',
+";
+		if(!empty($budgets)) {
+		
+			foreach($budgets AS $key=>$value) {
+				$to_write .= "'{$key}' => '{$value}',\n";
+			}
+			
+		}
+
+$to_write .= ');
 ?>';
 	$fp = fopen(TEMPLATEPATH . '/countries.php', 'w+');
 	fwrite($fp, $to_write);
 	fclose($fp);
+	
 	$to_write = '<?php
 $_SECTOR_CHOICES = array(
 ';
@@ -873,15 +909,19 @@ function wp_generate_paging($meta) {
 }
 
 function wp_generate_home_map_data() {
-		global $_GM_POLYGONS;
-		$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit=0";
-	
+		global $_GM_POLYGONS, $_DEFAULT_ORGANISATION_ID;
+		$activities_url = SEARCH_URL . "activities/?format=json&limit=0";
+		if(!empty($_DEFAULT_ORGANISATION_ID)) {
+			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
+		}
 		$content = file_get_contents($activities_url);
 		$result = json_decode($content);
 		$meta = $result->meta;
 		$limit = $meta->total_count;
-		$activities_url = SEARCH_URL . "activities/?format=json&organisations=41120&limit={$limit}";
-		
+		$activities_url = SEARCH_URL . "activities/?format=json&limit={$limit}";
+		if(!empty($_DEFAULT_ORGANISATION_ID)) {
+			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
+		}
 		$content = file_get_contents($activities_url);
 		$result = json_decode($content);
 		$objects = $result->objects;
