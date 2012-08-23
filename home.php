@@ -71,28 +71,28 @@
           <!--SUMMARY-->
         <div class="sm-wrap sitewidth">
 			<!--Country Summary-->
-			<div class="col col1">
+			<div class="col col1"><a href="<?php echo get_option('home'); ?>/where-the-projects-are-found/"
 				<?php
 					$id = 51;
 					$p = get_page($id);
 					echo apply_filters('the_content', $p->post_content);
-				?>
+				?></a>
 			</div>
 			<!--Section Summary-->
-			<div class="col col2">
+			<div class="col col2"><a href="<?php echo get_option('home'); ?>/which-sections-are-covered/"
 				<?php
 					$id = 54;
 					$p = get_page($id);
 					echo apply_filters('the_content', $p->post_content);
-				?>
+				?></a>
 			</div>
 			<!--Visualization Summary-->
-			<div class="col col3">
+			<div class="col col3"><a href="<?php echo get_option('home'); ?>/visualisation/"
 				<?php
 					$id = 57;
 					$p = get_page($id);
 					echo apply_filters('the_content', $p->post_content);
-				?>
+				?></a>
 			</div>
 			<!--Popular Searchlist-->
 			<div class="col col4">
