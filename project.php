@@ -14,6 +14,12 @@ $activity = wp_get_activity($project_id);
 <!--START MAINBODY-->
     <div id="opunh-mainbody">
 	<iframe id="secretIFrame" src="" style="display:none; visibility:hidden;"></iframe>
+    <ul id="actions" class="menu actions">
+                           <li><a href="#" id="<?php echo $activity->iati_identifier; ?>" class="export"><span>Export</span></a></li>
+                           <li><a href="#" class="share"><span>SHARE</span></a></li>
+                           <li><a href="javascript:bookmarksite('Promoting Sustainable Transport Solutions for East Africa', 'http://www.openunh-projectdetail.com')" class="bookmark"><span>BOOKMARK</span></a></li>
+                           <li><a href="<?php echo get_option('home'); ?>/?page_id=42" class="whistleb"><span>WHISTLEBLOWER</span></a></li>
+                        </ul>
     <a href="<?php echo $back_url; ?>" class="backbutton">Back to Search Results</a>
             <div class="clr"></div>
         	<!--SEARCH TITLE BAR-->
@@ -21,7 +27,7 @@ $activity = wp_get_activity($project_id);
                  	<h2><span><?php echo $activity->titles[0]->title; ?></span></h2>
                     	<ul class="shrtdetail">
 							<?php if(!empty($activity->recipient_country)) {?>
-								<li><span>Countries:</span><?php
+								<li><p class="label">Countries:</p><p class="list"><?php
 									$sep = '';
 									$countries = "";
 									$cSep = "";
@@ -31,10 +37,10 @@ $activity = wp_get_activity($project_id);
 										$sep = ', ';
 										$cSep = '|';
 									}
-								?></li>
+								?></p></li>
 							<?php } ?>
 							<?php if(!empty($activity->activity_sectors)) {?>
-								<li><span>Principal Sector:</span><?php
+								<li><p class="label">Principal Sector:</p><p class="list"><?php
 									$sep = '';
 									foreach($activity->activity_sectors AS $sector) {
 										if($sector->name=='No information available') {
@@ -44,18 +50,13 @@ $activity = wp_get_activity($project_id);
 										}
 										$sep = ', ';
 									}
-								?></li>
+								?></p></li>
 							<?php } ?>
 							<?php if(!empty($activity->statistics->total_budget)) {?>
-								<li><span>Budget:</span> US$ <?php echo format_custom_number($activity->statistics->total_budget)  ?></li>
+								<li><p class="label">Budget:</p><p class="list"><span> US$ <?php echo format_custom_number($activity->statistics->total_budget)  ?></span></p></li>
 							<?php } ?>
-                        </ul>
-                        <ul class="menu actions">
-                           <li><a href="#" id="<?php echo $activity->iati_identifier; ?>" class="export"><span>Export</span></a></li>
-                           <li><a href="#" class="share"><span>SHARE</span></a></li>
-                           <li><a href="javascript:bookmarksite('Promoting Sustainable Transport Solutions for East Africa', 'http://www.openunh-projectdetail.com')" class="bookmark"><span>BOOKMARK</span></a></li>
-                           <li><a href="<?php echo get_option('home'); ?>/?page_id=42" class="whistleb"><span>WHISTLEBLOWER</span></a></li>
-                        </ul>
+                        </ul> 
+                        <div class="clr"></div>  
                 </div>
             <!--END SEARCH TITLE BAR-->
             <!--COL-LEFT-->
