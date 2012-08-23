@@ -226,12 +226,15 @@ div.infowindow { max-height:250px; }
 .projecttitle h2, .content h2, .fpgagetitle h2{ border:1px solid #d5d5d5;margin:0 0 5px 0}
 .projecttitle h2 span, .content h2 span, .fpgagetitle h2 span{ display:block;background:#dfdfdf url(../images/bgprojects.png) left top repeat-x; border:1px solid #fafafa; padding:10px; font-size:18px; font-weight:bold; text-shadow:0px 1px #fff; }
 .fpgagetitle h2 span{font-weight:normal;}
-.projecttitle{ position:relative}
-.projecttitle ul.shrtdetail{ margin:0 0 10px 10px;}
-.projecttitle .shrtdetail li span{ font-weight:bold; padding:0 5px 0 0;}
-.projecttitle .actions{ float:right; margin:-25px 0 0 0; width:340px;}
-.projecttitle .actions li a{ color:#898989; font-size:10px; text-transform:uppercase; padding:0 10px 0 18px;}
-.projecttitle .actions li a:hover{ color:#131313;}
+.projecttitle{ position:relative;width:100%; clear:both; margin:0 0 5px 0}
+.projecttitle ul.shrtdetail{ margin:0 0 0 10px; }
+.projecttitle ul.shrtdetail li{ width:100%; clear:both;}
+.projecttitle .shrtdetail li p{ float:left; overflow:hidden;}
+.projecttitle .shrtdetail li p.label{font-weight:bold;padding:0 5px 0 0;}
+.projecttitle .shrtdetail li p.list{ width:85%;}
+#actions{ float:right; margin:0px 0 0 0; width:340px;}
+#actions li a{ color:#898989; font-size:10px; text-transform:uppercase; padding:0 10px 0 18px;}
+#actions li a:hover{ color:#131313;}
 .actions .export{ background:url(../images/export.png) left center no-repeat;}
 .actions .share{ background:url(../images/share-gr.png) left center no-repeat;}
 .actions .bookmark{ background:url(../images/bookmark-gr.png) left center no-repeat;}
