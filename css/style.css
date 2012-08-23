@@ -125,6 +125,7 @@ div.infowindow { max-height:250px; }
 .sm-wrap .col1,.sm-wrap .col2,.sm-wrap .col3{ width:230px; margin:0 10px 0 0; padding:10px 0}
 .sm-wrap .col1 h4,.sm-wrap .col2 h4,.sm-wrap .col3 h4, .vstbox h4{ color:#f68a39; font-size:16px; font-weight:bold; margin:8px 0;}
 .sm-wrap .col h4 a, .vstbox h4 a{color:#f68a39;}
+.sm-wrap .col p a, .vstbox p a{color:#333;}
 .sm-wrap .col4{ width:238px; background:#fcfcfc; border:1px solid #d5d5d5;}
 .sm-wrap .col4 h4{ background:#e0e0e0 url(../images/pop-sr.png) left top repeat-x; margin:0px; padding:8px 10px; text-shadow:0px 1px #fff; color:#000; font-weight:bold; border-bottom:1px solid #d5d5d5;}
 .sm-wrap .col4 ul{ padding:10px 0px;}
@@ -140,7 +141,8 @@ div.infowindow { max-height:250px; }
 .filtercontent{ padding:10px; border-top:1px solid #d5d5d5; border-bottom:1px solid #d5d5d5;}
 .filtercontent li,.countrieslist .col li{ clear:both; padding:3px 0;}
 .filtercontent li input, .countrieslist .col li input{ float:left; clear:left;}
-.filtercontent label, .countrieslist .col li label{ vertical-align:middle;}
+.filtercontent label, .countrieslist .col li label,.filterlist .col li label, .filtercontent label span{ vertical-align:middle;}
+.filtercontent label span{ display:block;}
 .filtercontent a{ font-weight:bold; font-size:11px;}
 
 .searchcriteria,.summarydetails{border-top:1px solid #d5d5d5; padding:5px 5px 5px 10px; font-size:11px;}
