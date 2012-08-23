@@ -94,12 +94,12 @@ function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
 			$search_url .= "&countries={$srch_countries}";
 			$has_filter = true;
 		}
-		
+		/*
 		if($has_filter!==true) {
 			$countries = $_COUNTRY_ISO_MAP;
 			unset($countries['WW']);
-			$search_url .= "&countries=" . implode('|', array_keys($countries));;
-		}
+			$search_url .= "&countries=" . implode('|', array_keys($countries));
+		}*/
 		
 	}
 	
@@ -283,7 +283,7 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 				
 				if(count($selected)>$limit) {
 					$limit=count($selected);
-					$_data = $selected;
+					$_data = array_diff($_data, $selected);
 				} else {
 					$limit -= count($selected);
 					$_data = array_diff($_data, $selected);
@@ -328,7 +328,6 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 						</li>";
 				if($cnt>$limit) break;
 			}
-			
 			if($limit<count($_COUNTRY_ISO_MAP)) {
 				$add_more = true;
 				$generate_popup = true;

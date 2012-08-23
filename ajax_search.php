@@ -25,9 +25,9 @@
 	if(!empty($FILTER['countries'])) {
 		$search_url .= "&countries={$FILTER['countries']}";
 	} else {
-		$countries = $_COUNTRY_ISO_MAP;
+		/*$countries = $_COUNTRY_ISO_MAP;
 		unset($countries['WW']);
-		$search_url .= "&countries=" . implode('|', array_keys($countries));;
+		$search_url .= "&countries=" . implode('|', array_keys($countries));*/
 	}
 	
 	if(!empty($FILTER['regions'])) {
