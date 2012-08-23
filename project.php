@@ -100,7 +100,34 @@ $activity = wp_get_activity($project_id);
                     	<div class="longdetail">
                        	 	<h4>Documents</h4>
                              <div class="wrap docs">
-								<h2>No information available</h2>
+								<?php if(empty($activity->documents)) {?>
+									<h2>No information available</h2>
+								<?php } else { ?>
+									
+									<ul>
+									<?php
+									foreach($activity->documents AS $doc) {
+										$class	= "";
+										if(!empty($doc->format)) {
+											$class = " class='" . str_replace('application/', '', $doc->format) . "'";
+										}
+										echo "<li{$class}>";
+										echo "<a href='{$doc->url}'>";
+										echo substr($doc->url, strrpos($doc->url,'/')+1);
+										$s = array('bytes', 'kb', 'MB', 'GB', 'TB', 'PB');
+										$bytes = strlen(file_get_contents($doc->url));
+										$e = floor(log($bytes)/log(1024));
+							 
+										//CREATE COMPLETED OUTPUT
+										$filesize = sprintf('%.2f '.$s[$e], ($bytes/pow(1024, floor($e))));
+										echo "<span>" . $filesize . "</span>";
+										echo "</a>";
+										echo "</li>";
+									} 
+									?>
+									</ul>
+									
+								<?php } ?>
                              </div>
                         </div>
                    <!--COMMITMENTS-->
