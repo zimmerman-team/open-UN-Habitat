@@ -1,5 +1,9 @@
 <?php
 	include_once( 'constants.php' );
+	if(empty($_COUNTRY_ISO_MAP) && file_exists('./countries.php')) {
+		include_once('./countries.php' );
+		asort($_COUNTRY_ISO_MAP);
+	}
 	
 	$FILTER = getFilter($_GET);
 	
@@ -20,6 +24,10 @@
 	
 	if(!empty($FILTER['countries'])) {
 		$search_url .= "&countries={$FILTER['countries']}";
+	} else {
+		$countries = $_COUNTRY_ISO_MAP;
+		unset($countries['WW']);
+		$search_url .= "&countries=" . implode('|', array_keys($countries));;
 	}
 	
 	if(!empty($FILTER['regions'])) {

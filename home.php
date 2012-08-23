@@ -26,7 +26,7 @@
 			</div>
 			<div class="maptabs">
 				<ul>
-					<li class="country"><a href="<?php echo get_option('home'); ?>?s=&amp;countries=AF|BE|JP|KE|KP|LA|LB|MZ|NP|SO|ES|CH|US" class="active"><span>View by Country</span></a></li>
+					<li class="country"><a href="<?php echo get_option('home'); ?>?s=" class="active"><span>View by Country</span></a></li>
 				<!--	<li class="region"><a href="#" ><span>View by Regions</span></a></li>-->
 					<li class="global-pr"><a href="<?php echo get_option('home'); ?>/?s=&amp;countries=WW"><span>Worldwide Projects</span></a></li>
 				</ul>

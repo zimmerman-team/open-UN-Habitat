@@ -94,6 +94,13 @@ function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
 			$search_url .= "&countries={$srch_countries}";
 			$has_filter = true;
 		}
+		
+		if($has_filter!==true) {
+			$countries = $_COUNTRY_ISO_MAP;
+			unset($countries['WW']);
+			$search_url .= "&countries=" . implode('|', array_keys($countries));;
+		}
+		
 	}
 	
 	if(!empty($_REQUEST['regions'])) {
