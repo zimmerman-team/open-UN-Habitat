@@ -313,7 +313,7 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 					$checked = "checked=\"checked\"";
 					$cnt++;
 					$return .= "<li>
-									<label for=\"id_countries_{$cnt}\"><input name=\"countries\" value=\"{$iso}\" id=\"id_countries_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
+									<label for=\"id_countries_{$cnt}\"><input name=\"countries\" value=\"{$iso}\" id=\"id_countries_{$cnt}\" type=\"checkbox\" {$checked} /><span>{$c}</span></label>
 								</li>";
 				}
 				
@@ -324,7 +324,7 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 				if(isset($selected[$iso])) $checked = "checked=\"checked\"";
 				$cnt++;
 				$return .= "<li>
-							<label for=\"id_countries_{$cnt}\"><input name=\"countries\" value=\"{$iso}\" id=\"id_countries_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
+							<label for=\"id_countries_{$cnt}\"><input name=\"countries\" value=\"{$iso}\" id=\"id_countries_{$cnt}\" type=\"checkbox\" {$checked} /><span>{$c}</span></label>
 						</li>";
 				if($cnt>$limit) break;
 			}
@@ -370,7 +370,7 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 					$checked = "checked=\"checked\"";
 					$cnt++;
 					$return .= "<li>
-									<label for=\"id_regions_{$cnt}\"><input name=\"regions\" value=\"{$iso}\" id=\"id_regions_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
+									<label for=\"id_regions_{$cnt}\"><input name=\"regions\" value=\"{$iso}\" id=\"id_regions_{$cnt}\" type=\"checkbox\" {$checked} /><span>{$c}</span></label>
 								</li>";
 				}
 				
@@ -381,7 +381,7 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 				if(isset($selected[$iso])) $checked = "checked=\"checked\"";
 				$cnt++;
 				$return .= "<li>
-							<label for=\"id_regions_{$cnt}\"><input name=\"regions\" value=\"{$iso}\" id=\"id_regions_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
+							<label for=\"id_regions_{$cnt}\"><input name=\"regions\" value=\"{$iso}\" id=\"id_regions_{$cnt}\" type=\"checkbox\" {$checked} /><span>{$c}</span></label>
 						</li>";
 				if($cnt>$limit) break;
 			}
@@ -427,7 +427,7 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 					$checked = "checked=\"checked\"";
 					$cnt++;
 					$return .= "<li>
-									<label for=\"id_sectors_{$cnt}\"><input name=\"sectors\" value=\"{$iso}\" id=\"id_sectors_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
+									<label for=\"id_sectors_{$cnt}\"><input name=\"sectors\" value=\"{$iso}\" id=\"id_sectors_{$cnt}\" type=\"checkbox\" {$checked} /><span>{$c}</span></label>
 								</li>";
 				}
 				
@@ -438,7 +438,7 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 				if(isset($selected[$iso])) $checked = "checked=\"checked\"";
 				$cnt++;
 				$return .= "<li>
-							<label for=\"id_sectors_{$cnt}\"><input name=\"sectors\" value=\"{$iso}\" id=\"id_sectors_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
+							<label for=\"id_sectors_{$cnt}\"><input name=\"sectors\" value=\"{$iso}\" id=\"id_sectors_{$cnt}\" type=\"checkbox\" {$checked} /><span>{$c}</span></label>
 						</li>";
 				if($cnt>$limit) break;
 			}
@@ -477,7 +477,7 @@ function wp_generate_filter_html( $filter, $limit = 4 ) {
 				if(isset($selected[$iso])) $checked = "checked=\"checked\"";
 				$cnt++;
 				$return .= "<li>
-							<label for=\"id_budgets_{$cnt}\"><input name=\"budgets\" value=\"{$iso}\" id=\"id_budgets_{$cnt}\" type=\"checkbox\" {$checked} />{$c}</label>
+							<label for=\"id_budgets_{$cnt}\"><input name=\"budgets\" value=\"{$iso}\" id=\"id_budgets_{$cnt}\" type=\"checkbox\" {$checked} /><span>{$c}</span></label>
 						</li>";
 				if($cnt>$limit) break;
 			}
