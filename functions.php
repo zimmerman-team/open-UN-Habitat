@@ -1006,4 +1006,11 @@ function objectToArray($d) {
 		return $d;
 	}
 }
+
+function chart_scripts_method() {
+    	wp_deregister_script( 'jsapi' );
+    	wp_register_script( 'jsapi', 'http://www.google.com/jsapi');
+    	wp_enqueue_script( 'jsapi' );
+	}   
+	add_action('wp_enqueue_scripts', 'chart_scripts_method');
 ?>
