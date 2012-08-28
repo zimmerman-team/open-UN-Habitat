@@ -196,8 +196,8 @@ function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
 			$return .= '<div class="clr"></div>
 						<div class="resultrow">
 							<a href="'.$base_url.'/?page_id=42" class="whistleb"><span>WHISTLEBLOWER</span></a>
-							<a href="#" class="share"><span>SHARE</span></a>
-							<a href="#" class="bookmark"><span>BOOKMARK</span></a>
+							<a class="addthis_button share" href="http://www.addthis.com/bookmark.php?v=250&amp;pubid=mwongzie" addthis:url="'.$base_url.'/?page_id=2&amp;id='.$project->iati_identifier.'&amp;back_url='.rawurlencode($back_url).'"><span>SHARE</span></a>
+							<a href="javascript:bookmarksite(\''. addslashes($project->titles[0]->title).'\', \''.$base_url.'/?page_id=2&amp;id='.$project->iati_identifier.'&amp;back_url='.rawurlencode($back_url).'\')" class="bookmark"><span>BOOKMARK</span></a>	
 						</div>';
 			
 			$return .= '</div>
