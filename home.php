@@ -31,7 +31,7 @@
 						unset($countries['WW']);
 					?>
 					<li class="country"><a href="<?php echo get_option('home'); ?>?s=&countries=<?php echo implode('|', array_keys($countries));?>" class="active"><span>View by Country</span></a></li>
-				<!--	<li class="region"><a href="#" ><span>View by Regions</span></a></li>-->
+				<li class="region"><a href="#" ><span>View by Regions</span></a></li>
 					<li class="global-pr"><a href="<?php echo get_option('home'); ?>/?s=&amp;countries=WW"><span>Worldwide Projects</span></a></li>
 				</ul>
 			</div>
