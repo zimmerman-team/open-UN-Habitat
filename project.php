@@ -16,8 +16,8 @@ $activity = wp_get_activity($project_id);
 	<iframe id="secretIFrame" src="" style="display:none; visibility:hidden;"></iframe>
     <ul id="actions" class="menu actions">
                            <li><a href="#" id="<?php echo $activity->iati_identifier; ?>" class="export"><span>Export</span></a></li>
-                           <li><a href="#" class="share"><span>SHARE</span></a></li>
-                           <li><a href="javascript:bookmarksite('Promoting Sustainable Transport Solutions for East Africa', 'http://www.openunh-projectdetail.com')" class="bookmark"><span>BOOKMARK</span></a></li>
+                           <li><a class="addthis_button share" href="http://www.addthis.com/bookmark.php?v=250&amp;pubid=mwongzie" addthis:url="<?php echo get_option('home'); ?>?page_id=2&amp;id=<?php echo $_REQUEST['id'];?>&amp;back_url=<?php echo $_REQUEST['back_url'];?>"><span>SHARE</span></a></li>
+                           <li><a href="javascript:bookmarksite('<?php echo addslashes($activity->titles[0]->title); ?>', '<?php echo get_option('home'); ?>?page_id=2&amp;id=<?php echo $_REQUEST['id'];?>&amp;back_url=<?php echo $_REQUEST['back_url'];?>')" class="bookmark"><span>BOOKMARK</span></a></li>
                            <li><a href="<?php echo get_option('home'); ?>/?page_id=42" class="whistleb"><span>WHISTLEBLOWER</span></a></li>
                         </ul>
     <a href="<?php echo $back_url; ?>" class="backbutton">Back to Search Results</a>
@@ -275,4 +275,15 @@ $activity = wp_get_activity($project_id);
 	<div class="clr"></div>
   </div>
     <!--END MAINBODY-->
-<?php get_footer(); ?>
+    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true,"ui_click":true};</script>
+    <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=mwongzie"></script>
+<?php get_footer(); ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+</body>
+</html>
