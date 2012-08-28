@@ -99,10 +99,12 @@
 				<h4>Popular Searches</h4>
 				<ul class="popsearch">
 					<li><a href="?s=Kenya">Kenya</a></li>
-					<li><a href="?s=Afghanistan">Afghanistan</a></li>
-					<li><a href="?s=reintegration">Reintegration</a></li>
-					<li><a href="?s=refugees">Refugees</a></li>
-					<li><a href="?s=">Global</a></li>
+					<li><a href="?s=Education">Education</a></li>
+					<li><a href="?s=Education">Education</a></li>
+					<li><a href="?s=Transparency">Transparency</a></li>
+					<li><a href="?s=settlements">Settlements</a></li>
+					<li><a href="?s=strategy">Strategy</a></li>
+					
 				</ul>
 			</div>
         </div>
