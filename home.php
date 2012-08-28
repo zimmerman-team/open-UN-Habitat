@@ -31,7 +31,7 @@
 						unset($countries['WW']);
 					?>
 					<li class="country"><a href="<?php echo get_option('home'); ?>?s=&countries=<?php echo implode('|', array_keys($countries));?>" class="active"><span>View by Country</span></a></li>
-				<!--	<li class="region"><a href="#" ><span>View by Regions</span></a></li>-->
+				<li class="region"><a href="#" ><span>View by Regions</span></a></li>
 					<li class="global-pr"><a href="<?php echo get_option('home'); ?>/?s=&amp;countries=WW"><span>Worldwide Projects</span></a></li>
 				</ul>
 			</div>
@@ -99,10 +99,12 @@
 				<h4>Popular Searches</h4>
 				<ul class="popsearch">
 					<li><a href="?s=Kenya">Kenya</a></li>
-					<li><a href="?s=Afghanistan">Afghanistan</a></li>
-					<li><a href="?s=reintegration">Reintegration</a></li>
-					<li><a href="?s=refugees">Refugees</a></li>
-					<li><a href="?s=">Global</a></li>
+					<li><a href="?s=Education">Education</a></li>
+					<li><a href="?s=Education">Education</a></li>
+					<li><a href="?s=Transparency">Transparency</a></li>
+					<li><a href="?s=settlements">Settlements</a></li>
+					<li><a href="?s=strategy">Strategy</a></li>
+					
 				</ul>
 			</div>
         </div>
