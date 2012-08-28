@@ -55,126 +55,43 @@ $type=$_REQUEST['type'];
 
 <!--START BODY-->
 <div id="opunh-mainbody">
-          <!--COL-LEFT-->
-          <div class="colLeft sm">
-          	<div class="filter">
-            	<div class="filterbox">
-                	<h4>By Country</h4>
-                    <div class="filtercontent">
-                        <ul>
-                            <li>
-                                <label for="id_countries_1"><input checked="checked" name="countries" value="GH" id="id_countries_1" type="checkbox">All</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_2"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Afghanistan</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_3"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Albania</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_4"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Algeria</label>
-                            </li>
-                             <li>
-                                <label for="id_countries_4"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Angola</label>
-                            </li>
-                        </ul>
-                    <a href="#">+ SEE ALL</a>                    </div>
-                </div>
-                <div class="filterbox">
-                	<h4>By Region</h4>
-                    <div class="filtercontent">
-                        <ul>
-                            <li>
-                                <label for="id_countries_1"><input checked="checked" name="countries" value="GH" id="id_countries_1" type="checkbox">All</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_1"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Caribbean</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_2"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Central America</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_3"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Central Asia</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_4"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Eastern Africa</label>
-                            </li>
-                        </ul>
-                    <a href="#">+ SEE ALL</a>                    </div>
-                </div>
-                <div class="filterbox">
-                	<h4>By Subject</h4>
-                    <div class="filtercontent">
-                        <ul>
-                            <li>
-                                <label for="id_countries_1"><input checked="checked" name="countries" value="GH" id="id_countries_1" type="checkbox">All</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_2"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Administrative costs</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_3"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Advanced technical training</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_4"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Agrarian reform</label>
-                            </li>
-                             <li>
-                                <label for="id_countries_4"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Agricultural alternative Dvpt</label>
-                            </li>
-                        </ul>
-                    <a href="#">+ SEE ALL</a>                    </div>
-                </div>
-                <div class="filterbox">
-                	<h4>By Sector</h4>
-                    <div class="filtercontent">
-                        <ul>
-                            <li>
-                                <label for="id_countries_1"><input checked="checked" name="countries" value="GH" id="id_countries_1" type="checkbox">All</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_2"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Administrative costs</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_3"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Advanced technical training</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_4"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Agrarian reform</label>
-                            </li>
-                             <li>
-                                <label for="id_countries_4"><input name="countries" value="GH" id="id_countries_1" type="checkbox">Agricultural alternative Dvpt</label>
-                            </li>
-                        </ul>
-                    <a href="#">+ SEE ALL</a>                    </div>
-                </div>
-                <div class="filterbox">
-                	<h4>By Budget</h4>
-                    <div class="filtercontent">
-                        <ul>
-                            <li>
-                                <label for="id_countries_1"><input name="countries" value="GH" id="id_countries_1" type="checkbox">&gt; &euro; 0</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_2"><input name="countries" value="GH" id="id_countries_1" type="checkbox">&gt; &euro; 10.000</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_2"><input name="countries" value="GH" id="id_countries_1" type="checkbox">&gt; &euro; 50.000</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_3"><input name="countries" value="GH" id="id_countries_1" type="checkbox">&gt; &euro; 100.000</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_4"><input name="countries" value="GH" id="id_countries_1" type="checkbox">&gt; &euro; 500.000</label>
-                            </li>
-                            <li>
-                                <label for="id_countries_4"><input name="countries" value="GH" id="id_countries_1" type="checkbox">&gt; &euro; 1.000.000</label>
-                            </li>
-                        </ul>
-
+<!--COL-LEFT-->
+		<div class="colLeft sm">
+			<div class="filter" id="filterContainer">
+				<div class="filterbox">
+					<h4>By Country</h4>
+					<div class="filtercontent">
+						<?php echo wp_generate_filter_html('country'); ?>
+					</div>
 				</div>
-              </div>
-            </div>
-          </div>
-          <!--COL-RIGHT-->
+				<!--COUNTRIES-->
+				<?php echo  wp_generate_filter_popup('country'); ?>
+				<!--END COUNTRIES-->
+				<div class="filterbox">
+					<h4>By Region</h4>
+					<div class="filtercontent">
+						<?php echo wp_generate_filter_html('region'); ?>
+					</div>
+				</div>
+				<!--REGIONS-->
+				<?php echo  wp_generate_filter_popup('region'); ?>
+				<div class="filterbox">
+					<h4>By Sector</h4>
+					<div class="filtercontent">
+						<?php echo wp_generate_filter_html('sector'); ?>
+					</div>
+				</div>
+				<!--SECTORS-->
+				<?php echo  wp_generate_filter_popup('sector'); ?>
+				<div class="filterbox">
+					<h4>By Budget</h4>
+					<div class="filtercontent">
+						<?php echo wp_generate_filter_html('budget'); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	  <!--COL-RIGHT-->
           <div class="colRight">
           	<div class="searchresultslist">
             	<!--SEARCH TITLE BAR-->
