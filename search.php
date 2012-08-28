@@ -460,4 +460,8 @@ else
 	</script>
 		
 	<?php } ?>
+    	<script type="text/javascript">
+			var addthis_config = {"data_track_addressbar":true,"ui_click":true};
+		</script>
+		<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=mwongzie"></script>
 <?php get_footer(); ?>
