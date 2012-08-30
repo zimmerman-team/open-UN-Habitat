@@ -117,9 +117,9 @@ $type=$_REQUEST['type'];
                             </div>
                            <div class="summary">
                            	<h4>Total Budget</h4>
-                            	<p>&euro; 25,0000</p>
+                            	<p>US$ 9,786,593</p>
                             <h4>Total Number of projects</h4>
-                            	<p>5</p>
+                            	<p>6</p>
                            </div>
                            <div class="clr"></div>
                         </div>
@@ -128,51 +128,54 @@ $type=$_REQUEST['type'];
                 <?php if($type=="sc"){?>
                 <!--SUBJECTS LIST-->
                 <div class="summarywrap">
-                <h2>All Sectors and Subjects</h2>
+                <h2>All Sectors</h2>
                 	<h3><span>SECTORS</span></h3>
                 	<ul>
-                        <li><a href="<?php echo get_option('home')."/?s=".str_replace(" ","+","Administrative costs"); ?>">Administrative costs</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Advanced technical and managerial training</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Agrarian reform</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Agricultural alternative development</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Agricultural co-operatives</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Agricultural development</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Agricultural education/training</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Agricultural extension</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Agricultural financial services</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Agricultural inputs</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Agricultural land resources</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Agricultural policy and administrative management</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=".str_replace(" ","+","Administrative costs"); ?>">11420 Higher eduction</a></li>
+
                   </ul>
                     <ul>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Energy research</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Environmental education/ training</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Environmental policy and administrative management</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Environmental research</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Family planning</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Financial policy and administrative management</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Fishery development</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Flood prevention/control</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Food aid/Food security programmes</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Food crop production</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Forestry development</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">11430 Advanced technical and managerial training</a></li>
+
                     </ul>        
                     <ul>
                     	
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Personnel development for population and reproductive health</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Population policy and administrative management</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Post-conflict peace-building (UN)</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Power generation/renewable sources</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Primary education</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Privatisation</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Promotion of development awareness</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Public finance management</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Public sector financial management</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Radio/television/print media</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Reconstruction relief and rehabilitation</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">43030 Urban development and management</a></li>
+ 
+                        
+                  </ul>
+                  
+                    <ul>
+                    	
+                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">3010 Population policy and administrative management</a></li>
+ 
+                        
+                  </ul>
+                  
+                    <ul>
+                    	
+                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">6030 Housing policy and administrative management,</a></li>
+ 
+                        
+                  </ul>
+                  
+                    <ul>
+                    	
+                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">15163 Free flow of information</a></li>
+ 
+                        
+                  </ul>
+                  
+                    <ul>
+                    	
+                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">11330 Vocational training</a></li>
+ 
                         
                   </ul>
                               <div class="clr"></div>
+                              
+                              
+                              <!--
                         <h3><span>SUBJECTS</span></h3>
                 	<ul>
                         <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Administrative costs</a></li>
@@ -216,7 +219,7 @@ $type=$_REQUEST['type'];
                         <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Reconstruction relief and rehabilitation</a></li>
                         
                   </ul>
-                <div class="clr"></div>
+                <div class="clr"></div> -->
                 </div>
                 <!--END SUBJECT LIST-->
                 <?php } else{?>
@@ -225,106 +228,63 @@ $type=$_REQUEST['type'];
                 <h2>All Regions and Countries</h2>
                 	<h3><span>EAST ASIA AND PACIFIC</span></h3>
                 	<ul>
-                        <li><a href="<?php echo get_option('home')."/?s=".str_replace(" ","+","Cambodia"); ?>">Cambodia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">China</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Fiji</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Cambodia</a></li>
+                
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Sri Lanka</a></li>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Indonesia</a></li>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Korea (Democratic Peoples Republic)</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Lao (Peoples Democratic Republic)</a></li>
+             
                     </ul>        
                     <ul>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Malaysia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Mongolia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Multicountry East Asia And Pacific (APN+)</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Multicountry East Asia And Pacific (ISEAN-HIVOS)</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Multicountry Western Pacific</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Myanmar</a></li>
+               
                         </ul>
                     <ul>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Papua New Guinea</a></li>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Philippines</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Solomon Islands</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Thailand</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Timor-Leste</a></li>
+
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Viet Nam</a></li>
                               </ul>
                               <div class="clr"></div>
                        <h3><span>EASTERN AFRICA AND INDIAN OCEAN</span></h3>
                 	<ul>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Cambodia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">China</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Fiji</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Indonesia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Korea (Democratic Peoples Republic)</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Lao (Peoples Democratic Republic)</a></li>
+
                     </ul>        
                     <ul>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Malaysia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Mongolia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Multicountry East Asia And Pacific (APN+)</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Multicountry East Asia And Pacific (ISEAN-HIVOS)</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Multicountry Western Pacific</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Myanmar</a></li>
+        
                         </ul>
                     <ul>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Papua New Guinea</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Philippines</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Solomon Islands</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Thailand</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Timor-Leste</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Viet Nam</a></li>
+             
                               </ul>
                               <div class="clr"></div>
                         <h3><span>EASTERN EUROPE AND CENTRAL ASIA</span></h3>
                 	<ul>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Cambodia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">China</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Fiji</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Indonesia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Korea (Democratic Peoples Republic)</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Lao (Peoples Democratic Republic)</a></li>
+                   
                     </ul>        
                     <ul>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Malaysia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Mongolia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Multicountry East Asia And Pacific (APN+)</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Multicountry East Asia And Pacific (ISEAN-HIVOS)</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Multicountry Western Pacific</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Myanmar</a></li>
+                 
                         </ul>
                     <ul>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Papua New Guinea</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Philippines</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Solomon Islands</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Thailand</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Timor-Leste</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Viet Nam</a></li>
+                    
                               </ul>
                               <div class="clr"></div>
                         <h3><span>LATIN AMERICA AND CARIBBEAN</span></h3>
                 	<ul>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Cambodia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">China</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Fiji</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Indonesia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Korea (Democratic Peoples Republic)</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Lao (Peoples Democratic Republic)</a></li>
+                      
                     </ul>        
                     <ul>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Malaysia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Mongolia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Multicountry East Asia And Pacific (APN+)</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Multicountry East Asia And Pacific (ISEAN-HIVOS)</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Multicountry Western Pacific</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Myanmar</a></li>
+                       
                         </ul>
                     <ul>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Papua New Guinea</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Philippines</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Solomon Islands</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Thailand</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Timor-Leste</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Viet Nam</a></li>
+             
                               </ul>
                 <div class="clr"></div>
                 </div>
