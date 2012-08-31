@@ -226,42 +226,45 @@ $type=$_REQUEST['type'];
                 <!--COUNTRY LIST-->
                 <div class="summarywrap">
                 <h2>All Regions and Countries</h2>
-                	<h3><span>EAST ASIA AND PACIFIC</span></h3>
+                	<h3><span>ASIA</span></h3>
                 	<ul>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Cambodia</a></li>
-                
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Sri Lanka</a></li>
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Indonesia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Korea (Democratic Peoples Republic)</a></li>
-             
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Korea (Democratic Republic)</a></li>
+                           
                     </ul>        
                     <ul>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Malaysia</a></li>
-               
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Mongolia</a></li>
+                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Nepal</a></li> 
+                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Phillipines</a></li>
                         </ul>
+                    
                     <ul>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Philippines</a></li>
-
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Sri Lanka</a></li>     
                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Viet Nam</a></li>
-                              </ul>
+                    </ul>
+                    
                               <div class="clr"></div>
-                       <h3><span>EASTERN AFRICA AND INDIAN OCEAN</span></h3>
-                	<ul>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Cambodia</a></li>
-
+                       <h3><span>AFRICA</span></h3>
+                    <ul>
+                	<li><a href="<?php echo get_option('home')."/?s=country"; ?>">Burkina Faso</a></li>
+                	<li><a href="<?php echo get_option('home')."/?s=country"; ?>">Kenya</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Mozambique</a></li>
+                     </ul>
+                     <ul> 
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Namibia</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Nigeria</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Rwanda</a></li>
+                     </ul>   
+                     <ul>   
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Senegal</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Uganda</a></li>
                     </ul>        
-                    <ul>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Malaysia</a></li>
-        
-                        </ul>
-                    <ul>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Papua New Guinea</a></li>
-             
-                              </ul>
+                   
                               <div class="clr"></div>
-                        <h3><span>EASTERN EUROPE AND CENTRAL ASIA</span></h3>
+                        <h3><span>SOUTH AMERICA</span></h3>
                 	<ul>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Cambodia</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Ecuador</a></li>
                    
                     </ul>        
                     <ul>
@@ -273,19 +276,7 @@ $type=$_REQUEST['type'];
                     
                               </ul>
                               <div class="clr"></div>
-                        <h3><span>LATIN AMERICA AND CARIBBEAN</span></h3>
-                	<ul>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Cambodia</a></li>
-                      
-                    </ul>        
-                    <ul>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Malaysia</a></li>
                        
-                        </ul>
-                    <ul>
-                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Papua New Guinea</a></li>
-             
-                              </ul>
                 <div class="clr"></div>
                 </div>
                 <!--END COUNTRY LIST-->
