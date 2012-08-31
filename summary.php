@@ -131,7 +131,7 @@ $type=$_REQUEST['type'];
                 <h2>All Sectors</h2>
                 	<h3><span>SECTORS</span></h3>
                 	<ul>
-                        <li><a href="<?php echo get_option('home')."/?s=".str_replace(" ","+","Administrative costs"); ?>">11420 Higher eduction</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=".str_replace(" ","+","Administrative costs"); ?>">11420 Higher education</a></li>
 
                   </ul>
                     <ul>
