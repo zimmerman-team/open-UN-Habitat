@@ -16,7 +16,7 @@ $activity = wp_get_activity($project_id);
 	<iframe id="secretIFrame" src="" style="display:none; visibility:hidden;"></iframe>
     <ul id="actions" class="menu actions">
                            <li><a href="#" id="<?php echo $activity->iati_identifier; ?>" class="export"><span>Export</span></a></li>
-                           <li><a class="addthis_button share" href="http://www.addthis.com/bookmark.php?v=250&amp;pubid=mwongzie" addthis:url="<?php echo get_option('home'); ?>?page_id=2&amp;id=<?php echo $_REQUEST['id'];?>&amp;back_url=<?php echo $_REQUEST['back_url'];?>"><span>SHARE</span></a></li>
+                           <li><a class="addthis_button share" href="http://www.addthis.com/bookmark.php?v=250&amp;pubid=ra-50408ec91245851b" addthis:url="<?php echo get_option('home'); ?>?page_id=2&amp;id=<?php echo $_REQUEST['id'];?>&amp;back_url=<?php echo $_REQUEST['back_url'];?>"><span>SHARE</span></a></li>
                            <li><a href="javascript:bookmarksite('<?php echo addslashes($activity->titles[0]->title); ?>', '<?php echo get_option('home'); ?>?page_id=2&amp;id=<?php echo $_REQUEST['id'];?>&amp;back_url=<?php echo $_REQUEST['back_url'];?>')" class="bookmark"><span>BOOKMARK</span></a></li>
                            <li><a href="<?php echo get_option('home'); ?>/?page_id=42" class="whistleb"><span>WHISTLEBLOWER</span></a></li>
                         </ul>
