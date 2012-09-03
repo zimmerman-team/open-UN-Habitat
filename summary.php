@@ -48,7 +48,7 @@ $type=$_REQUEST['type'];
 		} ?>
 	// Create and draw the visualization.
 	new google.visualization.PieChart(document.getElementById('visualization')).
-		draw(data, {title:"",colors:['#42604f','#f68a39','#008499','#ee343f'],chartArea:{left:0,top:10,width:"80%",height:"80%"}});
+		draw(data, {title:"",tooltip:{text:"percentage"},colors:['#42604f','#f68a39','#008499','#ee343f'],chartArea:{left:0,top:10,width:"80%",height:"80%"}});
   }
   google.setOnLoadCallback(drawVisualization);
 </script>
