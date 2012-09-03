@@ -228,46 +228,53 @@ $type=$_REQUEST['type'];
                 <h2>All Regions and Countries</h2>
                 	<h3><span>ASIA</span></h3>
                 	<ul>
-                        <li><a href="<?php echo get_option('home')."/?s=&countries=KH; ?>">Cambodia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=&countries=ID"; ?>">Indonesia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=&countries=KR"; ?>">Korea (Democratic Republic)</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Cambodia</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Indonesia</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Korea (Democratic Republic)</a></li>
                            
                     </ul>        
                     <ul>
-                        <li><a href="<?php echo get_option('home')."/?s=&countries=MN"; ?>">Mongolia</a></li>
-                         <li><a href="<?php echo get_option('home')."/?s=&countries=NE"; ?>">Nepal</a></li> 
-                         <li><a href="<?php echo get_option('home')."/?s=&countries=PH"; ?>">Phillipines</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Mongolia</a></li>
+                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Nepal</a></li> 
+                         <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Phillipines</a></li>
                         </ul>
                     
                     <ul>
-                        <li><a href="<?php echo get_option('home')."/?s=&countries=LK; ?>">Sri Lanka</a></li>     
-                       
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Sri Lanka</a></li>     
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Viet Nam</a></li>
                     </ul>
                     
                               <div class="clr"></div>
                        <h3><span>AFRICA</span></h3>
                     <ul>
-                	<li><a href="<?php echo get_option('home')."/?s=&countries=BF; ?>">Burkina Faso</a></li>
-                	<li><a href="<?php echo get_option('home')."/?s=&countries=KE"; ?>">Kenya</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=&countries=MZ"; ?>">Mozambique</a></li>
+                	<li><a href="<?php echo get_option('home')."/?s=country"; ?>">Burkina Faso</a></li>
+                	<li><a href="<?php echo get_option('home')."/?s=country"; ?>">Kenya</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Mozambique</a></li>
                      </ul>
                      <ul> 
-                        <li><a href="<?php echo get_option('home')."/?s=&countries=NA"; ?>">Namibia</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=&countries=NG"; ?>">Nigeria</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=&countries=RW; ?>">Rwanda</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Namibia</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Nigeria</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Rwanda</a></li>
                      </ul>   
                      <ul>   
-                        <li><a href="<?php echo get_option('home')."/?s=&countries=SN"; ?>">Senegal</a></li>
-                        <li><a href="<?php echo get_option('home')."/?s=&countries=UG"; ?>">Uganda</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Senegal</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Uganda</a></li>
                     </ul>        
                    
                               <div class="clr"></div>
                         <h3><span>SOUTH AMERICA</span></h3>
                 	<ul>
-                        <li><a href="<?php echo get_option('home')."/?s=&countries=EC"; ?>">Ecuador</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Ecuador</a></li>
                    
                     </ul>        
-                  
+                    <ul>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Malaysia</a></li>
+                 
+                        </ul>
+                    <ul>
+                        <li><a href="<?php echo get_option('home')."/?s=country"; ?>">Papua New Guinea</a></li>
+                    
+                              </ul>
                               <div class="clr"></div>
                        
                 <div class="clr"></div>
