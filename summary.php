@@ -38,10 +38,10 @@ $type=$_REQUEST['type'];
 			// Create and populate the data table.
 			var data = google.visualization.arrayToDataTable([
 			  ['Sector', 'Funding Percentage'],
-			  ['Agriculture', 1200],
-			  ['Poverty', 135],
-			  ['Sanitation', 120],
-			  ['Others', 85]
+			  ['Urban development and management', 46],
+			  ['Higher education', 19],
+			  ['Advanced managerial and technical training', 15],
+			  ['Others', 20]
 			]);
 		<?php 
 		break;
