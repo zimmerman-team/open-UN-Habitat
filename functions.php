@@ -163,7 +163,7 @@ function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
 				$return .= '<span class="detail"><span>Sector</span>: ';
 				$sep = '';
 				if(empty($project->activity_sectors)) {
-					$return .= "No information avaialable";
+					$return .= "No information available";
 				} else {
 					foreach($project->activity_sectors AS $sector) {
 						$return .= $sep . $sector->name;
@@ -190,7 +190,7 @@ function wp_generate_results($details, &$meta, &$projects_html, &$has_filter) {
 			$return .= '<div class="rcol rcol3">
 							<ul>
 							  <li><span>End date planned: </span>'.$project->end_planned.'</li>
-							  <li><span>End dat actual: </span>'.$project->end_actual.'</li>
+							  <li><span>End date actual: </span>'.$project->end_actual.'</li>
 							</ul>
 						</div>';
 			$return .= '<div class="clr"></div>
