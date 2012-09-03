@@ -131,44 +131,44 @@ $type=$_REQUEST['type'];
                 <h2>All Sectors</h2>
                 	<h3><span>SECTORS</span></h3>
                 	<ul>
-                        <li><a href="<?php echo get_option('home')."/?s=".str_replace(" ","+","Administrative costs"); ?>">11420 Higher education</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=".str_replace(" ","+","Administrative costs"); ?>">Higher education</a></li>
 
                   </ul>
                     <ul>
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">11430 Advanced technical and managerial training</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Advanced technical and managerial training</a></li>
 
                     </ul>        
                     <ul>
                     	
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">43030 Urban development and management</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Urban development and management</a></li>
  
                         
                   </ul>
                   
                     <ul>
                     	
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">3010 Population policy and administrative management</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Population policy and administrative management</a></li>
  
                         
                   </ul>
                   
                     <ul>
                     	
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">6030 Housing policy and administrative management,</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Housing policy and administrative management,</a></li>
  
                         
                   </ul>
                   
                     <ul>
                     	
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">15163 Free flow of information</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Free flow of information</a></li>
  
                         
                   </ul>
                   
                     <ul>
                     	
-                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">11330 Vocational training</a></li>
+                        <li><a href="<?php echo get_option('home')."/?s=subject"; ?>">Vocational training</a></li>
  
                         
                   </ul>
