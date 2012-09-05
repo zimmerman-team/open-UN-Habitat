@@ -114,7 +114,12 @@ $activity = wp_get_activity($project_id);
 										}
 										echo "<li{$class}>";
 										echo "<a href='{$doc->url}'>";
-										echo substr($doc->url, strrpos($doc->url,'/')+1);
+										//echo substr($doc->url, strrpos($doc->url,'/')+1);
+										if(empty($doc->title)) {
+											echo $activity->titles[0]->title;
+										} else {
+											echo $doc->title;
+										}
 										$s = array('bytes', 'kb', 'MB', 'GB', 'TB', 'PB');
 										$bytes = strlen(file_get_contents($doc->url));
 										$e = floor(log($bytes)/log(1024));

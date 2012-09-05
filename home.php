@@ -29,9 +29,10 @@
 					<?php 
 						$countries = $_COUNTRY_ISO_MAP;
 						unset($countries['WW']);
+						$regions = $_REGION_CHOICES;
 					?>
 					<li class="country"><a href="<?php echo get_option('home'); ?>?s=&countries=<?php echo implode('|', array_keys($countries));?>" class="active"><span>View by Country</span></a></li>
-				<li class="region"><a href="#" ><span>View by Regions</span></a></li>
+					<li class="region"><a href="<?php echo get_option('home'); ?>?s=&regions=<?php echo implode('|', array_keys($regions));?>" ><span>View by Regions</span></a></li>
 					<li class="global-pr"><a href="<?php echo get_option('home'); ?>/?s=&amp;countries=WW"><span>Worldwide Projects</span></a></li>
 				</ul>
 			</div>
