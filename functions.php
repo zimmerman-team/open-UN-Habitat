@@ -216,26 +216,6 @@ function wp_get_activity($identifier) {
 	
 	$content = file_get_contents($search_url);
 	$activity = json_decode($content);
-	/*if(empty($activity->title->default)) $activity->title->default = EMPTY_LABEL;
-	if(empty($activity->recipient_country)) $activity->recipient_country[0]->name = EMPTY_LABEL;
-	if(empty($activity->activity_sectors)) $activity->activity_sectors[0]->name = EMPTY_LABEL;
-	if(empty($activity->iati_identifier)) $activity->iati_identifier = EMPTY_LABEL;
-	if(empty($activity->reporting_organisation->org_name)) $activity->reporting_organisation->org_name = EMPTY_LABEL;
-	if(empty($activity->start_actual)) $activity->start_actual = EMPTY_LABEL;
-	if(empty($activity->activity_sectors[0]->code)) $activity->activity_sectors[0]->code = EMPTY_LABEL;
-	if(empty($activity->date_updated)) $activity->date_updated = EMPTY_LABEL;
-	if(empty($activity->start_planned)) $activity->start_planned = EMPTY_LABEL;
-	if(empty($activity->end_planned)) $activity->end_planned = EMPTY_LABEL;
-	if(empty($activity->end_actual)) $activity->end_actual = EMPTY_LABEL;
-	if(empty($activity->collaboration_type->name)) $activity->collaboration_type->name = EMPTY_LABEL;
-	if(empty($activity->default_flow_type->name)) $activity->default_flow_type->name = EMPTY_LABEL;
-	if(empty($activity->default_aid_type->name)) $activity->default_aid_type->name = EMPTY_LABEL;
-	if(empty($activity->default_finance_type->name)) $activity->default_finance_type->name = EMPTY_LABEL;
-	if(empty($activity->default_tied_status_type->name)) $activity->default_tied_status_type->name = EMPTY_LABEL;
-	if(empty($activity->activity_status->name)) $activity->activity_status->name = EMPTY_LABEL;
-	if(empty($activity->reporting_organisation->org_name)) $activity->reporting_organisation->org_name = EMPTY_LABEL;
-	if(empty($activity->reporting_organisation->ref)) $activity->reporting_organisation->ref = EMPTY_LABEL;
-	if(empty($activity->description->default)) $activity->description->default = EMPTY_LABEL;*/
 	return $activity;
 
 }
@@ -754,7 +734,15 @@ function wp_generate_filter_popup($filter, $limit = 4 ) {
 
 function wp_generate_constants() {
 	global $_DEFAULT_ORGANISATION_ID;
-	$activities_url = SEARCH_URL . "activities/?format=json&limit=0";
+	$limit = 50;
+	$countries = array();
+	$sectors = array();
+	$regions = array();
+	$budgets = array();
+	$countries_activities = array();
+	$total_budget = 0;
+	
+	$activities_url = SEARCH_URL . "activities/?format=json&limit={$limit}";
 	if(!empty($_DEFAULT_ORGANISATION_ID)) {
 		$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
 	}
@@ -763,13 +751,40 @@ function wp_generate_constants() {
 	$meta = $result->meta;
 	$count = $meta->total_count;
 	
-	$start=0;
-	$limit=50;
-	$countries = array();
-	$sectors = array();
-	$regions = array();
-	$budgets = array();
-	$total_budget = 0;
+	$objects = $result->objects;
+	$activities = objectToArray($objects);
+	
+	foreach($activities AS $a) {
+		if(!empty($a['recipient_country'])) {
+			foreach($a['recipient_country'] AS $c) {
+				$countries_activities[$c['iso']] += 1;
+				if(isset($countries[$c['iso']])) continue;
+				$countries[$c['iso']] = $c['name'];
+				
+				if(!isset($budgets[$c['iso']])) {
+					$budgets[$c['iso']] = $a['statistics']['total_budget'];
+				} else {
+					$budgets[$c['iso']] += $a['statistics']['total_budget'];
+				}
+				$total_budget += $a['statistics']['total_budget'];
+			}
+		}
+		if(!empty($a['activity_sectors'])) {
+			foreach($a['activity_sectors'] AS $s) {
+				if(isset($sectors[$s['code']])) continue;
+				$sectors[$s['code']] = $s['name'];
+			}
+		}
+		if(!empty($a['recipient_region'])) {
+			foreach($a['recipient_region'] AS $r) {
+				if(isset($regions[$r['code']])) continue;
+				$regions[$r['code']] = $r['name'];
+			}
+		}
+	}
+	
+	
+	$start=$limit;
 	while($start<$count) {
 		$activities_url = SEARCH_URL . "activities/?format=json&start={$start}&limit={$limit}";
 		if(!empty($_DEFAULT_ORGANISATION_ID)) {
@@ -783,8 +798,10 @@ function wp_generate_constants() {
 		foreach($activities AS $a) {
 			if(!empty($a['recipient_country'])) {
 				foreach($a['recipient_country'] AS $c) {
+					$countries_activities[$c['iso']] += 1;
 					if(isset($countries[$c['iso']])) continue;
 					$countries[$c['iso']] = $c['name'];
+					
 					if(!isset($budgets[$c['iso']])) {
 						$budgets[$c['iso']] = $a['statistics']['total_budget'];
 					} else {
@@ -833,6 +850,19 @@ $to_write .= "'all' => '{$total_budget}',
 			}
 			
 		}
+
+$to_write .= ');
+	
+$_COUNTRY_ACTIVITY_COUNT = array(
+';
+	if(!empty($countries_activities)) {
+		
+		foreach($countries_activities AS $key=>$value) {
+			$value = intval($value);
+			$to_write .= "'{$key}' => '{$value}',\n";
+		}
+		
+	}
 
 $to_write .= ');
 ?>';
@@ -915,33 +945,16 @@ function wp_generate_paging($meta) {
 }
 
 function wp_generate_home_map_data() {
-		global $_GM_POLYGONS, $_DEFAULT_ORGANISATION_ID;
-		$activities_url = SEARCH_URL . "activities/?format=json&limit=0";
-		if(!empty($_DEFAULT_ORGANISATION_ID)) {
-			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
-		}
-		$content = file_get_contents($activities_url);
-		$result = json_decode($content);
-		$meta = $result->meta;
-		$limit = $meta->total_count;
-		$activities_url = SEARCH_URL . "activities/?format=json&limit={$limit}";
-		if(!empty($_DEFAULT_ORGANISATION_ID)) {
-			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
-		}
-		$content = file_get_contents($activities_url);
-		$result = json_decode($content);
-		$objects = $result->objects;
-		$activities = objectToArray($objects);
+		global $_GM_POLYGONS, $_DEFAULT_ORGANISATION_ID, $_COUNTRY_ISO_MAP, $_COUNTRY_ACTIVITY_COUNT;
+		
 		$array['objects'] = array();
-		$array['meta']['total_count'] = $result->meta->total_count;
-		foreach($activities AS $a) {
-			foreach($a['recipient_country'] AS $c) {
-				if(isset($array['objects'][$c['iso']])) {
-					$array['objects'][$c['iso']]['total_cnt']++;
-				} else {
-					if(isset($_GM_POLYGONS[$c['iso']])) {
-						$array['objects'][$c['iso']] = array('path' => $_GM_POLYGONS[$c['iso']], 'name' => $c['name'], 'total_cnt' => 1);
-					}
+		$array['meta']['total_count'] = COUNT($_COUNTRY_ISO_MAP);
+		foreach($_COUNTRY_ISO_MAP AS $iso=>$c) {
+			if(isset($array['objects'][$iso])) {
+				$array['objects'][$iso]['total_cnt']++;
+			} else {
+				if(isset($_GM_POLYGONS[$iso])) {
+					$array['objects'][$iso] = array('path' => $_GM_POLYGONS[$iso], 'name' => $c, 'total_cnt' => $_COUNTRY_ACTIVITY_COUNT[$iso]);
 				}
 			}
 		}

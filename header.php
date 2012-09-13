@@ -42,7 +42,7 @@
 	<script src="<?php bloginfo('template_url'); ?>/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/jeegoocontext/jquery.jeegoocontext.min.js" type="text/javascript"></script>
-    <script src="<?php bloginfo('template_url'); ?>/js/script.js?theme_path=<?php bloginfo('template_url'); ?>&amp;blog_name=<?php bloginfo('name'); ?>" type="text/javascript"></script>
+    <script src="<?php bloginfo('template_url'); ?>/js/script.js?theme_path=<?php bloginfo('template_url'); ?>&amp;blog_name=<?php bloginfo('name'); ?>&baseurl=<?php echo get_option('home'); ?>" type="text/javascript"></script>
     <script src="<?php bloginfo('template_url'); ?>/js/selector.js" type="text/javascript"></script>
 	<?php if(is_home()){?>
 	<script type="text/javascript" charset="utf-8">

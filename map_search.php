@@ -35,60 +35,36 @@ if(!function_exists(objectToArray)) {
 			$array['objects'][$c] = array('path' => $_GM_POLYGONS[$c], 'name' => $_COUNTRY_ISO_MAP[$c], 'total_cnt' => 0);
 		}
 		
-		$activities_url = SEARCH_URL . "activities/?format=json&limit=0&countries={$FILTER['countries']}";
-		if(!empty($_DEFAULT_ORGANISATION_ID)) {
-			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
-		}
-		if(!empty($FILTER['query'])) {
-			$activities_url .= "&query={$FILTER['query']}";
-		}
-		
-		if(!empty($FILTER['regions'])) {
-			$activities_url .= "&regions={$FILTER['regions']}";
-		}
-		
-		if(!empty($FILTER['sectors'])) {
-			$activities_url .= "&sectors={$FILTER['sectors']}";
-		}
-		
-		if(!empty($FILTER['budgets'])) {
-			$budgets = explode('|', trim($_REQUEST['budgets']));
-			//Get the lowest budget from filter and use this one, all the other are included in the range
-			ksort($budgets);
-			$activities_url .= "&statistics__total_budget__gt={$budgets[0]}";
-		}
-		
-		$content = file_get_contents($activities_url);
-		$result = json_decode($content);
-		$meta = $result->meta;
-		$limit = $meta->total_count;
-		
-		
+		$limit = 50;
+		$search_url = "";
 		$activities_url = SEARCH_URL . "activities/?format=json&limit={$limit}&countries={$FILTER['countries']}";
 		if(!empty($_DEFAULT_ORGANISATION_ID)) {
-			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
+			$search_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
 		}
 		if(!empty($FILTER['query'])) {
-			$activities_url .= "&query={$FILTER['query']}";
+			$search_url .= "&query={$FILTER['query']}";
 		}
 		
 		if(!empty($FILTER['regions'])) {
-			$activities_url .= "&regions={$FILTER['regions']}";
+			$search_url .= "&regions={$FILTER['regions']}";
 		}
 		
 		if(!empty($FILTER['sectors'])) {
-			$activities_url .= "&sectors={$FILTER['sectors']}";
+			$search_url .= "&sectors={$FILTER['sectors']}";
 		}
 		
 		if(!empty($FILTER['budgets'])) {
 			$budgets = explode('|', trim($_REQUEST['budgets']));
 			//Get the lowest budget from filter and use this one, all the other are included in the range
 			ksort($budgets);
-			$activities_url .= "&statistics__total_budget__gt={$budgets[0]}";
+			$search_url .= "&statistics__total_budget__gt={$budgets[0]}";
 		}
 		
-		$content = file_get_contents($activities_url);
+		$content = file_get_contents($activities_url.$search_url);
 		$result = json_decode($content);
+		$meta = $result->meta;
+		$count = $meta->total_count;
+		
 		$objects = $result->objects;
 		$activities = objectToArray($objects);
 		$array['meta']['total_count'] = $result->meta->total_count;
@@ -100,93 +76,34 @@ if(!function_exists(objectToArray)) {
 			}
 		}
 		
-	} else {
-		
-		/*$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit=0";
-				
-		$content = file_get_contents($search_url);
-		$result = json_decode($content);
-		$meta = $result->meta;
-		$total_count = $meta->total_count;
-		$search_url = SEARCH_URL . "countries/?format=json&organisations=41120&limit={$total_count}";
-		$content = file_get_contents($search_url);
-		$result = json_decode($content);
-		$meta = $result->meta;
-		$objects = $result->objects;
-		$countries = objectToArray($objects);
-		
-		foreach($countries AS $c) {
-			if(isset($_GM_POLYGONS[$c['iso']])) {
-				$array[$c['iso']] = array('path' => $_GM_POLYGONS[$c['iso']], 'name' => $c['name']);
+		$start=$limit;
+		while($start<$count) {
+			$activities_url = SEARCH_URL . "activities/?format=json&limit={$limit}&countries={$FILTER['countries']}";
+			
+			$content = file_get_contents($activities_url.$search_url);
+			$result = json_decode($content);
+			$objects = $result->objects;
+			$activities = objectToArray($objects);
+			$array['meta']['total_count'] = $result->meta->total_count;
+			foreach($activities AS $a) {
+				foreach($a['recipient_country'] AS $c) {
+					if(isset($array['objects'][$c['iso']])) {
+						$array['objects'][$c['iso']]['total_cnt']++;
+					}
+				}
 			}
 		}
-		*/
-		$activities_url = SEARCH_URL . "activities/?format=json&limit=0";
-		if(!empty($_DEFAULT_ORGANISATION_ID)) {
-			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
-		}
 		
-		if(!empty($FILTER['query'])) {
-			$activities_url .= "&query={$FILTER['query']}";
-		}
+	} else {
 		
-		if(!empty($FILTER['regions'])) {
-			$activities_url .= "&regions={$FILTER['regions']}";
-		}
-		
-		if(!empty($FILTER['sectors'])) {
-			$activities_url .= "&sectors={$FILTER['sectors']}";
-		}
-		
-		if(!empty($FILTER['budgets'])) {
-			$budgets = explode('|', trim($_REQUEST['budgets']));
-			//Get the lowest budget from filter and use this one, all the other are included in the range
-			ksort($budgets);
-			$activities_url .= "&statistics__total_budget__gt={$budgets[0]}";
-		}
-	
-		$content = file_get_contents($activities_url);
-		$result = json_decode($content);
-		$meta = $result->meta;
-		$limit = $meta->total_count;
-		$activities_url = SEARCH_URL . "activities/?format=json&limit={$limit}";
-		if(!empty($_DEFAULT_ORGANISATION_ID)) {
-			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
-		}
-		
-		if(!empty($FILTER['query'])) {
-			$activities_url .= "&query={$FILTER['query']}";
-		}
-		
-		if(!empty($FILTER['regions'])) {
-			$activities_url .= "&regions={$FILTER['regions']}";
-		}
-		
-		if(!empty($FILTER['sectors'])) {
-			$activities_url .= "&sectors={$FILTER['sectors']}";
-		}
-		
-		if(!empty($FILTER['budgets'])) {
-			$budgets = explode('|', trim($_REQUEST['budgets']));
-			//Get the lowest budget from filter and use this one, all the other are included in the range
-			ksort($budgets);
-			$activities_url .= "&statistics__total_budget__gt={$budgets[0]}";
-		}
-		
-		$content = file_get_contents($activities_url);
-		$result = json_decode($content);
-		$objects = $result->objects;
-		$activities = objectToArray($objects);
 		$array['objects'] = array();
-		$array['meta']['total_count'] = $result->meta->total_count;
-		foreach($activities AS $a) {
-			foreach($a['recipient_country'] AS $c) {
-				if(isset($array['objects'][$c['iso']])) {
-					$array['objects'][$c['iso']]['total_cnt']++;
-				} else {
-					if(isset($_GM_POLYGONS[$c['iso']])) {
-						$array['objects'][$c['iso']] = array('path' => $_GM_POLYGONS[$c['iso']], 'name' => $c['name'], 'total_cnt' => 1);
-					}
+		$array['meta']['total_count'] = COUNT($_COUNTRY_ISO_MAP);
+		foreach($_COUNTRY_ISO_MAP AS $iso=>$c) {
+			if(isset($array['objects'][$iso])) {
+				$array['objects'][$iso]['total_cnt']++;
+			} else {
+				if(isset($_GM_POLYGONS[$iso])) {
+					$array['objects'][$iso] = array('path' => $_GM_POLYGONS[$iso], 'name' => $c, 'total_cnt' => $_COUNTRY_ACTIVITY_COUNT[$iso]);
 				}
 			}
 		}
