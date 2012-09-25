@@ -337,8 +337,7 @@ else
 	?>
 	<script type="text/javascript" charset="utf-8">
 		function initPageMap(country) {
-			var baseUrl = top.location.pathname.toString(),
-			url = baseUrl + "wp-content/themes/openunh/map_search.php?countries=<?php echo $countries ?><?php echo $search_url; ?>";
+			url = "<?php bloginfo('template_directory') ?>/map_search.php?countries=<?php echo $countries ?><?php echo $search_url; ?>";
 			var countries = '<?php echo $countries ?>';
 
 			$.ajax({
