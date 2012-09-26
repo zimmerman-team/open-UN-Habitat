@@ -907,6 +907,154 @@ $_REGION_CHOICES = array(
 	fclose($fp);
 }
 
+function wp_get_summary_data($type) {
+	if(empty($type)) return false;
+	
+	global $_DEFAULT_ORGANISATION_ID, $_REGION_CHOICES, $_SECTOR_CHOICES;
+	$limit = 50;
+	$regions = array();
+	$sectors = array();
+	$total_budget = 0;
+	
+	$activities_url = SEARCH_URL . "activities/?format=json&limit={$limit}";
+	if(!empty($_DEFAULT_ORGANISATION_ID)) {
+		$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
+	}
+	
+	$content = file_get_contents($activities_url);
+	$result = json_decode($content);
+	$meta = $result->meta;
+	$count = $meta->total_count;
+	
+	$objects = $result->objects;
+	$activities = objectToArray($objects);
+	
+	foreach($activities AS $a) {
+		$total_budget += floatval($a['statistics']['total_budget']);
+		switch($type) {
+			case 'cn':
+				if(!empty($a['recipient_region'])) {
+					foreach($a['recipient_region'] AS $r) {
+						if(!isset($regions[$r['code']])) {
+							$regions[$r['code']] = 0;
+						} else {
+							$regions[$r['code']] += floatval($a['statistics']['total_budget']);
+						}			
+					}
+				} else {
+					if(!isset($regions[0])) {
+						$regions[0] = 0;
+					} else {
+						$regions[0] += floatval($a['statistics']['total_budget']);
+					}
+				}
+				break;
+			case 'sc':
+				if(!empty($a['activity_sectors'])) {
+					foreach($a['activity_sectors'] AS $s) {
+						if(!isset($sectors[$s['code']])) {
+							$sectors[$s['code']] = 0;
+						} else {
+							$sectors[$s['code']] += floatval($a['statistics']['total_budget']);
+						}			
+					}
+				} else {
+					if(!isset($sectors[0])) {
+						$sectors[0] = 0;
+					} else {
+						$sectors[0] += floatval($a['statistics']['total_budget']);
+					}
+				}
+				break;
+		}
+	}
+	
+	
+	$start=$limit;
+	while($start<$count) {
+		$activities_url = SEARCH_URL . "activities/?format=json&start={$start}&limit={$limit}";
+		if(!empty($_DEFAULT_ORGANISATION_ID)) {
+			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
+		}
+		$content = file_get_contents($activities_url);
+		$result = json_decode($content);
+		$objects = $result->objects;
+		$activities = objectToArray($objects);
+		
+		foreach($activities AS $a) {
+			$total_budget += floatval($a['statistics']['total_budget']);
+			switch($type) {
+				case 'cn':
+					if(!empty($a['recipient_region'])) {
+						foreach($a['recipient_region'] AS $r) {
+							if(!isset($regions[$r['code']])) {
+								$regions[$r['code']] = 0;
+							} else {
+								$regions[$r['code']] += floatval($a['statistics']['total_budget']);
+							}
+						}
+					} else {
+						if(!isset($regions[0])) {
+							$regions[0] = 0;
+						} else {
+							$regions[0] += floatval($a['statistics']['total_budget']);
+						}
+					}
+					break;
+				case 'sc':
+					if(!empty($a['activity_sectors'])) {
+						foreach($a['activity_sectors'] AS $s) {
+							if(!isset($sectors[$s['code']])) {
+								$sectors[$s['code']] = 0;
+							} else {
+								$sectors[$s['code']] += floatval($a['statistics']['total_budget']);
+							}
+						}
+					} else {
+						if(!isset($sectors[0])) {
+							$sectors[0] = 0;
+						} else {
+							$sectors[0] += floatval($a['statistics']['total_budget']);
+						}
+					}
+					break;
+			}		
+					
+		}
+		
+		$start+=$limit;
+	}
+	
+	$object['total_budget'] = $total_budget;
+	$object['total_projects'] = $count;
+	
+	switch($type) {
+		case 'cn':
+			$object['data'][] = array('Region', 'Funding Percentage');
+			foreach($regions AS $idx=>$r) {
+				if($idx==0) {
+					$object['data'][] = array('Others', $r);
+				} else {
+					$object['data'][] = array($_REGION_CHOICES[$idx], $r);
+				}
+			}
+			break;
+		case 'sc':
+			$object['data'][] = array('Sector', 'Funding Percentage');
+			foreach($sectors AS $idx=>$s) {
+				if($idx==0) {
+					$object['data'][] = array('Others', $s);
+				} else {
+					$object['data'][] = array($_SECTOR_CHOICES[$idx], $s);
+				}
+			}
+			break;
+	}
+	
+	return $object;
+	
+}
+
 function wp_generate_paging($meta) {
 	global $_PER_PAGE;
 	//fix the paging 
@@ -965,7 +1113,7 @@ function wp_generate_home_map_data() {
 function format_custom_number($num) {
 	
 	$s = explode('.', $num);
-	
+
 	$parts = "";
 	if(strlen($s[0])>3) {
 		$parts = "." . substr($s[0], strlen($s[0])-3, 3);
@@ -992,7 +1140,7 @@ function format_custom_number($num) {
 	
 	if(isset($s[1])) {
 		if($s[1]!="00") {
-			$ret .= "," + $s[1];
+			$ret .= "," . $s[1];
 		}
 	}
 	
