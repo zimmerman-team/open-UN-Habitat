@@ -1,4 +1,4 @@
-var sThemePath = '', sBlogName = '', _per_page = 5;
+var sThemePath = '', sBlogName = '', sBaseUrl = '', _per_page = 5;
 // JavaScript Document
 $(document).ready(function() {
 	
@@ -9,6 +9,9 @@ $(document).ready(function() {
 		} // end if
 		if($(this).attr('src').indexOf('blog_name') > -1) {
 		  sBlogName = $(this).attr('src').split('blog_name=')[1].split('&')[0];
+		} // end if
+		if($(this).attr('src').indexOf('baseurl') > -1) {
+		  sBaseUrl = $(this).attr('src').split('baseurl=')[1].split('&')[0];
 		} // end if
 	  } // end if
 	});
@@ -244,7 +247,7 @@ $(document).ready(function() {
 	});
 	
 	$('#popupsubmtBtn>a').click(function(){
-		var baseUrl = top.location.pathname.toString();
+		var baseUrl = sBaseUrl + '/' ;
 		var country_fltr = '', region_fltr = '', sector_fltr = '', budget_fltr = '';
 		var sep = "";
 		var urlSep = "?";
@@ -343,7 +346,7 @@ $(document).ready(function() {
 		$('div.layout li a').removeClass('active');
 		$(this).addClass('active');
 		
-		var baseUrl = top.location.pathname.toString(),
+		var baseUrl = sBaseUrl,
 		url =  baseUrl,
 		urlSep = "?", country_fltr = '', region_fltr = '', sector_fltr = '', budget_fltr = '',
 		sep = "", selectedFltrs = [], isFilter = false;
@@ -743,7 +746,7 @@ function processAjaxMap() {
 
 function processAjaxFilters(offset, sort_by) {
 	
-	var baseUrl = top.location.pathname.toString();
+	var baseUrl = sBaseUrl;
 	$('#resultsContainer').empty();
 	
 	var html = "<center><p>" +
@@ -902,8 +905,8 @@ function processAjaxFilters(offset, sort_by) {
 
 function applyFilterHTML(selected) {
 	$('.searchcriteria').empty();
-	var baseUrl = top.location.pathname.toString();
-	var html = '<div class="clearresults"><a href="'+baseUrl+'?s=" id="clearSearchBtn">Clear Search<span>X</span></a></div>';
+	var baseUrl = sBaseUrl;
+	var html = '<div class="clearresults"><a href="'+baseUrl+'/?s=" id="clearSearchBtn">Clear Search<span>X</span></a></div>';
 	html += '<ul>';
 	var sep = '';
 	if(!$.isEmptyObject(selected.countries)) {
@@ -975,7 +978,7 @@ function applyResults(meta, objects) {
 	var limit = meta.limit,
 		offset = meta.offset,
 		total_count = meta.total_count,
-		baseUrl = top.location.pathname.toString(),
+		baseUrl = sBaseUrl,
 		back_url = top.location.search.toString();
 		
 	var html = "";
@@ -986,7 +989,7 @@ function applyResults(meta, objects) {
 			
 			html += "<div class='searchresult row"+(idx%2)+"'>" +
 					"<a id='detail_"+(idx+1)+"' href='javascript:void(0);' class='moredetail'></a>" +
-					"<h3><a href='" + baseUrl + "?page_id=2&id="+project.iati_identifier+"&back_url="+encodeURI(back_url)+"'>"+project.titles[0].title+"</a></h3>" +
+					"<h3><a href='" + baseUrl + "/?page_id=2&id="+project.iati_identifier+"&back_url="+encodeURI(back_url)+"'>"+project.titles[0].title+"</a></h3>" +
 					"<span class='detail'><span>Countries</span>: "; 
 			var sep = '';
 			for(i in project.recipient_country) {
@@ -1029,7 +1032,7 @@ function applyResults(meta, objects) {
 					"</div>" +
 					"<div class='clr'></div>" +
 					"<div class='resultrow'>" +
-					"<a href='"+baseUrl+"?page_id=42' class='whistleb'><span>WHISTLEBLOWER</span></a>" +
+					"<a href='"+baseUrl+"/?page_id=42' class='whistleb'><span>WHISTLEBLOWER</span></a>" +
 					"<a href='#' class='share'><span>SHARE</span></a>" +
 					"<a href='#' class='bookmark'><span>BOOKMARK</span></a>" +
 					"</div>" +

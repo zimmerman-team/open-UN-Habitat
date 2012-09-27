@@ -140,7 +140,73 @@ $activity = wp_get_activity($project_id);
                     <div class="longdetail">
                         <h4>Commitments</h4>
                          <div class="wrap comit">
-							<h2>No information available</h2>                             
+							<?php if(empty($activity->activity_transactions)) {?>
+							<h2>No information available</h2> 
+							<?php } else { ?>
+								<table cellpadding="0" cellspacing="0" class="comitWrap">
+									<tr>
+									<?php 
+										$cnt = 0;
+										foreach($activity->activity_transactions AS $at) {
+											$cnt++;
+											$align = 'left';
+											if($cnt==2) $align = 'right';
+											$currency = '';
+											switch($at->currency) {
+												case 'USD':
+													$currency = 'US$ ';
+													break;
+												case 'EUR':
+													$currency = '&euro; ';
+													break;
+												case 'GBP':
+													$currency = '£ ';
+													break;
+											}
+											$value = format_custom_number($at->value);
+											$provider_org = EMPTY_LABEL;
+											if(!empty($activity->reporting_organisation->org_name)) {
+												$provider_org = $activity->reporting_organisation->org_name;
+											}
+											$reciver_org = EMPTY_LABEL;
+											if(!empty($activity->participating_organisations)) {
+												$reciver_org = $activity->participating_organisations[0]->org_name;
+											}
+											echo "<td width='50%' align='{$align}'>
+														<table cellspacing='0' cellpadding='0' class='comitTable'>
+															  <tr>
+																<th>Activity</th>
+																<td>{$activity->titles[0]->title}</td>
+															  </tr>
+															  <tr>
+																<th>Provider org</th>
+																<td>{$provider_org}</td>
+															  </tr>
+															  <tr>
+																<th>Receiver org</th>
+																<td>{$reciver_org}</td>
+															  </tr>
+															  <tr>
+																<th>Value</th>
+																<td>{$currency}{$value}</td>
+														  </tr>
+															  <tr>
+																<th>Transaction date</th>
+																<td>{$at->transaction_date}</td>
+															  </tr>
+													  </table>
+												  </td>";
+									
+											if($cnt==2) {
+												$cnt=0;
+												echo "</tr><tr>";
+											
+											}
+										}
+									?>
+									</tr>
+								</table>
+							<?php }?>
                          </div>
                     </div>
 

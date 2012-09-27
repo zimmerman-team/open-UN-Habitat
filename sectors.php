@@ -7,6 +7,6 @@ $_SECTOR_CHOICES = array(
 '16030' => 'Housing policy and administrative management',
 '13010' => 'Population policy and administrative management',
 '23010' => 'Energy policy and administrative management',
-'11430' => 'Advanced technical and managerial trainin',
+'11430' => 'Advanced technical and managerial training',
 );
 ?>

@@ -18,19 +18,16 @@ $type=$_REQUEST['type'];
 <script type="text/javascript">
   google.load('visualization', '1', {packages: ['corechart']});
 </script>
+<?php
+	$data = wp_get_summary_data($type);
+?>
 <script type="text/javascript">
   function drawVisualization() {
   <?php 
 	switch($_REQUEST['type']){
 		case 'cn': ?>
-			// Create and populate the data table.
-			var data = google.visualization.arrayToDataTable([
-			  ['Region', 'Funding Percentage'],
-			  ['East asia and pacific', 1100],
-			  ['Eastern africa and indian ocean', 2000],
-			  ['Latin america and Caribbean', 2000],
-			  ['Others', 700]
-			]);
+			// Create and populate the data table.			
+			var data = google.visualization.arrayToDataTable(<?php echo json_encode($data['data']);?>);
 		<?php
 		break;
 		default:
@@ -117,9 +114,9 @@ $type=$_REQUEST['type'];
                             </div>
                            <div class="summary">
                            	<h4>Total Budget</h4>
-                            	<p>US$ 9,786,593</p>
+                            	<p><?php echo format_custom_number($data['total_budget']); ?></p>
                             <h4>Total Number of projects</h4>
-                            	<p>6</p>
+                            	<p><?php echo $data['total_projects']; ?></p>
                            </div>
                            <div class="clr"></div>
                         </div>
