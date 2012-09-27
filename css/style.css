@@ -8,12 +8,12 @@ body{  text-align:center; font-family:Arial, Helvetica, sans-serif}
 .ff5{ font-size:10px;}
 a{ color:#009ada;}
 dt { float:left; }
-.sitewidth{float:left;width:960px; clear:both; }
+.sitewidth{float:left; width:960px; clear:both; }
 #opunh-wrapper,#opunh-footer{ width:960px; margin:0 auto; overflow:hidden; text-align:left;}
 #opunh-header,#opunh-mainbody,#opunh-footer{position:relative}
 #opunh-header{ height:100px; }
 #opunh-mainbody{line-height:150%;padding:20px 0 30px 0;}
-#opunh-footerwrap{ width:100%;background:url(../images/footerbg2.png) left top repeat-x; }
+#opunh-footerwrap{ width:100%; background:url(../images/footerbg2.png) left top repeat-x; }
 #opunh-footer{height:85px;overflow:hidden;}
 .menu,.menu li{ float:left; list-style:none}
 ul.pagination {display:inline-block; float:none;}
@@ -115,7 +115,8 @@ div.infowindow { max-height:250px; }
 #countries, .nodisp{ text-align:left; display:none;}
 .all{ font-weight:bold;}
 .countrieslist, .regionslist, .sectorslist,.filterlist { width:100%;}
-.countrieslist .col, .regionslist .col, .sectorslist .col,.filterlist .col{ float:left;width:25%; text-align:left;}
+.countrieslist .col, .regionslist .col,.filterlist .col{ float:left; width:25%; text-align:left;}
+.sectorslist .col{ float:left; width:50%; text-align:left;}
 .countrieslist .col li, .regionslist .col li ,.sectorslist .col li, .filterlist .col li { margin:0 0 5px 0}
 
 /*Summary*/
