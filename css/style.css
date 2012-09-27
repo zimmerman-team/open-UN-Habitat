@@ -115,7 +115,8 @@ div.infowindow { max-height:250px; }
 #countries, .nodisp{ text-align:left; display:none;}
 .all{ font-weight:bold;}
 .countrieslist, .regionslist, .sectorslist,.filterlist { width:100%;}
-.countrieslist .col, .regionslist .col, .sectorslist .col,.filterlist .col{ float:left;width:25%; text-align:left;}
+.countrieslist .col, .regionslist .col,.filterlist .col{ float:left;width:25%; text-align:left;}
+.sectorslist .col{ float:left;width:50%; text-align:left;}
 .countrieslist .col li, .regionslist .col li ,.sectorslist .col li, .filterlist .col li { margin:0 0 5px 0}
 
 /*Summary*/
