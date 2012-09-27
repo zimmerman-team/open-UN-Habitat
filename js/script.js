@@ -756,9 +756,12 @@ function processAjaxFilters(offset, sort_by) {
 	
 	$('#resultsContainer').html(html);
 	
+	var filter_type = $('#filter_type').val();
+	
 	var url =  sThemePath + "/ajax_search.php",
 		urlSep = "?", country_fltr = '', region_fltr = '', sector_fltr = '', budget_fltr = '',
 		sep = "", selectedFltrs = [], isFilter = false;
+	
 	
 	$('.filterbox input[type=checkbox]:checked').each(function(){
 		var control_name = $(this).attr('name');
@@ -831,6 +834,10 @@ function processAjaxFilters(offset, sort_by) {
 		
 	}
 	
+	if(filter_type=='static') {
+		url = sBaseUrl + "?s=";
+		urlSep = "&";
+	}
 	
 	if(country_fltr.length>0) {
 		url +=  urlSep + "countries=" + country_fltr;
@@ -853,29 +860,35 @@ function processAjaxFilters(offset, sort_by) {
 		isFilter = true;
 	}
 	
-	url +=  urlSep + "limit=" + _per_page;
-	urlSep = "&";
+	if(filter_type!='static') {
+		url +=  urlSep + "limit=" + _per_page;
+		urlSep = "&";
+		
+		url +=  urlSep + "offset=" + offset;
+		urlSep = "&";
+		
+		if(sort_by != null && sort_by.length>0) {
+			url += urlSep + "order_by=" + sort_by;
+		} else {
+			$('.jeegoocontext li.active a').each(function(){
+				var id = $(this).parent().parent().attr('id');
+				var ord =  $(this).attr('id');
+				switch(id) {
+					case 'contxmenu_b':
+						ord = (ord=='desc'?'-':'') + 'statistics__total_budget';
+						url += urlSep + "order_by=" + ord;
+						break;
+					case 'contxmenu_d':
+						ord = (ord=='desc'?'-':'') + 'start_actual';
+						url += urlSep + "order_by=" + ord;
+						break;	
+				}
+			});
+		}
+	}
 	
-	url +=  urlSep + "offset=" + offset;
-	urlSep = "&";
-	
-	if(sort_by != null && sort_by.length>0) {
-		url += urlSep + "order_by=" + sort_by;
-	} else {
-		$('.jeegoocontext li.active a').each(function(){
-			var id = $(this).parent().parent().attr('id');
-			var ord =  $(this).attr('id');
-			switch(id) {
-				case 'contxmenu_b':
-					ord = (ord=='desc'?'-':'') + 'statistics__total_budget';
-					url += urlSep + "order_by=" + ord;
-					break;
-				case 'contxmenu_d':
-					ord = (ord=='desc'?'-':'') + 'start_actual';
-					url += urlSep + "order_by=" + ord;
-					break;	
-			}
-		});
+	if(filter_type=='static') {
+		window.location = url;
 	}
 	
 	jQuery.ajax({

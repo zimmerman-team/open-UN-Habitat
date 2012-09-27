@@ -49,7 +49,7 @@ $type=$_REQUEST['type'];
   }
   google.setOnLoadCallback(drawVisualization);
 </script>
-
+<input type="hidden" id="filter_type" value="static">
 <!--START BODY-->
 <div id="opunh-mainbody">
 <!--COL-LEFT-->
