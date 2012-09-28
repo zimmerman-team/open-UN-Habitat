@@ -114,7 +114,7 @@ $type=$_REQUEST['type'];
                             </div>
                            <div class="summary">
                            	<h4>Total Budget</h4>
-                            	<p><?php echo format_custom_number($data['total_budget']); ?></p>
+                            	<p>US$ <?php echo format_custom_number($data['total_budget']); ?></p>
                             <h4>Total Number of projects</h4>
                             	<p><?php echo $data['total_projects']; ?></p>
                            </div>
