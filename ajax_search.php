@@ -13,7 +13,7 @@
 	$FILTER['offset'] = intval($FILTER['offset']);
 	if($FILTER['offset']<0) $FILTER['offset'] = 0;
 	
-	$search_url = "http://oipa.openaidsearch.org/api/v2/activities/?format=json&limit={$FILTER['limit']}&offset={$FILTER['offset']}";
+    	$search_url = SEARCH_URL . "activities/?format=json&limit={$FILTER['limit']}&offset={$FILTER['offset']}";	if(!empty($_DEFAULT_ORGANISATION_ID)) {
 	if(!empty($_DEFAULT_ORGANISATION_ID)) {
 		$search_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
 	}
