@@ -1151,19 +1151,19 @@ function applyResults(meta, objects) {
 }
 	
 /**
-* Formats the number according to the ‘format’ string;
+* Formats the number according to the ï¿½formatï¿½ string;
 * adherses to the american number standard where a comma
 * is inserted after every 3 digits.
 *  note: there should be only 1 contiguous number in the format,
 * where a number consists of digits, period, and commas
-*        any other characters can be wrapped around this number, including ‘$’, ‘%’, or text
+*        any other characters can be wrapped around this number, including ï¿½$ï¿½, ï¿½%ï¿½, or text
 *        examples (123456.789):
-*          ‘0? - (123456) show only digits, no precision
-*          ‘0.00? - (123456.78) show only digits, 2 precision
-*          ‘0.0000? - (123456.7890) show only digits, 4 precision
-*          ‘0,000? - (123,456) show comma and digits, no precision
-*          ‘0,000.00? - (123,456.78) show comma and digits, 2 precision
-*          ‘0,0.00? - (123,456.78) shortcut method, show comma and digits, 2 precision
+*          ï¿½0? - (123456) show only digits, no precision
+*          ï¿½0.00? - (123456.78) show only digits, 2 precision
+*          ï¿½0.0000? - (123456.7890) show only digits, 4 precision
+*          ï¿½0,000? - (123,456) show comma and digits, no precision
+*          ï¿½0,000.00? - (123,456.78) show comma and digits, 2 precision
+*          ï¿½0,0.00? - (123,456.78) shortcut method, show comma and digits, 2 precision
 *
 * @method format
 * @param format {string} the way you would like to format this text
@@ -1176,7 +1176,7 @@ function stripNonNumeric(s) {
 }
 
 function format_number(format) {
-  
+  	if(!format || format==null) return "";	var s = format.split('.');
 	var s = format.split('.');
 	var parts = "";
 	if(s[0].length>3) {
@@ -1211,7 +1211,7 @@ function format_number(format) {
 
 
 /***********************************************
-* Bookmark site script- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* Bookmark site script- ï¿½ Dynamic Drive DHTML code library (www.dynamicdrive.com)
 * This notice MUST stay intact for legal use
 * Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
 ***********************************************/
