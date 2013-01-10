@@ -783,10 +783,10 @@ function wp_generate_constants() {
 		}
 	}
 	
-	
+	unset($activities);
 	$start=$limit;
 	while($start<$count) {
-		$activities_url = SEARCH_URL . "activities/?format=json&start={$start}&limit={$limit}";
+		$activities_url = SEARCH_URL . "activities/?format=json&offset={$start}&limit={$limit}";
 		if(!empty($_DEFAULT_ORGANISATION_ID)) {
 			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
 		}
@@ -972,7 +972,7 @@ function wp_get_summary_data($type) {
 	
 	$start=$limit;
 	while($start<$count) {
-		$activities_url = SEARCH_URL . "activities/?format=json&start={$start}&limit={$limit}";
+		$activities_url = SEARCH_URL . "activities/?format=json&offset={$start}&limit={$limit}";
 		if(!empty($_DEFAULT_ORGANISATION_ID)) {
 			$activities_url .= "&organisations=" . $_DEFAULT_ORGANISATION_ID;
 		}
